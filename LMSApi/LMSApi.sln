@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34701.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LMSApi", "LMSApi\LMSApi.csproj", "{365E65D0-5053-45BA-B530-043FF7B882C3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LMSBase", "..\LMSBase\LMSBase\LMSBase.csproj", "{57CFD1BE-81C6-45D8-BF4D-9E9F92C62ED1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{365E65D0-5053-45BA-B530-043FF7B882C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{365E65D0-5053-45BA-B530-043FF7B882C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{365E65D0-5053-45BA-B530-043FF7B882C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{365E65D0-5053-45BA-B530-043FF7B882C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57CFD1BE-81C6-45D8-BF4D-9E9F92C62ED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57CFD1BE-81C6-45D8-BF4D-9E9F92C62ED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57CFD1BE-81C6-45D8-BF4D-9E9F92C62ED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57CFD1BE-81C6-45D8-BF4D-9E9F92C62ED1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B07EC857-29EE-4FFD-8C62-2C6E2B7E0F2B}
+	EndGlobalSection
+EndGlobal
