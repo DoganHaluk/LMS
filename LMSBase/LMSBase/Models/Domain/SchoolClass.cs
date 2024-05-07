@@ -8,7 +8,7 @@
 		public List<Student> Students { get; set; }
 		public int? StatusId { get; set; }
 		public Status Status { get; set; }
-		public int CoachId { get; set; }
-		public Coach Coach { get; set; }
+		
+		public List<CoachSchoolClass> CoachSchoolClasses { get; set; }
 	}
 }

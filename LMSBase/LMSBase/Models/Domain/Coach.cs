@@ -4,6 +4,6 @@ namespace LMSBase.Models.Domain
 {
 	public class Coach : User
 	{
-		public List<SchoolClass> SchoolClasses { get; set; }
+		public List<CoachSchoolClass> CoachSchoolClasses { get; set; }
 	}
 }
