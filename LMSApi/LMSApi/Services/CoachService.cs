@@ -3,11 +3,11 @@ using LMSBase.Models.Domain;
 
 namespace LMSApi.Services
 {
-	public class CoachServices
+	public class CoachService
 	{
 		private readonly LMSDbContext _context;
 
-		public CoachServices(LMSDbContext context)
+		public CoachService(LMSDbContext context)
 		{
 			_context = context;
 		}

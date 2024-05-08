@@ -11,6 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<SchoolClassService>();
+builder.Services.AddScoped<SchoolClassEditor>();
+builder.Services.AddScoped<CoachSchoolClassService>();
+builder.Services.AddScoped<CoachService>();
 
 builder.Services.AddDbContext<LMSDbContext>(
 	options =>

@@ -1,38 +1,39 @@
 ﻿using LMSApi.Services;
 using LMSBase.Models.Domain;
+using LMSBase.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMSApi.Controllers
 {
 	[ApiController]
 	[Route("/api/SchoolClass")]
-	public class SchoolClassController : Controller
+	public class SchoolClassController : ControllerBase
 	{
-		private readonly SchoolClassService _schoolClassService;
+		private readonly SchoolClassEditor _schoolClassEditor;
 
-		public SchoolClassController(SchoolClassService schoolClassService)
+		public SchoolClassController(SchoolClassEditor schoolClassEditor)
 		{
-			_schoolClassService = schoolClassService;
+			_schoolClassEditor = schoolClassEditor;
 		}
 
-		[HttpGet]
+		[HttpGet("Schoolclasses")]
 		public IActionResult GetSchoolClasses()
 		{
-			return Ok(_schoolClassService.GetSchoolClasses());
+			return Ok(_schoolClassEditor.GetSchoolClasses());
 		}
 
 
-		[HttpGet]
+		[HttpGet("Schoolclasses/{id}")]
 		public IActionResult GetSchoolClassOverview(int id) 
 		{
-			return Ok(_schoolClassService.GetSchoolClassOverview(id));
+			return Ok(_schoolClassEditor.GetSchoolClassOverview(id));
 		}
 
-		[HttpPost]
+		[HttpPost("Schoolclasses")]
 
-		public IActionResult CreateSchoolClass(SchoolClass schoolClass)
+		public IActionResult CreateSchoolClass(CreateSchoolClassDto createSchoolClassDto)
 		{
-			SchoolClass newSchoolClass = _schoolClassService.CreateSchoolClass(schoolClass);
+			CreateSchoolClassDto newSchoolClass = _schoolClassEditor.CreateSchoolClass(createSchoolClassDto);
 			return Created($"{newSchoolClass.SchoolClassId}", newSchoolClass);
 		}
 
