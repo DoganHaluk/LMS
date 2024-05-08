@@ -15,6 +15,10 @@ namespace LMSApi.Configuration
 		public DbSet<Coach> Coaches { get; set; }
 		public DbSet<Student> Students { get; set; }
 
+		public DbSet<CoachSchoolClass> CoachSchoolClasses { get; set; }
+
+		public DbSet<StudentCodelab> StudentCodeLabs { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Student>().Ignore(s => s.Claims);
