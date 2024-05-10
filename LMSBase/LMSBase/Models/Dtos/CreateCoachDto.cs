@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LMSBase.Models.Dtos
 {
-	public class CoachDto
+	public class CreateCoachDto
 	{
 		public int UserId { get; set; }
 		public string UserName { get; set; }
