@@ -1,6 +1,7 @@
 using LMSApi.Configuration;
 using LMSApi.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,12 +12,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<SchoolClassService>();
-
-builder.Services.AddDbContext<LMSDbContext>(
-	options =>
+builder.Services.AddScoped<LearningModuleService>();
+builder.Services.AddScoped<LearningModuleEditor>();
+builder.Services.AddDbContext<LMSDbContext>(options =>
 	{
 		options.UseSqlServer(builder.Configuration["ConnectionString"]);
 	});
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

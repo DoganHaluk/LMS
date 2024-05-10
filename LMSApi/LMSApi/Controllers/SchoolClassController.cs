@@ -15,18 +15,6 @@ namespace LMSApi.Controllers
 			_schoolClassService = schoolClassService;
 		}
 
-		[HttpGet]
-		public IActionResult GetSchoolClasses()
-		{
-			return Ok(_schoolClassService.GetSchoolClasses());
-		}
-
-
-		[HttpGet]
-		public IActionResult GetSchoolClassOverview(int id) 
-		{
-			return Ok(_schoolClassService.GetSchoolClassOverview(id));
-		}
 
 		[HttpPost]
 

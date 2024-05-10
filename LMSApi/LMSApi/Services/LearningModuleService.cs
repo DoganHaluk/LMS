@@ -21,6 +21,11 @@ namespace LMSApi.Services
 				.ToList();
 		}
 
+		public LearningModule GetLearningModuleById(int id)
+		{
+			return _context.LearningModules.Find(id);
+		}
+
 		public LearningModule CreateLearningModule(LearningModule learningModule)
 		{
 			_context.LearningModules.Add(learningModule);
@@ -31,7 +36,7 @@ namespace LMSApi.Services
 		public LearningModule UpdateLearningModule(LearningModule learningModule)
 		{
 			var newLearningModule = _context.LearningModules.Find(learningModule.LearningModuleId);
-			newLearningModule = learningModule;
+			newLearningModule.ModuleName = learningModule.ModuleName;
 			_context.SaveChanges();
 			return newLearningModule;
 		}
