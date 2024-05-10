@@ -14,9 +14,8 @@ namespace LMSApi.Configuration
 		public DbSet<Status> Statuses { get; set; }
 		public DbSet<Coach> Coaches { get; set; }
 		public DbSet<Student> Students { get; set; }
-
+		public DbSet<SchoolClassCourse> SchoolClassCourses { get; set; }
 		public DbSet<CoachSchoolClass> CoachSchoolClasses { get; set; }
-
 		public DbSet<StudentCodelab> StudentCodeLabs { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,7 +34,7 @@ namespace LMSApi.Configuration
 				.HasOne(m => m.Parent)
 				.WithMany(m => m.SubModules)
 				.HasForeignKey(m => m.ParentId);
-			modelBuilder.Entity<Course>(e => e.HasOne(c => c.Status).WithMany().OnDelete(DeleteBehavior.SetNull));
+			modelBuilder.Entity<SchoolClassCourse>(e => e.HasOne(c => c.Status).WithMany().OnDelete(DeleteBehavior.SetNull));
 			modelBuilder.Entity<StudentCodelab>(e => e.HasOne(sc => sc.Status).WithMany().OnDelete(DeleteBehavior.SetNull));
 			modelBuilder.Entity<SchoolClass>(e => e.HasOne(c => c.Status).WithMany().OnDelete(DeleteBehavior.SetNull));
 			modelBuilder.Entity<LearningModule>(e => e.HasOne(m => m.Status).WithMany().OnDelete(DeleteBehavior.SetNull));
