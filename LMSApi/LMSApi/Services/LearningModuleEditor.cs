@@ -25,17 +25,9 @@ namespace LMSApi.Services
 			return _learningModuleService.CreateLearningModule(learningModule);
 		}
 
-		public LearningModule UpdateLearningModule(int id, LearningModuleDto learningModuleDto)
+		public LearningModule UpdateLearningModuleName(int id, LearningModuleNameDto learningModuleNameDto)
 		{
-			LearningModule learningModule = new LearningModule()
-			{
-				LearningModuleId = id,
-				ModuleName = learningModuleDto.ModuleName,
-				CourseId = learningModuleDto.CourseId,
-				ParentId = learningModuleDto.ParentId,
-				StatusId = learningModuleDto.StatusId,
-			};
-			return _learningModuleService.UpdateLearningModule(learningModule);
+			return _learningModuleService.UpdateLearningModuleName(id, learningModuleNameDto.ModuleName);
 		}
 	}
 }

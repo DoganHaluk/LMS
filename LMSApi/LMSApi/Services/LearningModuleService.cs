@@ -1,5 +1,6 @@
 ﻿using LMSApi.Configuration;
 using LMSBase.Models.Domain;
+using LMSBase.Models.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace LMSApi.Services
@@ -33,10 +34,10 @@ namespace LMSApi.Services
 			return learningModule;
 		}
 
-		public LearningModule UpdateLearningModule(LearningModule learningModule)
+		public LearningModule UpdateLearningModuleName(int id, string moduleName)
 		{
-			var newLearningModule = _context.LearningModules.Find(learningModule.LearningModuleId);
-			newLearningModule.ModuleName = learningModule.ModuleName;
+			var newLearningModule = _context.LearningModules.Find(id);
+			newLearningModule.ModuleName = moduleName;
 			_context.SaveChanges();
 			return newLearningModule;
 		}

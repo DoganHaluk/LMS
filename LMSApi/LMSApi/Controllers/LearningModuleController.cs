@@ -39,9 +39,9 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPut("{id}")]
-		public IActionResult UpdateLearningModule(int id, LearningModuleDto learningModuleDto)
+		public IActionResult UpdateLearningModule(int id, LearningModuleNameDto learningModuleNameDto)
 		{
-			var newLearningModule =_learningModuleEditor.UpdateLearningModule(id, learningModuleDto);
+			var newLearningModule =_learningModuleEditor.UpdateLearningModuleName(id, learningModuleNameDto);
 			return Created($"/api/modules/{newLearningModule.LearningModuleId}", newLearningModule);
 		}
 	}
