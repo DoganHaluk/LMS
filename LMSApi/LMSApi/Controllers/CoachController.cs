@@ -19,7 +19,7 @@ namespace LMSApi.Controllers
 
 		[HttpPost("")]
 
-		public IActionResult CreateCoach(CoachDto coachDto)
+		public IActionResult CreateCoach(CreateCoachDto coachDto)
 		{
 			Coach newCoach = _coachService.CreateCoach(CoachMapper.ToDomain(coachDto));
 			return Created($"{newCoach.UserId }",CoachMapper.ToDto(newCoach));

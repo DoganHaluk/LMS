@@ -10,7 +10,7 @@ namespace LMSBase.Models.Mappers
 {
 	public class CoachMapper
 	{
-		public static Coach ToDomain (CoachDto coachDto)
+		public static Coach ToDomain (CreateCoachDto coachDto)
 		{
 			Coach coach = new Coach()
 			{
@@ -22,9 +22,9 @@ namespace LMSBase.Models.Mappers
 			return coach;
 		}
 
-		public static CoachDto ToDto (Coach coach)
+		public static CreateCoachDto ToDto (Coach coach)
 		{
-			CoachDto coachDto = new CoachDto()
+			CreateCoachDto coachDto = new CreateCoachDto()
 			{
 				UserId = coach.UserId,
 				UserName = coach.UserName,
