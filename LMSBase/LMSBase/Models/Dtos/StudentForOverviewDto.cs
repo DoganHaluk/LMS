@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace LMSBase.Models.Dtos
 {
-	public class ListSchoolClassesDto
+	public class StudentForOverviewDto
 	{
-		public int SchoolClassId { get; set; }
+		public int USerId { get; set; }
 
-		public string SchoolClassName { get; set; }
+		public string USerName { get; set;}
 	}
 }

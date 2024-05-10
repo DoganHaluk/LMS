@@ -32,40 +32,14 @@ namespace LMSApi.Services
 			return createSchoolClassDto;
 		}
 
-		public List<ListSchoolClassesDto> GetSchoolClasses()
+		public List<SchoolClass> GetSchoolClasses()
 		{
-			List<ListSchoolClassesDto> listSchoolClassesDtos = new List<ListSchoolClassesDto>();
-			List<SchoolClass> schoolClasses = _schoolClassService.GetSchoolClasses();
-			foreach (var schoolClass in schoolClasses)
-			{
-				ListSchoolClassesDto listSchoolClassesDto = new ListSchoolClassesDto()
-				{
-					SchoolClassId = schoolClass.SchoolClassId,
-					SchoolClassName = schoolClass.SchoolClassName,
-				};
-				listSchoolClassesDtos.Add(listSchoolClassesDto);
-			}
-			return listSchoolClassesDtos;
+			return _schoolClassService.GetSchoolClasses();
 		}
 
-		public SchoolClassOverviewDto GetSchoolClassOverview(int id)
-		{			
-			SchoolClass schoolClass = _schoolClassService.GetSchoolClassOverview(id);
-
-			SchoolClassOverviewDto schoolClassOverviewDto = new SchoolClassOverviewDto()
-			{
-				SchoolClassId = schoolClass.SchoolClassId,
-				SchoolClassName = schoolClass.SchoolClassName,
-			};
-			foreach (var student in schoolClass.Students)
-			{
-				schoolClassOverviewDto.StudentsNames.Add(student.UserName);
-			}
-			foreach (var coach in schoolClass.CoachSchoolClasses)
-			{
-				schoolClassOverviewDto.CoachesNames.Add(coach.Coach.UserName);
-			}
-			return schoolClassOverviewDto;
+		public SchoolClass GetSchoolClassOverview(int id)
+		{	
+			return _schoolClassService.GetSchoolClassOverview(id);			
 		}
 	}
 }
