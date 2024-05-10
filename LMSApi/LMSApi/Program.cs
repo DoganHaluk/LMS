@@ -14,7 +14,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<SchoolClassService>();
 builder.Services.AddScoped<LearningModuleService>();
 builder.Services.AddScoped<LearningModuleEditor>();
-builder.Services.AddDbContext<LMSDbContext>(options =>
+builder.Services.AddScoped<SchoolClassEditor>();
+builder.Services.AddScoped<CoachSchoolClassService>();
+builder.Services.AddScoped<CoachService>();
+builder.Services.AddDbContext<LMSDbContext>(
+	options =>
 	{
 		options.UseSqlServer(builder.Configuration["ConnectionString"]);
 	});

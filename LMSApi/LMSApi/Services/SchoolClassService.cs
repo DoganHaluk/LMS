@@ -34,7 +34,7 @@ namespace LMSApi.Services
 		{
 			var schoolClass = _context.SchoolClasses.Find(schoolClassId);
 
-			schoolClass.StatusId = 8;
+			schoolClass.StatusId = 7;
 
 			_context.SaveChanges();
 			return schoolClass;
