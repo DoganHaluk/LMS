@@ -20,7 +20,7 @@ namespace LMSApi.Services
 
 		public SchoolClass GetSchoolClassOverview(int id)
 		{
-			return _context.SchoolClasses.Where(x => x.SchoolClassId == id).Include(x=>x.Students).Include(x=>x.CoachSchoolClasses).ThenInclude(c=>c.Coach).FirstOrDefault();
+			return _context.SchoolClasses.Where(x => x.SchoolClassId == id).Include(s=>s.SchoolClassCourses).ThenInclude(s=>s.Course).Include(x=>x.Students).Include(x=>x.CoachSchoolClasses).ThenInclude(c=>c.Coach).FirstOrDefault();
 		}
 
 		public SchoolClass CreateSchoolClass(SchoolClass schoolClass)

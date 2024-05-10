@@ -15,5 +15,7 @@ namespace LMSBase.Models.Dtos
 		public List<StudentForOverviewDto> Students { get; set; }
 
 		public List<CoachFromCoachSchoolClassDto> CoachSchoolClasses { get; set; }
+
+		public List<CoursesFromSchoolClassCoursesDto> SchoolClassCourses { get; set; }
 	}
 }
