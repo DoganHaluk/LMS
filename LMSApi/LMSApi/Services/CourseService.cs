@@ -12,6 +12,24 @@ namespace LMSApi.Services
 			_context = context;
 		}
 
-		
+		public Course GetCourseById(int id)
+		{
+			return _context.Courses.Find(id);
+		}
+
+		public Course CreateCourse(Course course)
+		{
+			_context.Courses.Add(course);
+			_context.SaveChanges();
+			return course;
+		}
+
+		public Course UpdateCourseName(int id, string courseName) 
+		{
+			var newCourse = _context.Courses.Find(id);
+			newCourse.CourseName = courseName;
+			_context.SaveChanges();
+			return newCourse;
+		}
 	}
 }

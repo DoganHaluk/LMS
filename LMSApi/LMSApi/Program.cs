@@ -17,6 +17,9 @@ builder.Services.AddScoped<LearningModuleEditor>();
 builder.Services.AddScoped<SchoolClassEditor>();
 builder.Services.AddScoped<CoachSchoolClassService>();
 builder.Services.AddScoped<CoachService>();
+builder.Services.AddScoped<CourseService>();
+builder.Services.AddScoped<CourseEditor>();
+builder.Services.AddScoped<SchoolClassCourseService>();
 builder.Services.AddDbContext<LMSDbContext>(
 	options =>
 	{
