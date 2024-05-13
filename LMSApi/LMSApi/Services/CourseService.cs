@@ -12,6 +12,11 @@ namespace LMSApi.Services
 			_context = context;
 		}
 
+		public List<Course> GetCourses()
+		{
+			return _context.Courses.ToList();
+		}
+
 		public Course GetCourseById(int id)
 		{
 			return _context.Courses.Find(id);

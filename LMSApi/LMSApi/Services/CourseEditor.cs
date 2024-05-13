@@ -14,25 +14,16 @@ namespace LMSApi.Services
 			_schoolClassCourseService = schoolClassCourseService;
 		}
 
-		public Course CreateCourse(CreateCourseDto createCourseDto)
+		public Course CreateCourse(CourseDto courseDto)
 		{
 			Course course = new Course()
 			{
-				CourseName = createCourseDto.CourseName,
+				CourseName = courseDto.CourseName,
 			};
-			var newCourse = _courseService.CreateCourse(course);
-
-			SchoolClassCourse schoolClassCourse = new SchoolClassCourse()
-			{
-				CourseId = newCourse.CourseId,
-				SchoolClassId = createCourseDto.SchoolClassId,
-				StatusId = 1
-			};
-			_schoolClassCourseService.CreateSchoolClassCourse(schoolClassCourse);
-			return newCourse;
+			return _courseService.CreateCourse(course);			 
 		}
 
-		public Course UpdateCourseName(int id, CourseNameDto courseDto)
+		public Course UpdateCourseName(int id, CourseDto courseDto)
 		{
 			return _courseService.UpdateCourseName(id, courseDto.CourseName);
 		}
