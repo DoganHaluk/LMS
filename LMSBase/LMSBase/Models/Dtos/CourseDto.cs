@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LMSBase.Models.Dtos
 {
-	public class CourseNameDto
+	public class CourseDto
 	{
 		public string CourseName { get; set; }
 	}

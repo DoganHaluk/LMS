@@ -18,6 +18,12 @@ namespace LMSApi.Controllers
 			_courseService = courseService;
 		}
 
+		[HttpGet]
+		public IActionResult GetCourses()
+		{
+			return Ok(_courseService.GetCourses());
+		}
+
 		[HttpGet("{id}")]
 		public IActionResult GetCourseById(int id)
 		{
@@ -25,16 +31,16 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult CreateCourse(CreateCourseDto createCourseDto)
+		public IActionResult CreateCourse(CourseDto courseDto)
 		{
-			var newCourse = _courseEditor.CreateCourse(createCourseDto);
+			var newCourse = _courseEditor.CreateCourse(courseDto);
 			return Created($"/api/courses/{newCourse.CourseId}", newCourse);
 		}
 
 		[HttpPut("{id}")]
-		public IActionResult UpdateCourseName(int id, CourseNameDto courseNameDto)
+		public IActionResult UpdateCourseName(int id, CourseDto courseDto)
 		{
-			var newCourse = _courseEditor.UpdateCourseName(id, courseNameDto);
+			var newCourse = _courseEditor.UpdateCourseName(id, courseDto);
 			return Created($"/api/courses/{newCourse.CourseId}", newCourse);
 		}
 	}
