@@ -1,5 +1,6 @@
 ﻿using LMSApi.Configuration;
 using LMSBase.Models.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace LMSApi.Services
 {
@@ -19,7 +20,7 @@ namespace LMSApi.Services
 
 		public Student GetStudentById(int id)
 		{
-			return _context.Students.Find(id);
+			return _context.Students.Where(s=>s.UserId==id).Include(s=>s.SchoolClass).FirstOrDefault();
 		}
 
 		public Student GetStudentByEmail(string email)
@@ -34,12 +35,12 @@ namespace LMSApi.Services
 			return student;
 		}
 
-		public Student UpdateStudentWithSchoolClass(int id, int schoolClassId)
+		public Student UpdateStudentWithSchoolClass(Student student)
 		{
-			var student = _context.Students.Find(id);
-			student.SchoolClassId = schoolClassId;
+			var updatedStudent = _context.Students.Find(student.UserId);
+			updatedStudent.SchoolClassId = student.SchoolClassId;
 			_context.SaveChanges();
-			return student;
+			return updatedStudent;
 		}
 		
 

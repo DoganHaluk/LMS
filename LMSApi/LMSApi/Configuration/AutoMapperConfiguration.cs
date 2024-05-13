@@ -15,6 +15,9 @@ namespace LMSApi.Configuration
 			CreateMap<CoachSchoolClass,CoachFromCoachSchoolClassDto>();
 			CreateMap<SchoolClassCourse,CoursesFromSchoolClassCoursesDto>();
 			CreateMap<Course,CourseForOverviewDto>();
+			CreateMap<CreateStudentDto, Student>();
+			CreateMap<Student,GetStudentDto>();
+			CreateMap<StudentForClassUpdate, Student>();
 		}
 	}
 }
