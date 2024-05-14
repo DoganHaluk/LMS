@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using LMSApi.Services;
 using LMSBase.Models.Domain;
-using LMSBase.Models.Dtos;
 using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
 using Microsoft.AspNetCore.Mvc;
@@ -34,8 +33,8 @@ namespace LMSApi.Controllers
 		[HttpGet("{id}")]
 		public IActionResult GetClassById(int id)
 		{
-			//return Ok(_mapper.Map(_schoolClassEditor.GetClassById(id)));
-			return Ok();
+		     return Ok(_mapper.Map<SchoolClassSummaryDto>(_schoolClassEditor.GetSchoolClassById(id)));
+			
 		}
 
 		[HttpGet("ClassOverview/{id}")]

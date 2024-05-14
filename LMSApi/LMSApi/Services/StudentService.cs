@@ -35,16 +35,20 @@ namespace LMSApi.Services
 			return student;
 		}
 
-		public Student UpdateStudentWithSchoolClass(Student student)
+		public Student EditStudentProfile(Student student)
 		{
 			var updatedStudent = _context.Students.Find(student.UserId);
-			updatedStudent.SchoolClassId = student.SchoolClassId;
+			updatedStudent = student;
 			_context.SaveChanges();
 			return updatedStudent;
 		}
-		
 
-
-		
+		public Student EditStudentPassword(Student student)
+		{
+			var updatedStudent = _context.Students.Find(student.UserId);
+			updatedStudent = student;
+			_context.SaveChanges();
+			return updatedStudent;
+		}
 	}
 }
