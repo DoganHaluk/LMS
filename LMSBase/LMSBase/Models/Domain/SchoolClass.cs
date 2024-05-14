@@ -9,5 +9,6 @@
 		public int? StatusId { get; set; }
 		public Status Status { get; set; }
 		public List<CoachSchoolClass> CoachSchoolClasses { get; set; }
+		//public List<Coach> Coaches { get; set; }
 	}
 }

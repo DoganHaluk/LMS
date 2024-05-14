@@ -3,12 +3,13 @@ using LMSApi.Configuration;
 using LMSApi.Services;
 using LMSBase.Models.Domain;
 using LMSBase.Models.Dtos;
+using LMSBase.Models.Dtos.Response;
 using LMSBase.Models.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMSApi.Controllers
 {
-	[ApiController]
+    [ApiController]
 	[Route("/api/coach")]
 	public class CoachController : ControllerBase
 	{
@@ -33,7 +34,7 @@ namespace LMSApi.Controllers
 		[HttpGet("/{id}")]
 		public IActionResult GetCoach(int id)
 		{
-			GetCoachProfileDto getCoachProfile = _mapper.Map<GetCoachProfileDto>(_coachService.GetCoach(id));
+			CoachSummaryDto getCoachProfile = _mapper.Map<CoachSummaryDto>(_coachService.GetCoach(id));
 			return Ok(getCoachProfile);
 		}
 

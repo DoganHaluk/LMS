@@ -20,6 +20,7 @@ builder.Services.AddScoped<CoachService>();
 builder.Services.AddScoped<CourseService>();
 builder.Services.AddScoped<CourseEditor>();
 builder.Services.AddScoped<SchoolClassCourseService>();
+builder.Services.AddScoped<SchoolClassCourseEditor>();
 builder.Services.AddScoped<StudentService>();
 builder.Services.AddDbContext<LMSDbContext>(
 	options =>

@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LMSBase.Models.Dtos
+namespace LMSBase.Models.Dtos.Response
 {
-	public class CreateSchoolClassDto
+	public class SchoolClassSummaryDto
 	{
-		public int SchoolClassId {  get; set; } 
+		public int SchoolClassId { get; set; }
 		public string SchoolClassName { get; set; }
-
-		public int CoachId { get; set; }
 	}
 }

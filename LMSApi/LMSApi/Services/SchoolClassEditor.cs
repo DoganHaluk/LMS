@@ -1,9 +1,9 @@
 ﻿using LMSBase.Models.Domain;
-using LMSBase.Models.Dtos;
+using LMSBase.Models.Dtos.Request;
 
 namespace LMSApi.Services
 {
-	public class SchoolClassEditor
+    public class SchoolClassEditor
 	{
 		private readonly SchoolClassService _schoolClassService;
 		private readonly CoachSchoolClassService _coachSchoolClassService;
@@ -14,7 +14,7 @@ namespace LMSApi.Services
 			_coachSchoolClassService = coachSchoolClassService;
 		}
 
-		public CreateSchoolClassDto CreateSchoolClass(CreateSchoolClassDto createSchoolClassDto)
+		public SchoolClass CreateSchoolClass(CreateSchoolClassDto createSchoolClassDto)
 		{
 			SchoolClass schoolClass = new SchoolClass()
 			{
@@ -28,8 +28,7 @@ namespace LMSApi.Services
 				SchoolClassId = newSchoolClass.SchoolClassId
 			};
 			_coachSchoolClassService.CreateCoachSchoolClass(coachSchoolClass);
-			createSchoolClassDto.SchoolClassId = newSchoolClass.SchoolClassId;
-			return createSchoolClassDto;
+			return newSchoolClass;
 		}
 
 		public List<SchoolClass> GetSchoolClasses()

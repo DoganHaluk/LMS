@@ -12,10 +12,11 @@ namespace LMSApi.Services
 			_context = context;
 		}
 
-		public void CreateSchoolClassCourse(SchoolClassCourse schoolClassCourse)
+		public SchoolClassCourse CreateSchoolClassCourse(SchoolClassCourse schoolClassCourse)
 		{
 			_context.SchoolClassCourses.Add(schoolClassCourse);
 			_context.SaveChanges();
+			return schoolClassCourse;
 		}
 	}
 }

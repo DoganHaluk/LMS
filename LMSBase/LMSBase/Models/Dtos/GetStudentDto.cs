@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LMSBase.Models.Dtos.Response;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,6 @@ namespace LMSBase.Models.Dtos
 		public string UserName { get; set; }
 		public string Email { get; set; }
 
-		public SchoolClassNameAndIdDto SchoolClass { get; set; }
+		public SchoolClassSummaryDto SchoolClass { get; set; }
 	}
 }
