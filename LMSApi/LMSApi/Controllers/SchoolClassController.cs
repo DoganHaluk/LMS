@@ -22,12 +22,17 @@ namespace LMSApi.Controllers
 		[HttpGet("SchoolClasses")]
 		public IActionResult GetSchoolClasses()
 		{
-			List<SchoolClassForListDto> list = new List<SchoolClassForListDto>();
+			List<SchoolClassNameAndIdDto> list = new List<SchoolClassNameAndIdDto>();
 			foreach (var schoolclass in _schoolClassEditor.GetSchoolClasses())
 			{
-				list.Add(_mapper.Map<SchoolClassForListDto>(schoolclass));
+				list.Add(_mapper.Map<SchoolClassNameAndIdDto>(schoolclass));
 			}
 			return Ok(list);
+		}
+		[HttpGet("{id}")]
+		public IActionResult GetClassById(int id)
+		{
+			return Ok(_mapper.Map(_schoolClassEditor.GetClassById(id)));
 		}
 
 		[HttpGet("ClassOverview/{id}")]

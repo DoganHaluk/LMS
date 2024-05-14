@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LMSBase.Models.Dtos
 {
-	public class SchoolClassForListDto
+	public class SchoolClassNameAndIdDto
 	{
 		public int SchoolClassId { get; set; }
 		public string SchoolClassName { get; set; }

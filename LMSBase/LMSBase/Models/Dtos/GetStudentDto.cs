@@ -12,6 +12,6 @@ namespace LMSBase.Models.Dtos
 		public string UserName { get; set; }
 		public string Email { get; set; }
 
-		public SchoolClassForListDto SchoolClass { get; set; }
+		public SchoolClassNameAndIdDto SchoolClass { get; set; }
 	}
 }
