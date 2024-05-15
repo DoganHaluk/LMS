@@ -22,6 +22,8 @@ namespace LMSApi.Configuration
 			CreateMap<SchoolClassCourse, SchoolClassCourseDto>();
 			CreateMap<Course, CourseSummaryDto>();
 			CreateMap<Status, StatusDto>();
+			CreateMap<Course, CourseDto>();
+			CreateMap<LearningModule, LearningModuleDto>();
 		}
 	}
 }

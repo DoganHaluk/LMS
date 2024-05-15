@@ -1,5 +1,6 @@
 ﻿using LMSApi.Configuration;
 using LMSBase.Models.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace LMSApi.Services
 {
@@ -14,7 +15,11 @@ namespace LMSApi.Services
 
 		public List<Course> GetCourses()
 		{
-			return _context.Courses.ToList();
+			return _context.Courses
+				.Include(c => c.Modules)
+				.ThenInclude(m => m.SubModules)
+				.ThenInclude(m => m.Codelabs)
+				.ToList();
 		}
 
 		public Course GetCourseById(int id)
@@ -29,7 +34,7 @@ namespace LMSApi.Services
 			return course;
 		}
 
-		public Course UpdateCourseName(int id, string courseName) 
+		public Course UpdateCourseName(int id, string courseName)
 		{
 			var newCourse = _context.Courses.Find(id);
 			newCourse.CourseName = courseName;

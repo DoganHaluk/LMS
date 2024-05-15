@@ -5,14 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LMSBase.Models.Dtos
+namespace LMSBase.Models.Dtos.Response
 {
 	public class LearningModuleDto
 	{
 		public int LearningModuleId { get; set; }
 		public string ModuleName { get; set; }
-		public int? ParentId { get; set; }
-		public int? StatusId { get; set; }
-		public int CourseId { get; set; }
+		public List<LearningModule> SubModules { get; set; }
+		public LearningModule Parent { get; set; }
+		public List<Codelab> Codelabs { get; set; }
+		public StatusDto Status { get; set; }
 	}
 }

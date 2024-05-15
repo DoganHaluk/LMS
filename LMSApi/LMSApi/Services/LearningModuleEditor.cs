@@ -1,10 +1,11 @@
 ﻿using LMSBase.Models.Domain;
 using LMSBase.Models.Dtos;
+using LMSBase.Models.Dtos.Request;
 using System.Net.Http.Headers;
 
 namespace LMSApi.Services
 {
-	public class LearningModuleEditor
+    public class LearningModuleEditor
 	{
 		private readonly LearningModuleService _learningModuleService;
 
@@ -13,7 +14,7 @@ namespace LMSApi.Services
 			_learningModuleService = learningModuleService;
 		}
 
-		public LearningModule CreateLearningModule(LearningModuleDto learningModuleDto)
+		public LearningModule CreateLearningModule(CreateLearningModuleDto learningModuleDto)
 		{
 			LearningModule learningModule = new LearningModule()
 			{

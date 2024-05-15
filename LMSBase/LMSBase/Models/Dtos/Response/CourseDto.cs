@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LMSBase.Models.Dtos
+namespace LMSBase.Models.Dtos.Response
 {
 	public class CourseDto
 	{
+		public int CourseId { get; set; }
 		public string CourseName { get; set; }
 	}
 }
