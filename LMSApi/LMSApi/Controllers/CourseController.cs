@@ -31,7 +31,7 @@ namespace LMSApi.Controllers
 		[HttpGet("{id}")]
 		public IActionResult GetCourseById(int id)
 		{
-			return Ok(_courseService.GetCourseById(id));
+			return Ok(_mapper.Map<CourseOverviewDto>(_courseService.GetCourseById(id)));
 		}
 
 		[HttpPost]

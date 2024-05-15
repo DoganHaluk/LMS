@@ -15,16 +15,17 @@ namespace LMSApi.Services
 
 		public List<Course> GetCourses()
 		{
-			return _context.Courses
-				.Include(c => c.Modules)
-				.ThenInclude(m => m.SubModules)
-				.ThenInclude(m => m.Codelabs)
-				.ToList();
+			return _context.Courses.ToList();
 		}
 
 		public Course GetCourseById(int id)
 		{
-			return _context.Courses.Find(id);
+			return _context.Courses
+				.Where(c => c.CourseId == id)
+				.Include(c => c.Modules)
+				.ThenInclude(m => m.SubModules)
+				.ThenInclude(m => m.Codelabs)
+				.FirstOrDefault();
 		}
 
 		public Course CreateCourse(Course course)

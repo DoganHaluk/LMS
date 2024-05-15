@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using LMSApi.Services;
-using LMSBase.Models.Dtos;
 using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
 using Microsoft.AspNetCore.Http;

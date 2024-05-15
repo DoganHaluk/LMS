@@ -16,6 +16,6 @@ namespace LMSBase.Models.Dtos.Response
 
         public List<CoachSchoolClassDto> CoachSchoolClasses { get; set; }
 
-        public List<CoursesFromSchoolClassCoursesDto> SchoolClassCourses { get; set; }
+        public List<SchoolClassCourseDto> SchoolClassCourses { get; set; }
     }
 }
