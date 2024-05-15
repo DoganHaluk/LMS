@@ -10,7 +10,7 @@ namespace LMSBase.Models.Dtos.Response
 	{
 		public int SchoolClassCourseId {  get; set; }
 		public SchoolClassSummaryDto SchoolClass {  get; set; }
-		public CourseSummaryDto Course {  get; set; }
+		public CourseOverviewDto Course {  get; set; }
 		public StatusDto Status {  get; set; }
 	}
 }
