@@ -2,9 +2,8 @@
 using LMSApi.Configuration;
 using LMSApi.Services;
 using LMSBase.Models.Domain;
-using LMSBase.Models.Dtos;
+using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
-using LMSBase.Models.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMSApi.Controllers
@@ -22,21 +21,24 @@ namespace LMSApi.Controllers
 			_coachService = coachService;
 			_mapper = mapper;
 		}
+		
+
+		[HttpGet("/{id}")]
+		public IActionResult GetCoach(int id)
+		{
+			return Ok(_mapper.Map<CoachSummaryDto>(_coachService.GetCoach(id)));
+		}
 
 		[HttpPost("")]
 
 		public IActionResult CreateCoach(CreateCoachDto coachDto)
 		{
-			Coach newCoach = _coachService.CreateCoach(CoachMapper.ToDomain(coachDto));
-			return Created($"{newCoach.UserId}", newCoach);
+			Coach newCoach = _coachService.CreateCoach(_mapper.Map<Coach>(coachDto));
+			return Created($"{newCoach.UserId}", _mapper.Map<CoachSummaryDto>(newCoach));
 		}
 
-		[HttpGet("/{id}")]
-		public IActionResult GetCoach(int id)
-		{
-			CoachSummaryDto getCoachProfile = _mapper.Map<CoachSummaryDto>(_coachService.GetCoach(id));
-			return Ok(getCoachProfile);
-		}
+
+
 
 	}
 }

@@ -22,6 +22,9 @@ builder.Services.AddScoped<CourseEditor>();
 builder.Services.AddScoped<SchoolClassCourseService>();
 builder.Services.AddScoped<SchoolClassCourseEditor>();
 builder.Services.AddScoped<StudentService>();
+builder.Services.AddScoped<StudentEditor>();
+builder.Services.AddScoped<CodelabService>();
+builder.Services.AddScoped<CodelabEditor>();
 builder.Services.AddDbContext<LMSDbContext>(
 	options =>
 	{

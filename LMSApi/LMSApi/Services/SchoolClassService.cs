@@ -23,6 +23,11 @@ namespace LMSApi.Services
 			return _context.SchoolClasses.Where(x => x.SchoolClassId == id).Include(s=>s.SchoolClassCourses).ThenInclude(s=>s.Course).Include(x=>x.Students).Include(x=>x.CoachSchoolClasses).ThenInclude(c=>c.Coach).FirstOrDefault();
 		}
 
+		public SchoolClass GetSchoolClassById(int id)
+		{
+			return _context.SchoolClasses.Find(id);
+		}
+
 		public SchoolClass CreateSchoolClass(SchoolClass schoolClass)
 		{
 			_context.SchoolClasses.Add(schoolClass);

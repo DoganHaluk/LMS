@@ -40,5 +40,10 @@ namespace LMSApi.Services
 		{	
 			return _schoolClassService.GetSchoolClassOverview(id);			
 		}
+
+		public SchoolClass GetSchoolClassById(int id)
+		{
+			return _schoolClassService.GetSchoolClassById(id);
+		}
 	}
 }
