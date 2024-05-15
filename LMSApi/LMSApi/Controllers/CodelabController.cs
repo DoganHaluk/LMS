@@ -51,6 +51,11 @@ namespace LMSApi.Controllers
 			return Ok(_mapper.Map<CodelabSummaryDto>(_codelabEditor.UpdateCodelab(editCodelabDto)));
 		}
 
-
+		[HttpDelete("{id}")]
+		public IActionResult DeleteCodelab(int id)
+		{
+			_codelabEditor.DeleteCodelab(id);
+			return NoContent();
+		}
 	}
 }

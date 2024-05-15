@@ -37,5 +37,13 @@ namespace LMSApi.Services
 			_context.SaveChanges();
 			return updated;
 		}
+
+
+		public void DeleteCodelab(int id)
+		{
+			var codelab = _context.Codelabs.Find(id);
+			_context.Codelabs.Remove(codelab);
+			_context.SaveChanges();
+		}
 	}
 }

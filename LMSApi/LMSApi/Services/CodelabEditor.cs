@@ -49,5 +49,10 @@ namespace LMSApi.Services
 			return _codelabService.UpdateCodelab(update);
 		}
 
+		public void DeleteCodelab(int codelabId)
+		{
+			_codelabService.DeleteCodelab(codelabId);
+		}
+
 	}
 }
