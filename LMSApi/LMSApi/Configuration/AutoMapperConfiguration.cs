@@ -28,6 +28,10 @@ namespace LMSApi.Configuration
 			CreateMap<CreateCodelabDto, Codelab>();
 			CreateMap<Course, CourseOverviewDto>();
 			CreateMap<LearningModule, LearningModuleOverviewDto>();
+			CreateMap<StudentCodelab,StudentCodelabSummaryDto>();
+			CreateMap<CreateStudentCodelabDto, StudentCodelab>();
+			CreateMap<UpdateStatusCodelabDto,StudentCodelab>();
+			CreateMap<AddCommentDto,StudentCodelab> ();
 		}
 	}
 }
