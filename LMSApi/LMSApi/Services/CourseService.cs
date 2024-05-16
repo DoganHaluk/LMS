@@ -28,6 +28,11 @@ namespace LMSApi.Services
 				.FirstOrDefault();
 		}
 
+		public Course GetCourseByName(string name)
+		{
+			return _context.Courses.Where(c => c.CourseName == name).FirstOrDefault();
+		}
+
 		public Course CreateCourse(Course course)
 		{
 			_context.Courses.Add(course);

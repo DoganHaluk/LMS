@@ -28,11 +28,24 @@ namespace LMSApi.Services
 			return _context.SchoolClasses.Find(id);
 		}
 
+		public SchoolClass GetSchoolClassByName(string name)
+		{
+			return _context.SchoolClasses.Where(c => c.SchoolClassName == name).FirstOrDefault();
+		}
+
 		public SchoolClass CreateSchoolClass(SchoolClass schoolClass)
 		{
 			_context.SchoolClasses.Add(schoolClass);
 			_context.SaveChanges();
 			return schoolClass;
+		}
+
+		public SchoolClass UpdateSchoolClassName(SchoolClass schoolClass)
+		{
+			var updated = _context.SchoolClasses.Find(schoolClass.SchoolClassId);
+			updated.SchoolClassName = schoolClass.SchoolClassName;
+			_context.SaveChanges();
+			return updated;
 		}
 
 		public SchoolClass UpdateStatusToDone(int schoolClassId) 

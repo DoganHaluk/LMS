@@ -27,6 +27,11 @@ namespace LMSApi.Services
 			return _context.LearningModules.Find(id);
 		}
 
+		public LearningModule GetLearningModuleByName(string name)
+		{
+			return _context.LearningModules.Where(l => l.ModuleName == name).FirstOrDefault();
+		}
+
 		public LearningModule CreateLearningModule(LearningModule learningModule)
 		{
 			_context.LearningModules.Add(learningModule);

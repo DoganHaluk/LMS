@@ -8,7 +8,6 @@ namespace LMSBase.Models.Dtos.Request
 {
 	public class UpdateStatusCodelabDto
 	{
-		public int StudentCodelabId { get; set; }
 		public int? StatusId { get; set; }
 	}
 }

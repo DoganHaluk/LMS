@@ -35,15 +35,15 @@ namespace LMSApi.Controllers
 
 		[HttpPost("{id}")]
 
-		public IActionResult UpdateStatus(UpdateStatusCodelabDto updateStatusCodelabDto)
+		public IActionResult UpdateStatus(int id, UpdateStatusCodelabDto updateStatusCodelabDto)
 		{
-			return Ok(_studentCodelabEditor.UpdateStatus(_mapper.Map<StudentCodelab>(updateStatusCodelabDto)));
+			return Ok(_studentCodelabEditor.UpdateStatus(id,_mapper.Map<StudentCodelab>(updateStatusCodelabDto)));
 		}
 
 		[HttpPost("comment/{id}")]
-		public IActionResult AddComment(AddCommentDto addCommentDto)
+		public IActionResult AddComment(int id,AddCommentDto addCommentDto)
 		{
-			return Ok(_studentCodelabEditor.UpdateComment(_mapper.Map<StudentCodelab>(addCommentDto)));
+			return Ok(_studentCodelabEditor.UpdateComment(id,_mapper.Map<StudentCodelab>(addCommentDto)));
 		}
 
 

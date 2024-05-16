@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LMSApi.Configuration;
 using LMSApi.Services;
 using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
@@ -31,21 +32,45 @@ namespace LMSApi.Controllers
 		[HttpGet("{id}")]
 		public IActionResult GetCourseById(int id)
 		{
-			return Ok(_mapper.Map<CourseOverviewDto>(_courseService.GetCourseById(id)));
+			List<InputError> errors = _courseEditor.ValidateUserCourseOverview(id);
+			if (errors.Count > 0)
+			{
+				return BadRequest(errors);
+			}
+			else
+			{
+				return Ok(_mapper.Map<CourseOverviewDto>(_courseEditor.GetCourseById(id)));
+			}
 		}
 
 		[HttpPost]
 		public IActionResult CreateCourse(CreateCourseDto courseDto)
 		{
-			var newCourse = _courseEditor.CreateCourse(courseDto);
-			return Created($"/api/courses/{newCourse.CourseId}", _mapper.Map<CourseDto>(newCourse));
+			List<InputError> errors = _courseEditor.ValidateCourseCreation(courseDto);
+			if (errors.Count > 0)
+			{
+				return BadRequest(errors);
+			}
+			else
+			{
+				var newCourse = _courseEditor.CreateCourse(courseDto);
+				return Created($"/api/courses/{newCourse.CourseId}", _mapper.Map<CourseDto>(newCourse));
+			}
 		}
 
 		[HttpPut("{id}")]
 		public IActionResult UpdateCourseName(int id, CreateCourseDto courseDto)
 		{
-			var newCourse = _courseEditor.UpdateCourseName(id, courseDto);
-			return Created($"/api/courses/{newCourse.CourseId}", _mapper.Map<CourseDto>(newCourse));
+			List<InputError> errors = _courseEditor.ValidateCourseEdition(id,courseDto);
+			if (errors.Count > 0)
+			{
+				return BadRequest(errors);
+			}
+			else
+			{
+				var newCourse = _courseEditor.UpdateCourseName(id, courseDto);
+				return Created($"/api/courses/{newCourse.CourseId}", _mapper.Map<CourseDto>(newCourse));
+			}
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LMSApi.Configuration;
 using LMSApi.Services;
 using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
@@ -23,7 +24,22 @@ namespace LMSApi.Controllers
 		[HttpPost]
 		public IActionResult AddCoursesToSchoolClass(CreateSchoolClassCourseDto createSchoolClassCourseDto)
 		{
-			return StatusCode(201, _mapper.Map<List<SchoolClassCourseDto>>(_schoolClassCourseEditor.CreateSchoolClassCourse(createSchoolClassCourseDto)));
+			List<InputError> validations = _schoolClassCourseEditor.ValidateAddCourses(createSchoolClassCourseDto);
+			if (validations.Count > 0)
+			{
+				return BadRequest(validations);
+			}
+			else
+			{
+				return StatusCode(201, _mapper.Map<List<SchoolClassCourseDto>>(_schoolClassCourseEditor.CreateSchoolClassCourse(createSchoolClassCourseDto)));
+			}
+		}
+
+		[HttpDelete("{id}")]
+		public IActionResult DeleteSchoolClassCourse(int id)
+		{
+			_schoolClassCourseEditor.DeleteSchoolClassCourse(id);
+			return NoContent();
 		}
 	}
 }

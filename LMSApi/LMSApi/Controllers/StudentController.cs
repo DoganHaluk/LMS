@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LMSApi.Configuration;
 using LMSApi.Services;
 using LMSBase.Models.Domain;
 using LMSBase.Models.Dtos.Request;
@@ -31,26 +32,48 @@ namespace LMSApi.Controllers
 
 		public IActionResult CreateStudent(CreateStudentDto createStudentDto)
 		{
-			Student newStudent = _studentEditor.CreateStudent(_mapper.Map<Student>(createStudentDto));
-			return Created($"{newStudent.UserId}", _mapper.Map<StudentSummaryDto>(newStudent));
+			List<InputError> validations = _studentEditor.ValidateRegisterStudent(createStudentDto);
+			if (validations.Count > 0)
+			{
+				return BadRequest(validations);
+			}
+			else
+			{
+				Student newStudent = _studentEditor.CreateStudent(_mapper.Map<Student>(createStudentDto));
+				return Created($"{newStudent.UserId}", _mapper.Map<StudentSummaryDto>(newStudent));
+			}
 		}
 
 		[HttpPost("{id}")]
 
-		public IActionResult EditStudentProfile(EditStudentProfileDto editStudentProfileDto)
+		public IActionResult EditStudentProfile(int id,EditStudentProfileDto editStudentProfileDto)
 		{
-			Student update = _studentEditor.EditStudentProfile(editStudentProfileDto);
-			return Ok(_mapper.Map<StudentSummaryDto>(update));
+			List<InputError> validations = _studentEditor.ValidateStudentProfileEdition(id,editStudentProfileDto);
+			if (validations.Count > 0)
+			{
+				return BadRequest(validations);
+			}
+			else
+			{
+				Student update = _studentEditor.EditStudentProfile(id, editStudentProfileDto);
+				return Ok(_mapper.Map<StudentSummaryDto>(update));
+			}
 		}
 
 		[HttpPost("/editpass/{id}")]
 
-		public IActionResult EditStudentPassword(EditStudentPasswordDto editStudentPasswordDto)
+		public IActionResult EditStudentPassword(int id,EditStudentPasswordDto editStudentPasswordDto)
 		{
-			Student update = _studentEditor.EditStudentPassword(editStudentPasswordDto);
-			return Ok(_mapper.Map<StudentSummaryDto>(update));
+			List<InputError> validations = _studentEditor.ValidateStudentPasswordEdition(id,editStudentPasswordDto);
+			if (validations.Count > 0)
+			{
+				return BadRequest(validations);
+			}
+			else
+			{
+				Student update = _studentEditor.EditStudentPassword(id, editStudentPasswordDto);
+				return Ok(_mapper.Map<StudentSummaryDto>(update));
+			}
 		}
-
-
 	}
 }

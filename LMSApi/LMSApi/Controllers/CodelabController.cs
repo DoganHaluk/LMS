@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LMSApi.Configuration;
 using LMSApi.Services;
 using LMSBase.Models.Domain;
 using LMSBase.Models.Dtos.Request;
@@ -41,14 +42,30 @@ namespace LMSApi.Controllers
 		[HttpPost]
 		public IActionResult CreateCodelab(CreateCodelabDto createCodelabDto)
 		{
-			var newCodelab = _codelabEditor.CreateCodelab(_mapper.Map<Codelab>(createCodelabDto));
-			return Created($"{newCodelab.CodelabId}",_mapper.Map<CodelabSummaryDto>(newCodelab));
+			List<InputError> errors = _codelabEditor.ValidateCodelabCreation(createCodelabDto);
+			if (errors.Count > 0)
+			{
+				return BadRequest(errors);
+			}
+			else
+			{
+				var newCodelab = _codelabEditor.CreateCodelab(_mapper.Map<Codelab>(createCodelabDto));
+				return Created($"{newCodelab.CodelabId}", _mapper.Map<CodelabSummaryDto>(newCodelab));
+			}
 		}
 
 		[HttpPost("{id}")]
-		public IActionResult EditCodelab(EditCodelabDto editCodelabDto)
+		public IActionResult EditCodelab(int id,EditCodelabDto editCodelabDto)
 		{
-			return Ok(_mapper.Map<CodelabSummaryDto>(_codelabEditor.UpdateCodelab(editCodelabDto)));
+			List<InputError> errors = _codelabEditor.ValidateCodelabEdition(id, editCodelabDto);
+			if (errors.Count > 0)
+			{
+				return BadRequest(errors);
+			}
+			else
+			{
+				return Ok(_mapper.Map<CodelabSummaryDto>(_codelabEditor.UpdateCodelab(id, editCodelabDto)));
+			}
 		}
 
 		[HttpDelete("{id}")]

@@ -23,13 +23,15 @@ namespace LMSApi.Services
 			return _studentCodelabService.CreateStudentCodelab(studentCodelab);
 		}
 
-		public StudentCodelab UpdateStatus(StudentCodelab studentCodelab)
+		public StudentCodelab UpdateStatus(int id, StudentCodelab studentCodelab)
 		{
+			studentCodelab.CodelabId = id;
 			return _studentCodelabService.UpdateStatus(studentCodelab);
 		}
 
-		public StudentCodelab UpdateComment(StudentCodelab studentCodelab)
+		public StudentCodelab UpdateComment(int id,StudentCodelab studentCodelab)
 		{
+			studentCodelab.CodelabId = id;
 			return _studentCodelabService.UpdateComment(studentCodelab);
 		}
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LMSApi.Configuration;
 using LMSApi.Services;
 using LMSBase.Models.Domain;
 using LMSBase.Models.Dtos.Request;
@@ -30,6 +31,7 @@ namespace LMSApi.Controllers
 			}
 			return Ok(list);
 		}
+
 		[HttpGet("{id}")]
 		public IActionResult GetClassById(int id)
 		{
@@ -40,14 +42,47 @@ namespace LMSApi.Controllers
 		[HttpGet("ClassOverview/{id}")]
 		public IActionResult GetSchoolClassOverview(int id) 
 		{
-			return Ok(_mapper.Map<SchoolClassOverviewDto>(_schoolClassEditor.GetSchoolClassOverview(id)));
+			List<InputError> errors = _schoolClassEditor.ValidateUserClassOverview(id);
+			if (errors.Count > 0)
+			{
+				return BadRequest(errors);
+			}
+			else
+			{
+				return Ok(_mapper.Map<SchoolClassOverviewDto>(_schoolClassEditor.GetSchoolClassOverview(id)));
+			}
 		}
 
 		[HttpPost("Schoolclass")]
 		public IActionResult CreateSchoolClass(CreateSchoolClassDto createSchoolClassDto)
 		{
-			SchoolClass newSchoolClass = _schoolClassEditor.CreateSchoolClass(createSchoolClassDto);
-			return Created($"{newSchoolClass.SchoolClassId}", _mapper.Map<SchoolClassSummaryDto>(newSchoolClass));
+			List<InputError> errors = _schoolClassEditor.ValidateSchoolClassCreation(createSchoolClassDto);
+			if (errors.Count > 0)
+			{
+				return BadRequest(errors);
+			}
+			else
+			{
+				SchoolClass newSchoolClass = _schoolClassEditor.CreateSchoolClass(createSchoolClassDto);
+				return Created($"{newSchoolClass.SchoolClassId}", _mapper.Map<SchoolClassSummaryDto>(newSchoolClass));
+			}
+			
+		}
+
+		[HttpPost("{id}")]
+
+		public IActionResult EditSchoolClassName(int id,EditSchoolClassDto editSchoolClassDto)
+		{
+			List<InputError> errors = _schoolClassEditor.ValidateSchoolClassEdition(id, editSchoolClassDto);
+			if (errors.Count > 0)
+			{
+				return BadRequest(errors);
+			}
+			else
+			{
+				var updated = _schoolClassEditor.EditSchoolClassName(id, _mapper.Map<SchoolClass>(editSchoolClassDto));
+				return Ok(updated);
+			}
 		}
 	}
 }

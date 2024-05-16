@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LMSApi.Configuration;
 using LMSApi.Services;
 using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
@@ -38,15 +39,31 @@ namespace LMSApi.Controllers
 		[HttpPost]
 		public IActionResult CreateLearningModule(CreateLearningModuleDto learningModuleDto)
 		{
-			var newLearningModule = _learningModuleEditor.CreateLearningModule(learningModuleDto);
-			return Created($"/api/modules/{newLearningModule.LearningModuleId}", _mapper.Map<LearningModuleDto>(newLearningModule));
+			List<InputError> errors = _learningModuleEditor.ValidateLearningModuleCreation(learningModuleDto);
+			if (errors.Count > 0)
+			{
+				return BadRequest(errors);
+			}
+			else
+			{
+				var newLearningModule = _learningModuleEditor.CreateLearningModule(learningModuleDto);
+				return Created($"/api/modules/{newLearningModule.LearningModuleId}", _mapper.Map<LearningModuleDto>(newLearningModule));
+			}
 		}
 
 		[HttpPut("{id}")]
 		public IActionResult UpdateLearningModule(int id, LearningModuleNameDto learningModuleNameDto)
 		{
-			var newLearningModule =_learningModuleEditor.UpdateLearningModuleName(id, learningModuleNameDto);
-			return Created($"/api/modules/{newLearningModule.LearningModuleId}", _mapper.Map<LearningModuleDto>(newLearningModule));
+			List<InputError> errors = _learningModuleEditor.ValidateModuleEdition(id,learningModuleNameDto);
+			if (errors.Count > 0)
+			{
+				return BadRequest(errors);
+			}
+			else
+			{
+				var newLearningModule = _learningModuleEditor.UpdateLearningModuleName(id, learningModuleNameDto);
+				return Created($"/api/modules/{newLearningModule.LearningModuleId}", _mapper.Map<LearningModuleDto>(newLearningModule));
+			}
 		}
 	}
 }

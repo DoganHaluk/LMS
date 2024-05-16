@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace LMSBase.Models.Dtos.Request
 {
-	public class EditStudentPasswordDto
+	public class EditSchoolClassDto
 	{
-		public string Password { get; set; }
-
-		public string RepeatPassword { get; set; }
+		public string SchoolClassName { get; set; }
 	}
 }
