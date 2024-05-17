@@ -5,11 +5,13 @@ using LMSBase.Models.Domain;
 using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
 using Microsoft.AspNetCore.Mvc;
+using Switchfully.DotNetToolkit.Authentication;
 
 namespace LMSApi.Controllers
 {
     [ApiController]
 	[Route("/api/coach")]
+	[AuthorizeScope("Coach")]
 	public class CoachController : ControllerBase
 	{
 		private readonly CoachService _coachService;

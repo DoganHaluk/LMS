@@ -5,6 +5,7 @@ using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Switchfully.DotNetToolkit.Authentication;
 
 namespace LMSApi.Controllers
 {
@@ -24,12 +25,14 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult GetCourses()
+		[AuthorizeScope("Coach,Student")]
+		public IActionResult GetCourses()		
 		{
 			return Ok(_courseService.GetCourses());
 		}
 
 		[HttpGet("{id}")]
+		[AuthorizeScope("Coach,Student")]
 		public IActionResult GetCourseById(int id)
 		{
 			List<InputError> errors = _courseEditor.ValidateUserCourseOverview(id);
@@ -44,6 +47,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPost]
+		[AuthorizeScope("Coach")]
 		public IActionResult CreateCourse(CreateCourseDto courseDto)
 		{
 			List<InputError> errors = _courseEditor.ValidateCourseCreation(courseDto);
@@ -59,6 +63,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPut("{id}")]
+		[AuthorizeScope("Coach")]
 		public IActionResult UpdateCourseName(int id, CreateCourseDto courseDto)
 		{
 			List<InputError> errors = _courseEditor.ValidateCourseEdition(id,courseDto);

@@ -26,11 +26,14 @@ namespace LMSApi.Services
 				errors.Add(nameError);
 			}
 			var checkName = _learningModuleService.GetLearningModuleByName(createLearningModuleDto.ModuleName);
-			InputError sameNameError = InputError.CheckExistingName(createLearningModuleDto.ModuleName, checkName.ModuleName);
-			if (sameNameError != null)
+			if (checkName != null)
 			{
-				errors.Add(sameNameError);
-			}
+				InputError sameNameError = InputError.CheckExistingName(createLearningModuleDto.ModuleName, checkName.ModuleName);
+				if (sameNameError != null)
+				{
+					errors.Add(sameNameError);
+				}
+			}			
 			if (createLearningModuleDto.ParentId > 0)
 			{
 				var checkModule = _learningModuleService.GetLearningModuleById(createLearningModuleDto.ParentId);
@@ -76,15 +79,16 @@ namespace LMSApi.Services
 				errors.Add(nameError);
 			}
 			var nameModule = _learningModuleService.GetLearningModuleByName(learningModuleNameDto.ModuleName);
-			InputError sameNameError = InputError.CheckExistingName(learningModuleNameDto.ModuleName,nameModule.ModuleName);
-			if (sameNameError != null)
+			if (nameModule != null)
 			{
-				errors.Add(sameNameError);
-			}
+				InputError sameNameError = InputError.CheckExistingName(learningModuleNameDto.ModuleName, nameModule.ModuleName);
+				if (sameNameError != null)
+				{
+					errors.Add(sameNameError);
+				}
+			}			
 			return errors;
 		}
-
-
 
 		public LearningModule UpdateLearningModuleName(int id, LearningModuleNameDto learningModuleNameDto)
 		{

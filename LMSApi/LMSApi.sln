@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LMSApi", "LMSApi\LMSApi.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LMSBase", "..\LMSBase\LMSBase\LMSBase.csproj", "{CC272660-90C2-47C2-9A1B-BD0D0ED0F561}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetToolkit", "..\DotnetToolKit\DotNetToolkit.csproj", "{ADEAC565-4B9A-4CA1-B435-8D39D37A3563}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CC272660-90C2-47C2-9A1B-BD0D0ED0F561}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC272660-90C2-47C2-9A1B-BD0D0ED0F561}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC272660-90C2-47C2-9A1B-BD0D0ED0F561}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADEAC565-4B9A-4CA1-B435-8D39D37A3563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADEAC565-4B9A-4CA1-B435-8D39D37A3563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADEAC565-4B9A-4CA1-B435-8D39D37A3563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADEAC565-4B9A-4CA1-B435-8D39D37A3563}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

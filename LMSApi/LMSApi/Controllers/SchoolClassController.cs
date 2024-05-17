@@ -5,6 +5,7 @@ using LMSBase.Models.Domain;
 using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
 using Microsoft.AspNetCore.Mvc;
+using Switchfully.DotNetToolkit.Authentication;
 
 namespace LMSApi.Controllers
 {
@@ -22,6 +23,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpGet("SchoolClasses")]
+		[AuthorizeScope("Coach,Student")]
 		public IActionResult GetSchoolClasses()
 		{
 			List<SchoolClassSummaryDto> list = new List<SchoolClassSummaryDto>();
@@ -33,6 +35,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpGet("{id}")]
+		[AuthorizeScope("Coach,Student")]
 		public IActionResult GetClassById(int id)
 		{
 		     return Ok(_mapper.Map<SchoolClassSummaryDto>(_schoolClassEditor.GetSchoolClassById(id)));
@@ -40,6 +43,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpGet("ClassOverview/{id}")]
+		[AuthorizeScope("Coach,Student")]
 		public IActionResult GetSchoolClassOverview(int id) 
 		{
 			List<InputError> errors = _schoolClassEditor.ValidateUserClassOverview(id);
@@ -54,6 +58,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPost("Schoolclass")]
+		[AuthorizeScope("Coach")]
 		public IActionResult CreateSchoolClass(CreateSchoolClassDto createSchoolClassDto)
 		{
 			List<InputError> errors = _schoolClassEditor.ValidateSchoolClassCreation(createSchoolClassDto);
@@ -70,7 +75,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPost("{id}")]
-
+		[AuthorizeScope("Coach")]
 		public IActionResult EditSchoolClassName(int id,EditSchoolClassDto editSchoolClassDto)
 		{
 			List<InputError> errors = _schoolClassEditor.ValidateSchoolClassEdition(id, editSchoolClassDto);

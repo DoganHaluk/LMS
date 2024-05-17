@@ -5,6 +5,7 @@ using LMSBase.Models.Domain;
 using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
 using Microsoft.AspNetCore.Mvc;
+using Switchfully.DotNetToolkit.Authentication;
 
 namespace LMSApi.Controllers
 {
@@ -22,6 +23,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpGet]
+		[AuthorizeScope("Coach,Student")]
 		public IActionResult GetAllCodelabs()
 		{
 			List<CodelabSummaryDto> codelabsDto = new List<CodelabSummaryDto>();
@@ -34,12 +36,14 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpGet("{id}")]
+		[AuthorizeScope("Coach,Student")]
 		public IActionResult GetCodelabById(int id) 
 		{
 			return Ok(_mapper.Map<CodelabSummaryDto>(_codelabEditor.GetCodelabById(id)));
 		}
 
 		[HttpPost]
+		[AuthorizeScope("Coach")]
 		public IActionResult CreateCodelab(CreateCodelabDto createCodelabDto)
 		{
 			List<InputError> errors = _codelabEditor.ValidateCodelabCreation(createCodelabDto);
@@ -55,6 +59,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPost("{id}")]
+		[AuthorizeScope("Coach")]
 		public IActionResult EditCodelab(int id,EditCodelabDto editCodelabDto)
 		{
 			List<InputError> errors = _codelabEditor.ValidateCodelabEdition(id, editCodelabDto);
@@ -69,6 +74,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpDelete("{id}")]
+		[AuthorizeScope("Coach")]
 		public IActionResult DeleteCodelab(int id)
 		{
 			_codelabEditor.DeleteCodelab(id);

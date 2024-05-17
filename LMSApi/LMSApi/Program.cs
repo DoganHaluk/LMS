@@ -1,7 +1,10 @@
 using LMSApi.Configuration;
 using LMSApi.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Switchfully.DotNetToolkit.Authentication;
 using System.Text.Json.Serialization;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +42,14 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+// Authentication
+builder.Services
+	.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+	.AddJwtBearer(JwtUtilities.JwtBearerConfigurationOptions);
+// Serilog
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+			loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -50,6 +61,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

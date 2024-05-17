@@ -5,6 +5,7 @@ using LMSBase.Models.Domain;
 using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
 using Microsoft.AspNetCore.Mvc;
+using Switchfully.DotNetToolkit.Authentication;
 
 namespace LMSApi.Controllers
 {
@@ -23,13 +24,13 @@ namespace LMSApi.Controllers
 
 
 		[HttpGet("{id}")]
+		[AuthorizeScope("Coach,Student")]
 		public IActionResult GetStudentById(int id)
 		{
 			return Ok(_mapper.Map<StudentSummaryDto>(_studentEditor.GetStudentById(id)));
 		}
 		
 		[HttpPost("")]
-
 		public IActionResult CreateStudent(CreateStudentDto createStudentDto)
 		{
 			List<InputError> validations = _studentEditor.ValidateRegisterStudent(createStudentDto);
@@ -45,7 +46,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPost("{id}")]
-
+		[AuthorizeScope("Student")]
 		public IActionResult EditStudentProfile(int id,EditStudentProfileDto editStudentProfileDto)
 		{
 			List<InputError> validations = _studentEditor.ValidateStudentProfileEdition(id,editStudentProfileDto);
@@ -61,7 +62,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPost("/editpass/{id}")]
-
+		[AuthorizeScope("Student")]
 		public IActionResult EditStudentPassword(int id,EditStudentPasswordDto editStudentPasswordDto)
 		{
 			List<InputError> validations = _studentEditor.ValidateStudentPasswordEdition(id,editStudentPasswordDto);

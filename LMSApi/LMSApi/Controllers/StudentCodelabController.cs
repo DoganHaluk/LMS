@@ -4,11 +4,13 @@ using LMSBase.Models.Domain;
 using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
 using Microsoft.AspNetCore.Mvc;
+using Switchfully.DotNetToolkit.Authentication;
 
 namespace LMSApi.Controllers
 {
 	[ApiController]
 	[Route("api/studentcodelabs")]
+	
 	public class StudentCodelabController : ControllerBase
 	{
 		private readonly StudentCodelabEditor _studentCodelabEditor;
@@ -21,12 +23,14 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpGet("{id}")]
+		[AuthorizeScope("Student")]
 		public IActionResult GetStudentCodelab(int id)
 		{
 			return Ok(_mapper.Map<StudentCodelabSummaryDto>(_studentCodelabEditor.GetStudentCodelab(id))); 
 		}
 
 		[HttpPost]
+		[AuthorizeScope("Student")]
 		public IActionResult CreateStudentCodelab(CreateStudentCodelabDto createStudentCodelabDto)
 		{
 			var newStudentCodelab = _studentCodelabEditor.CreateStudentCodelab(_mapper.Map<StudentCodelab>(createStudentCodelabDto));
@@ -34,19 +38,25 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPost("{id}")]
-
+		[AuthorizeScope("Student")]
 		public IActionResult UpdateStatus(int id, UpdateStatusCodelabDto updateStatusCodelabDto)
 		{
 			return Ok(_studentCodelabEditor.UpdateStatus(id,_mapper.Map<StudentCodelab>(updateStatusCodelabDto)));
 		}
 
 		[HttpPost("comment/{id}")]
+		[AuthorizeScope("Student")]
 		public IActionResult AddComment(int id,AddCommentDto addCommentDto)
 		{
 			return Ok(_studentCodelabEditor.UpdateComment(id,_mapper.Map<StudentCodelab>(addCommentDto)));
 		}
 
-
+		[HttpGet("progression")]
+		[AuthorizeScope("Coach")]
+		public IActionResult GetProgressions(int schoolClassId=0,int moduleId=0)
+		{
+			return Ok(_mapper.Map<List<ProgressionDto>>(_studentCodelabEditor.GetProgressions(schoolClassId, moduleId)));
+		}
 
 	}
 }

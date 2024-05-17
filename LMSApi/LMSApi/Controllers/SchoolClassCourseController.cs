@@ -5,11 +5,13 @@ using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Switchfully.DotNetToolkit.Authentication;
 
 namespace LMSApi.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[AuthorizeScope("Coach")]
 	public class SchoolClassCourseController : ControllerBase
 	{
 		private readonly SchoolClassCourseEditor _schoolClassCourseEditor;

@@ -18,6 +18,11 @@ namespace LMSApi.Services
 			return _context.Codelabs.ToList();
 		}
 
+		public List<int> GetCodelabIdsFromModule(int moduleId)
+		{
+			return _context.Codelabs.Where(c=>c.LearningModuleId==moduleId).Select(c=>c.CodelabId).ToList();
+		}
+
 		public Codelab GetCodelabById(int id) 
 		{
 			return _context.Codelabs.Where(c=>c.CodelabId==id).Include(c=>c.LearningModule).FirstOrDefault();
