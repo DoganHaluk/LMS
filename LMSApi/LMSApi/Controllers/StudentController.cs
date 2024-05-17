@@ -22,9 +22,15 @@ namespace LMSApi.Controllers
 			_mapper = mapper;
 		}
 
+		[HttpGet]
+		public IActionResult GetAllStudents()
+		{
+			return Ok(_mapper.Map<List<StudentSummaryDto>>(_studentEditor.GetAllStudents()));
+		}
+
 
 		[HttpGet("{id}")]
-		[AuthorizeScope("Coach,Student")]
+		//[authorizescope("coach,student")]
 		public IActionResult GetStudentById(int id)
 		{
 			return Ok(_mapper.Map<StudentSummaryDto>(_studentEditor.GetStudentById(id)));

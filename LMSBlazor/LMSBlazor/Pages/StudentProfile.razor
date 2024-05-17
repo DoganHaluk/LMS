@@ -1,0 +1,15 @@
+﻿@page "/studentprofile"
+
+
+
+<h3>StudentProfile</h3>
+
+@if (Student != null)
+{
+	<p>@Student.UserId</p>
+	<p>@Student.UserName</p>
+	<p>@Student.Email</p>
+	<p>@Student.SchoolClass?.SchoolClassName</p>
+}
+
+

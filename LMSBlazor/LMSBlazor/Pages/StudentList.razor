@@ -1,0 +1,42 @@
+﻿@page "/studentlist"
+
+<PageTitle>All Students</PageTitle>
+<h3>StudentList</h3>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				User Id
+			</th>
+			<th>
+				User Name
+			</th>
+			<th>
+				Email
+			</th>
+			<th>
+				Class
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var student in AllStudents)
+		{
+			<tr>
+				<th>
+					<a href="/studentprofile?UserId=@student.UserId">@student.UserId</a>
+				</th>
+				<th>
+					@student.UserName
+				</th>
+				<th>
+					@student.Email
+				</th>
+				<th>
+					@student.SchoolClass?.SchoolClassName
+				</th>
+			</tr>
+		}
+	</tbody>
+</table>

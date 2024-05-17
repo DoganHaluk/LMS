@@ -12,6 +12,6 @@ namespace LMSBase.Models.Dtos.Response
         public string UserName { get; set; }
         public string Email { get; set; }
 
-        public SchoolClassSummaryDto SchoolClass { get; set; }
+        public SchoolClassSummaryDto? SchoolClass { get; set; }
     }
 }

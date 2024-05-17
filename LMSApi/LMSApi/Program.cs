@@ -30,11 +30,23 @@ builder.Services.AddScoped<CodelabService>();
 builder.Services.AddScoped<CodelabEditor>();
 builder.Services.AddScoped<StudentCodelabService>();
 builder.Services.AddScoped<StudentCodelabEditor>();
+
+builder.Services.AddCors(option =>
+{
+    option.AddPolicy("blazorApp", builder =>
+    {
+		builder.AllowAnyOrigin()
+		.AllowAnyHeader()
+		.AllowAnyMethod();       
+    });
+});
+
 builder.Services.AddDbContext<LMSDbContext>(
 	options =>
 	{
 		options.UseSqlServer(builder.Configuration["ConnectionString"]);
 	});
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
 	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
@@ -65,5 +77,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("blazorApp");
 
 app.Run();
