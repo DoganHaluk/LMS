@@ -1,0 +1,24 @@
+﻿@page "/classoverview"
+@inject NavigationManager _navigation
+
+<h3>ClassOverview</h3>
+
+<p>@SchoolClass.SchoolClassName</p>
+<br />
+<p>STUDENTS : </p>
+@foreach (var student in SchoolClass.Students)
+{
+	<p>@student.UserName</p>
+}
+<br />
+<p>COACHES</p>
+@foreach (var coach in SchoolClass.CoachSchoolClasses)
+{
+	<p>@coach.Coach.UserName</p>
+}
+<br />
+<p>COURSE</p>
+@foreach (var course in SchoolClass.SchoolClassCourses)
+{
+	<p>@course.Course.CourseName</p>
+}

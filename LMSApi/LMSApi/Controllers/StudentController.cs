@@ -52,7 +52,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPost("{id}")]
-		[AuthorizeScope("Student")]
+		//[AuthorizeScope("Student")]
 		public IActionResult EditStudentProfile(int id,EditStudentProfileDto editStudentProfileDto)
 		{
 			List<InputError> validations = _studentEditor.ValidateStudentProfileEdition(id,editStudentProfileDto);

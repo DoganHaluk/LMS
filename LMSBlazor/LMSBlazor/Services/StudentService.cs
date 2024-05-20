@@ -1,5 +1,7 @@
 ﻿using LMSBase.Models.Domain;
+using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
+using System.Net.Http.Json;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -36,6 +38,14 @@ namespace LMSBlazor.Services
 			var apiResponse = await _httpClient.GetStreamAsync($"/api/student/{id}");
 			student = JsonSerializer.Deserialize<StudentSummaryDto>(apiResponse, _serializerOptions);
             return student;
+		}
+
+
+        public async Task EditStudentProfile(int id,EditStudentProfileDto editStudentProfileDto)
+        {
+
+            var apiresponse = await _httpClient.PostAsJsonAsync($"/api/student/{id}", editStudentProfileDto);
+            apiresponse.EnsureSuccessStatusCode();
 		}
     }
 }

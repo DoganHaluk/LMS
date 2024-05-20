@@ -1,0 +1,33 @@
+﻿@page "/editstudentprofile"
+@inject NavigationManager _navigation
+
+<h3>EditStudentProfile</h3>
+
+	<EditForm Model="@EditStudent" OnSubmit="UpdateProfile">
+		<label>Name</label>
+		<InputText id="studentName" @bind-Value="EditStudent.UserName"></InputText>
+		<br />
+		<br />
+		<label>Email</label>
+		<InputText id="studentEmail" @bind-Value="EditStudent.Email"></InputText>
+		<br />
+		<br />
+		<label>Class</label>
+		<InputSelect id="studentSchoolClass" @bind-Value="EditStudent.SchoolClassId">
+			@foreach (var schoolClass in SchoolClasses)
+			{
+				<option value="@schoolClass.SchoolClassId">@schoolClass.SchoolClassName</option>
+			}
+		</InputSelect>
+	</EditForm>
+
+	<br />
+	<br />
+
+	<button type="submit" @onclick="UpdateProfile">Submit</button>
+	<button type="submit" @onclick="NavigateToProfile">Cancel</button>
+
+
+	
+	
+

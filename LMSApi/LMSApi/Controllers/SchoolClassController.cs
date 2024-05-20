@@ -23,7 +23,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpGet("SchoolClasses")]
-		[AuthorizeScope("Coach,Student")]
+		//[AuthorizeScope("Coach,Student")]
 		public IActionResult GetSchoolClasses()
 		{
 			List<SchoolClassSummaryDto> list = new List<SchoolClassSummaryDto>();
@@ -43,7 +43,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpGet("ClassOverview/{id}")]
-		[AuthorizeScope("Coach,Student")]
+		//[AuthorizeScope("Coach,Student")]
 		public IActionResult GetSchoolClassOverview(int id) 
 		{
 			List<InputError> errors = _schoolClassEditor.ValidateUserClassOverview(id);
