@@ -14,9 +14,12 @@ namespace LMSBlazor.Pages
 
 		StudentSummaryDto Student {  get; set; } 
 
+		User User { get; set; }
+
 		protected override async Task OnInitializedAsync()
 		{
-			Student = await _studentService.GetStudentProfile(UserId);
+			User = await _authenticationService.GetUserAsync();
+			Student = await _studentService.GetStudentProfile(UserId);			
 		}
 
 		private void NavigateToEdit()

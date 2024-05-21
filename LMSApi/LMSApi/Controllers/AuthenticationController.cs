@@ -1,5 +1,7 @@
 ﻿using LMSApi.Services;
 using LMSBase.Models.Domain;
+using LMSBase.Models.Dtos.Request;
+using LMSBase.Models.Dtos.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,18 +21,25 @@ namespace LMSApi.Controllers
 		}
 
 
-		[HttpGet]
-		public IActionResult Authenticate(string email, string password) 
+		[HttpPost]
+		public IActionResult Authenticate(LoginDto login) 
 		{ 
-			Student student = _studentService.GetStudentByEmailAndPassword(email, password);
-			Coach coach = _coachService.GetCoachByEmailAndPassword(email,password);
+			AuthenticatedDto authenticatedDto = new AuthenticatedDto();
+			Student student = _studentService.GetStudentByEmailAndPassword(login);
+			Coach coach = _coachService.GetCoachByEmailAndPassword(login);
 			if(student != null)
 			{
-				return Ok(_studentService.GenerateJwtToken(student));
+				authenticatedDto.UserId = student.UserId;
+				authenticatedDto.Role = "Student";
+				authenticatedDto.Token = _studentService.GenerateJwtToken(student);
+				return Ok(authenticatedDto);
 			}
 			else if(coach != null)
 			{
-				return Ok(_coachService.GenerateJwtToken(coach));
+				authenticatedDto.UserId = coach.UserId;
+				authenticatedDto.Role = "Coach";
+				authenticatedDto.Token = _coachService.GenerateJwtToken(coach);
+				return Ok(authenticatedDto);
 			}
 			else
 			{

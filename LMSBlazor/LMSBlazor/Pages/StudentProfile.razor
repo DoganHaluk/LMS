@@ -1,10 +1,10 @@
 ﻿@page "/studentprofile"
 @inject NavigationManager _navigation
+@inject AuthenticationService _authenticationService;
 
 
 
 <h3>StudentProfile</h3>
-<div>
 	@if (Student != null)
 	{
 		<p>@Student.UserId</p>
@@ -12,11 +12,13 @@
 		<p>@Student.Email</p>
 		<p>@Student.SchoolClass?.SchoolClassName</p>
 	}
-	<button id="edit" @onclick="NavigateToEdit">Edit Profile</button>
-</div>
-<div>
-	<button id="classoverview" @onclick="NavigateToClass">Class Overview</button>
-</div>
+	@if(User.Role == "Student" && User.UserId == Student.UserId)
+	{
+		<button id="edit" @onclick="NavigateToEdit">Edit Profile</button>
+
+	    <button id="classoverview" @onclick="NavigateToClass">Class Overview</button>
+	}
+	
 
 
 

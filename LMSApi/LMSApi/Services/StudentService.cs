@@ -1,5 +1,6 @@
 ﻿using LMSApi.Configuration;
 using LMSBase.Models.Domain;
+using LMSBase.Models.Dtos.Request;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -36,9 +37,9 @@ namespace LMSApi.Services
 			return _context.Students.Where(s => s.Email == email).FirstOrDefault();
 		}
 
-		public Student GetStudentByEmailAndPassword(string email, string password)
+		public Student GetStudentByEmailAndPassword(LoginDto login)
 		{
-			Student student = _context.Students.Where(s => s.Email == email).Where(s => s.Password == password).FirstOrDefault();
+			Student student = _context.Students.Where(s => s.Email == login.Email).Where(s => s.Password == login.Password).FirstOrDefault();
 			if (student != null)
 			{
 				student.Claims.Add(new Claim("scope", "Student"));

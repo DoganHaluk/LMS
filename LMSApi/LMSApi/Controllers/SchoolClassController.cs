@@ -58,7 +58,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPost("Schoolclass")]
-		[AuthorizeScope("Coach")]
+		//[AuthorizeScope("Coach")]
 		public IActionResult CreateSchoolClass(CreateSchoolClassDto createSchoolClassDto)
 		{
 			List<InputError> errors = _schoolClassEditor.ValidateSchoolClassCreation(createSchoolClassDto);

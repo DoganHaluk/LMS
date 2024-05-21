@@ -1,0 +1,22 @@
+﻿@page "/login"
+@inject NavigationManager _navigate
+@inject LocalStorageService _localStorageService
+@inject AuthenticationService _authenticationService
+
+
+<h3>Login</h3>
+
+<EditForm Model="@UserLogin" OnSubmit="HandleLogin">
+	<label>Email</label>
+	<InputText id="userEmail" @bind-Value="UserLogin.Email"></InputText>
+	<br />
+	<br />
+	<label>Password</label>
+	<InputText type="password" id="userPassword" @bind-Value="UserLogin.Password"></InputText>
+	<button type="submit">Login</button>
+	@if (!string.IsNullOrEmpty(ErrorMessage))
+	{
+		<p>@ErrorMessage</p>
+	}
+
+</EditForm>

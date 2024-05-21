@@ -1,0 +1,26 @@
+﻿@page "/coachprofile"
+@inject AuthenticationService _authenticationService
+@inject NavigationManager _navigation
+
+
+<h3>CoachProfile</h3>
+
+@if (Coach != null)
+{
+	<p>@Coach.UserId</p>
+	<p>@Coach.UserName</p>
+	<p>@Coach.Email</p>
+	@if(User.Role == "Coach" && User.UserId == Coach.UserId)
+	{
+		<ul>
+			@foreach (var schoolClass in Coach.CoachSchoolClasses)
+			{
+				<li><a href="/classoverview?UserId=@UserId&SchoolClassId=@schoolClass.SchoolClass.SchoolClassId">@schoolClass.SchoolClass.SchoolClassName</a></li>
+			}
+		</ul>
+		<div>
+			<button type="button" @onclick="NavigateToCreateClass">Create Class</button>
+		</div>
+	}
+	
+}

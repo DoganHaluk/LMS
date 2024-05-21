@@ -6,16 +6,22 @@
 <p>@SchoolClass.SchoolClassName</p>
 <br />
 <p>STUDENTS : </p>
-@foreach (var student in SchoolClass.Students)
-{
-	<p>@student.UserName</p>
-}
+<ul>
+	@foreach (var student in SchoolClass.Students)
+	{
+		<li><a href="/studentprofile?UserId=@student.UserId">@student.UserName</a></li>
+	}
+</ul>
+
 <br />
 <p>COACHES</p>
-@foreach (var coach in SchoolClass.CoachSchoolClasses)
-{
-	<p>@coach.Coach.UserName</p>
-}
+<ul>
+	@foreach (var coach in SchoolClass.CoachSchoolClasses)
+	{
+		<li><a href="/coachprofile?UserId=@coach.Coach.UserId">@coach.Coach.UserName</a></li>
+	}
+</ul>
+
 <br />
 <p>COURSE</p>
 @foreach (var course in SchoolClass.SchoolClassCourses)

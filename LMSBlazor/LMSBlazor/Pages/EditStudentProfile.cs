@@ -19,7 +19,11 @@ namespace LMSBlazor.Pages
 
 		private StudentSummaryDto Student { get; set; }
 
+		private CoachSummaryDto Coach { get; set; }
+
 		private List<SchoolClassSummaryDto> SchoolClasses { get; set; }
+
+		private User User { get; set; }
 
 
 		protected override async Task OnInitializedAsync()
@@ -36,7 +40,7 @@ namespace LMSBlazor.Pages
             }
 		}
 
-		private async void UpdateProfile()
+		private async Task UpdateProfile()
 		{
 			await _studentService.EditStudentProfile(UserId, EditStudent);
 			_navigation.NavigateTo($"/studentprofile?UserId={Student.UserId}");

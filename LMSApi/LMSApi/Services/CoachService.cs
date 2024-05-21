@@ -1,5 +1,7 @@
 ﻿using LMSApi.Configuration;
 using LMSBase.Models.Domain;
+using LMSBase.Models.Dtos.Request;
+using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using static Switchfully.DotNetToolkit.Authentication.JwtUtilities;
@@ -22,12 +24,12 @@ namespace LMSApi.Services
 
 		public Coach GetCoach(int id)
 		{
-			return _context.Coaches.Find(id);
+			return _context.Coaches.Where(c=>c.UserId == id).Include(c=>c.CoachSchoolClasses).ThenInclude(s=>s.SchoolClass).FirstOrDefault();
 		}
 
-		public Coach GetCoachByEmailAndPassword(string email, string password)
+		public Coach GetCoachByEmailAndPassword(LoginDto login)
 		{
-			Coach coach = _context.Coaches.Where(c => c.Email == email).Where(c => c.Password == password).FirstOrDefault();
+			Coach coach = _context.Coaches.Where(c => c.Email == login.Email).Where(c => c.Password == login.Password).FirstOrDefault();
 			if (coach != null) 
 			{
 				coach.Claims.Add(new Claim("scope", "Coach"));

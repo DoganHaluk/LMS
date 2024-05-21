@@ -8,6 +8,9 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<StudentService>();
 builder.Services.AddScoped<SchoolClassService>();
+builder.Services.AddScoped<AuthenticationService>();
+builder.Services.AddScoped<LocalStorageService>();
+builder.Services.AddScoped<CoachService>();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7024") });
 

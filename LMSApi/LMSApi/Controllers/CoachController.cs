@@ -11,7 +11,7 @@ namespace LMSApi.Controllers
 {
     [ApiController]
 	[Route("/api/coach")]
-	[AuthorizeScope("Coach")]
+	//[AuthorizeScope("Coach")]
 	public class CoachController : ControllerBase
 	{
 		private readonly CoachService _coachService;
@@ -25,7 +25,7 @@ namespace LMSApi.Controllers
 		}
 		
 
-		[HttpGet("/{id}")]
+		[HttpGet("{id}")]
 		public IActionResult GetCoach(int id)
 		{
 			return Ok(_mapper.Map<CoachSummaryDto>(_coachService.GetCoach(id)));
