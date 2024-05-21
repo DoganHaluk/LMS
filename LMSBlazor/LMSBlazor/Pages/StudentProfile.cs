@@ -18,5 +18,15 @@ namespace LMSBlazor.Pages
 		{
 			Student = await _studentService.GetStudentProfile(UserId);
 		}
+
+		private void NavigateToEdit()
+		{
+			_navigation.NavigateTo($"/editstudentprofile?UserId={UserId}");
+		}
+
+		private void NavigateToClass()
+		{
+			_navigation.NavigateTo($"/classoverview?UserId={UserId}&SchoolClassId={Student.SchoolClass.SchoolClassId}");
+		}
 	}
 }

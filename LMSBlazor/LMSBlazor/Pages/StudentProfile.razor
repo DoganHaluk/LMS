@@ -1,15 +1,22 @@
 ﻿@page "/studentprofile"
+@inject NavigationManager _navigation
 
 
 
 <h3>StudentProfile</h3>
+<div>
+	@if (Student != null)
+	{
+		<p>@Student.UserId</p>
+		<p>@Student.UserName</p>
+		<p>@Student.Email</p>
+		<p>@Student.SchoolClass?.SchoolClassName</p>
+	}
+	<button id="edit" @onclick="NavigateToEdit">Edit Profile</button>
+</div>
+<div>
+	<button id="classoverview" @onclick="NavigateToClass">Class Overview</button>
+</div>
 
-@if (Student != null)
-{
-	<p>@Student.UserId</p>
-	<p>@Student.UserName</p>
-	<p>@Student.Email</p>
-	<p>@Student.SchoolClass?.SchoolClassName</p>
-}
 
 
