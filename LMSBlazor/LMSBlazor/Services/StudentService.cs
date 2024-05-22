@@ -12,10 +12,12 @@ namespace LMSBlazor.Services
     {
         private readonly HttpClient _httpClient;
         private readonly JsonSerializerOptions _serializerOptions;
+        private readonly TokenService _tokenService;
 
-        public StudentService(HttpClient httpClient)
+        public StudentService(HttpClient httpClient,TokenService tokenService)
         {
             _httpClient = httpClient;
+            _tokenService = tokenService;
             _serializerOptions = new JsonSerializerOptions()
             {
                 PropertyNameCaseInsensitive = true,
@@ -34,7 +36,8 @@ namespace LMSBlazor.Services
 
         public async Task<StudentSummaryDto> GetStudentProfile(int id)
         {
-            StudentSummaryDto student = new StudentSummaryDto();
+			await _tokenService.AddTokenAsync();
+			StudentSummaryDto student = new StudentSummaryDto();
 			var apiResponse = await _httpClient.GetStreamAsync($"/api/student/{id}");
 			student = JsonSerializer.Deserialize<StudentSummaryDto>(apiResponse, _serializerOptions);
             return student;

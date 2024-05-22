@@ -17,7 +17,7 @@ namespace LMSBlazor.Pages
 			var success = await _authenticationService.UserLoginAsync(UserLogin);
 			if (success == true) 
 			{
-				var user = await _localStorageService.GetItem<User>("currentUser");
+				var user = await _localStorageService.GetItem<CurrentUser>("currentUser");
 				if (user.Role == "Student")
 				{
                     _navigate.NavigateTo($"/studentprofile?UserId={user.UserId}");

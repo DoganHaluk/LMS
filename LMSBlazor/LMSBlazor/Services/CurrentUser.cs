@@ -1,6 +1,6 @@
 ﻿namespace LMSBlazor.Services
 {
-	public class User
+	public class CurrentUser
 	{
 		public int? UserId { get; set; }
 		

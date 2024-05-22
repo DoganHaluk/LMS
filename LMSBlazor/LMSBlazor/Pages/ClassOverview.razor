@@ -1,5 +1,6 @@
 ﻿@page "/classoverview"
 @inject NavigationManager _navigation
+@inject AuthenticationService _authentication
 
 <h3>ClassOverview</h3>
 
@@ -26,5 +27,10 @@
 <p>COURSE</p>
 @foreach (var course in SchoolClass.SchoolClassCourses)
 {
-	<p>@course.Course.CourseName</p>
+	<li><a href="/courseoverview?UserId=@UserId&CourseId=@course.Course.CourseId">@course.Course.CourseName</a></li>
+}
+
+@if (User.Role == "Coach")
+{
+	<button type="button" @onclick="NavigateToCourseDashboard">Courses Dashboard</button>
 }

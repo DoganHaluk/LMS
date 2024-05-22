@@ -1,0 +1,44 @@
+﻿@page "/courseoverview"
+@inject NavigationManager _navigation
+@inject AuthenticationService _authentication
+
+<h3>CourseOverview</h3>
+
+<p>@Course.CourseName</p>
+<ul>
+	@foreach (var module in Course.Modules)
+	{
+		<li><p>Learningmodule : @module.ModuleName</p></li>
+		if (module.SubModules.Count > 0)
+		{
+			foreach (var submodules in module.SubModules)
+			{
+				<ul>
+					<li><p>Submodule : @submodules.ModuleName</p></li>
+					@foreach (var codelab in submodules.Codelabs)
+					{
+						<ul>
+							<li>
+								<p>Codelab : @codelab.Name</p>
+								<p>Description : @codelab.Description</p>
+							</li>
+						</ul>
+					}
+				</ul>
+			}
+		}
+		else
+		{
+			foreach (var codelab in module.Codelabs)
+			{
+				<ul>
+					<li>
+						<p>@codelab.Name</p>
+						<p>@codelab.Description</p>
+					</li>
+				</ul>
+			}
+		}
+	}
+</ul>
+

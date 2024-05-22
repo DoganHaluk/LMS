@@ -1,4 +1,4 @@
-﻿
+﻿@inject AuthenticationService _authentication
 @inject NavigationManager _navigation
 
 <div class="top-row ps-3 navbar navbar-dark">
@@ -42,25 +42,26 @@
 
 @code {
 
-    [SupplyParameterFromQuery]
-    private int UserId { get; set; }
-
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private CurrentUser User { get; set; }
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
     }
 
-    private void NavigateToProfile()
+    private async void NavigateToProfile()
     {
-        _navigation.NavigateTo($"/studentprofile?UserId={UserId}");
+        User =await _authentication.GetUserAsync();
+        _navigation.NavigateTo($"/studentprofile?UserId={User.UserId}");
     }
 
-    private void NavigateToEdit()
+    private async void NavigateToEdit()
     {
-        _navigation.NavigateTo($"/editstudentprofile?UserId={UserId}");
+        User = await _authentication.GetUserAsync();
+        _navigation.NavigateTo($"/editstudentprofile?UserId={User.UserId}");
     }
 }

@@ -12,9 +12,9 @@ namespace LMSBlazor.Pages
 		[SupplyParameterFromQuery]
 		private int UserId { get; set; }
 
-		private CoachSummaryDto Coach {  get; set; }
+		private CoachSummaryDto? Coach {  get; set; }
 
-		User User { get; set; }
+		CurrentUser User { get; set; }
 
 		protected override async Task OnInitializedAsync()
 		{

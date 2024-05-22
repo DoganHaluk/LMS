@@ -11,7 +11,7 @@ namespace LMSBlazor.Services
 		private readonly JsonSerializerOptions _serializerOptions;
 		private readonly TokenService _tokenService;
 
-		private User user {  get; set; }
+		private CurrentUser user {  get; set; }
 
 		public CoachService(HttpClient httpClient, TokenService tokenService)
 		{

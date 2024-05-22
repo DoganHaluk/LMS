@@ -32,18 +32,16 @@ namespace LMSBlazor.Services
 			var apiResponse = await _httpClient.PostAsJsonAsync("/api/authentication", login);
 			if (apiResponse.StatusCode == HttpStatusCode.OK)
 			{
-				User user = JsonSerializer.Deserialize<User>(apiResponse.Content.ReadAsStream(), _serializerOptions);
+				CurrentUser user = JsonSerializer.Deserialize<CurrentUser>(apiResponse.Content.ReadAsStream(), _serializerOptions);
 				_storageService.SetItem("currentUser", user);
 				return true;
 			}
 			return false;			
 		}
 
-		public async Task<User> GetUserAsync()
+		public async Task<CurrentUser> GetUserAsync()
 		{
-			return await _storageService.GetItem<User>("currentUser");
+			return await _storageService.GetItem<CurrentUser>("currentUser");
 		}
-
-
 	}
 }

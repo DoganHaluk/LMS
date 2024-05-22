@@ -23,7 +23,7 @@ namespace LMSBlazor.Pages
 
 		private List<SchoolClassSummaryDto> SchoolClasses { get; set; }
 
-		private User User { get; set; }
+		private CurrentUser User { get; set; }
 
 
 		protected override async Task OnInitializedAsync()

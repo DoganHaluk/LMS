@@ -1,0 +1,30 @@
+﻿@page "/coursedashboard"
+@inject CourseService _courseService
+@inject SchoolClassService _schoolClassService
+@inject SchoolClassCourseService _schoolClassCourseService
+
+
+<h3>CourseDashboard</h3>
+
+@foreach (var course in Courses)
+{
+	<ul>
+		<li><p>@course.CourseName</p></li>
+	</ul>
+}
+
+@* <EditForm Model="@CreateSchoolClassCourseDto" OnSubmit="CreateSchoolClassCourses">
+	<InputSelect id="schoolClass" @bind-Value="SchoolClasses">
+		@foreach (var schoolClass in SchoolClasses)
+		{
+			<option value="@schoolClass.SchoolClassId">@schoolClass.SchoolClassName</option>
+		}
+	</InputSelect>
+	@foreach (var course in Courses)
+	{
+		<InputCheckbox @bind-Value=course.CourseId>@course.CourseName</InputCheckbox>
+	}
+
+
+</EditForm> *@
+

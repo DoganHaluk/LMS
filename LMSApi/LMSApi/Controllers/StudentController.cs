@@ -30,7 +30,7 @@ namespace LMSApi.Controllers
 
 
 		[HttpGet("{id}")]
-		//[authorizescope("coach,student")]
+		[AuthorizeScope("Coach,Student")]
 		public IActionResult GetStudentById(int id)
 		{
 			return Ok(_mapper.Map<StudentSummaryDto>(_studentEditor.GetStudentById(id)));
@@ -52,7 +52,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPost("{id}")]
-		//[AuthorizeScope("Student")]
+		[AuthorizeScope("Student")]
 		public IActionResult EditStudentProfile(int id,EditStudentProfileDto editStudentProfileDto)
 		{
 			List<InputError> validations = _studentEditor.ValidateStudentProfileEdition(id,editStudentProfileDto);
