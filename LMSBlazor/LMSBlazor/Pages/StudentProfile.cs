@@ -16,10 +16,20 @@ namespace LMSBlazor.Pages
 
 		CurrentUser User { get; set; }
 
+		protected override async Task OnParametersSetAsync()
+		{
+			await UpdatePageAsync();
+		}
+
 		protected override async Task OnInitializedAsync()
 		{
+			await UpdatePageAsync();
+		}
+
+		private async Task UpdatePageAsync()
+		{
 			User = await _authenticationService.GetUserAsync();
-			Student = await _studentService.GetStudentProfile(UserId);			
+			Student = await _studentService.GetStudentProfile(UserId);
 		}
 
 		private void NavigateToEdit()

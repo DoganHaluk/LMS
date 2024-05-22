@@ -20,14 +20,12 @@ namespace LMSApi.Services
 
 		public Course GetCourseById(int id)
 		{
-			var query = _context.Courses
+			return _context.Courses
 				.Where(c => c.CourseId == id)
-				.Include(c => c.Modules.Where(m=>m.ParentId==0 || m.ParentId == null))
+				.Include(c => c.Modules.Where(m => m.ParentId == null))
 				.ThenInclude(m => m.SubModules)
-				.ThenInclude(s => s.Codelabs);
-
-			string test = query.ToQueryString();
-			return query.FirstOrDefault();
+				.ThenInclude(s => s.Codelabs)
+				.FirstOrDefault();
 		}
 
 		public Course GetCourseByName(string name)
