@@ -11,6 +11,8 @@ namespace LMSBase.Models.Dtos.Response
 	{
 		public int LearningModuleId { get; set; }
 		public string ModuleName { get; set; }
+
+		public int ParentId { get; set; }
 		public List<LearningModuleOverviewDto> SubModules { get; set; }
 		public List<CodelabSummaryDto> Codelabs { get; set; }
 		public StatusDto Status { get; set; }
