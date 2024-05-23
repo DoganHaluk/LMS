@@ -6,7 +6,7 @@
 
 <p>@Course.CourseName</p>
 <ul>
-	@foreach (var module in Course.Modules.Where(m=>m.ParentId == 0))
+	@foreach (var module in Course.Modules)
 	{
 		<li><p>Learningmodule : @module.ModuleName</p></li>
 		if (module.SubModules.Count > 0)

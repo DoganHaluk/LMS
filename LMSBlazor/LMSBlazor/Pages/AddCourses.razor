@@ -1,0 +1,29 @@
+﻿@page "/addcourses"
+@inject CourseService _courseService
+@inject SchoolClassService _schoolClassService
+@inject SchoolClassCourseService _schoolClassCourseService
+@inject NavigationManager _navigation
+
+<h3>Courses</h3>
+
+<p>@SchoolClass.SchoolClassName</p>
+
+<EditForm Model="@Courses" OnSubmit="CreateSchoolClassCourses">
+	<ul>
+	@foreach (var course in Courses)
+	{
+			<li>
+			<InputCheckbox @bind-Value=course.Selected></InputCheckbox>
+			<label>@course.CourseName</label>
+			</li>
+	}
+	</ul>
+	<button type="submit">Add Courses</button>
+
+</EditForm>
+
+<button type="button" @onclick="NavigateToCourseDashboard">Course Dashboard</button>
+@* 
+<pre>@ModelJson</pre>
+<pre>@RequestJson</pre> *@
+

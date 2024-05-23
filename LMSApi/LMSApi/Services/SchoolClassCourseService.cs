@@ -12,6 +12,11 @@ namespace LMSApi.Services
 			_context = context;
 		}
 
+		public List<int> GetSchoolClassCoursesWithSchoolClassId(int schoolClassId)
+		{
+			return _context.SchoolClassCourses.Where(s=>s.SchoolClassId == schoolClassId).Select(s => s.CourseId).ToList();
+		}
+
 		public SchoolClassCourse GetSchoolClassCourseWithClassAndCourseId(int courseId,int classId)
 		{
 			return _context.SchoolClassCourses.Where(c => c.CourseId == courseId).Where(s => s.SchoolClassId == classId).FirstOrDefault();

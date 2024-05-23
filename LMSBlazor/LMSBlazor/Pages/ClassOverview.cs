@@ -26,9 +26,9 @@ namespace LMSBlazor.Pages
             SchoolClass = await _schoolClassService.GetSchoolClassOverview(SchoolClassId);
         }
 
-        public async Task NavigateToCourseDashboard()
+        public async Task NavigateToAddCourses()
         {
-            _navigation.NavigateTo($"/coursedashboard?UserId={UserId}");
+            _navigation.NavigateTo($"/addcourses?UserId={UserId}&SchoolClassId={SchoolClassId}");
         }
     }
 }

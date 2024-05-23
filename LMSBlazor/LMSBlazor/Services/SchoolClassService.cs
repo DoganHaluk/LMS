@@ -3,6 +3,7 @@ using System.Text.Json;
 using LMSBase.Models.Dtos.Response;
 using LMSBase.Models.Dtos.Request;
 using System.Net.Http.Json;
+using LMSBase.Models.Domain;
 
 namespace LMSBlazor.Services
 {
@@ -34,6 +35,14 @@ namespace LMSBlazor.Services
 			SchoolClassOverviewDto schoolclass = new SchoolClassOverviewDto();
 			var apiResponse = await _httpClient.GetStreamAsync($"/api/SchoolClass/ClassOverview/{schoolClassId}");
 			schoolclass = JsonSerializer.Deserialize<SchoolClassOverviewDto>(apiResponse, _serializerOptions);
+			return schoolclass;
+		}
+
+		public async Task<SchoolClassSummaryDto> GetSchoolClassSummary(int schoolClassId)
+		{
+			SchoolClassSummaryDto schoolclass = new SchoolClassSummaryDto();
+			var apiResponse = await _httpClient.GetStreamAsync($"/api/SchoolClass/{schoolClassId}");
+			schoolclass = JsonSerializer.Deserialize<SchoolClassSummaryDto>(apiResponse, _serializerOptions);
 			return schoolclass;
 		}
 

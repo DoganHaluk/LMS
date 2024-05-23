@@ -23,18 +23,24 @@ namespace LMSApi.Controllers
 			_mapper = mapper;
 		}
 
+		[HttpGet("{schoolClassId}")]
+		public IActionResult CheckSchoolClassCourses(int schoolClassId)
+		{
+			return Ok(_schoolClassCourseEditor.CheckSchoolClassCourses(schoolClassId));
+		}
+
 		[HttpPost]
 		public IActionResult AddCoursesToSchoolClass(CreateSchoolClassCourseDto createSchoolClassCourseDto)
 		{
-			List<InputError> validations = _schoolClassCourseEditor.ValidateAddCourses(createSchoolClassCourseDto);
-			if (validations.Count > 0)
-			{
-				return BadRequest(validations);
-			}
-			else
-			{
+			//List<InputError> validations = _schoolClassCourseEditor.ValidateAddCourses(createSchoolClassCourseDto);
+			//if (validations.Count > 0)
+			//{
+			//	return BadRequest(validations);
+			//}
+			//else
+			//{
 				return StatusCode(201, _mapper.Map<List<SchoolClassCourseDto>>(_schoolClassCourseEditor.CreateSchoolClassCourse(createSchoolClassCourseDto)));
-			}
+			//}
 		}
 
 		[HttpDelete("{id}")]

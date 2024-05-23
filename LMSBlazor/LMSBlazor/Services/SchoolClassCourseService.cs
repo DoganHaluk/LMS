@@ -2,6 +2,7 @@
 using System.Text.Json;
 using LMSBase.Models.Dtos.Request;
 using System.Net.Http.Json;
+using LMSBase.Models.Dtos.Response;
 
 namespace LMSBlazor.Services
 {
@@ -27,5 +28,12 @@ namespace LMSBlazor.Services
 			apiResponse.EnsureSuccessStatusCode();
 		}
 
+		public async Task<List<int>> CheckSchoolClassCourses(int schoolClassId)
+		{
+			List<int> courseIds = new List<int>();
+			var apiResponse = await _httpClient.GetStreamAsync($"/api/SchoolClassCourse/{schoolClassId}");
+			courseIds = JsonSerializer.Deserialize<List<int>>(apiResponse, _serializerOptions);
+			return courseIds;
+		} 
 	}
 }

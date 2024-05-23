@@ -10,5 +10,7 @@ namespace LMSBase.Models.Dtos.Response
 	{
 		public int CourseId { get; set; }
 		public string CourseName { get; set; }
+
+		public bool Selected { get; set; } = false;
 	}
 }

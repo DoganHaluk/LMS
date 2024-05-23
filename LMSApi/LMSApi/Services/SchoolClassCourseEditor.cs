@@ -10,14 +10,20 @@ namespace LMSApi.Services
 		private readonly SchoolClassCourseService _schoolClassCourseService;
 		private readonly SchoolClassService _schoolClassService;
 		private readonly CourseService _courseService;
+		private readonly LMSDbContext _context;
 
-		public SchoolClassCourseEditor(SchoolClassCourseService schoolClassCourseService,SchoolClassService schoolClassService, CourseService courseService)
+		public SchoolClassCourseEditor(SchoolClassCourseService schoolClassCourseService,SchoolClassService schoolClassService, CourseService courseService,LMSDbContext context)
 		{
 			_schoolClassCourseService = schoolClassCourseService;
 			_schoolClassService = schoolClassService;
 			_courseService = courseService;
+			_context = context;
 		}
 
+		public List<int> CheckSchoolClassCourses(int schoolClassId)
+		{			
+			return _schoolClassCourseService.GetSchoolClassCoursesWithSchoolClassId(schoolClassId);			
+		}
 
 		public List<InputError> ValidateAddCourses(CreateSchoolClassCourseDto schoolClassCourseDto)
 		{
@@ -45,7 +51,8 @@ namespace LMSApi.Services
 
 		public List<SchoolClassCourse> CreateSchoolClassCourse(CreateSchoolClassCourseDto createSchoolClassCourseDto)
 		{
-			List<SchoolClassCourse> schoolClassCourses = new List<SchoolClassCourse>();
+			var schoolClass = _schoolClassService.GetSchoolClassOverview(createSchoolClassCourseDto.SchoolClassId);
+			schoolClass.SchoolClassCourses = new List<SchoolClassCourse>();
 			foreach (int courseId in createSchoolClassCourseDto.CourseIds)
 			{
 				SchoolClassCourse schoolClassCourse = new SchoolClassCourse()
@@ -54,9 +61,11 @@ namespace LMSApi.Services
 					SchoolClassId = createSchoolClassCourseDto.SchoolClassId,
 					StatusId = 1
 				};
-				schoolClassCourses.Add(_schoolClassCourseService.CreateSchoolClassCourse(schoolClassCourse));
+				schoolClass.SchoolClassCourses.Add(_schoolClassCourseService.CreateSchoolClassCourse(schoolClassCourse));
 			}
-			return schoolClassCourses;
+			//_context.ChangeTracker.DetectChanges();
+			//var log = _context.ChangeTracker.DebugView.LongView;
+			return schoolClass.SchoolClassCourses;
 		}
 
 		public void DeleteSchoolClassCourse(int id)

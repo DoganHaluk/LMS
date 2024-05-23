@@ -13,6 +13,8 @@ builder.Services.AddScoped<LocalStorageService>();
 builder.Services.AddScoped<CoachService>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<CourseService>();
+builder.Services.AddScoped<SchoolClassCourseService>();
+
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7024") });
 

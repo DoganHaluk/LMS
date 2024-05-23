@@ -10,24 +10,57 @@ namespace LMSBlazor.Pages
 		[SupplyParameterFromQuery]
 		private int UserId { get; set; }
 
-		private List<CourseDto> Courses { get; set; }
+		List<CourseDto> Courses { get; set; }
 
-		private List<SchoolClassSummaryDto> SchoolClasses { get; set; }
 
-		private CreateSchoolClassCourseDto? CreateSchoolClassCourseDto { get; set; }
+		private bool Edit { get; set; } = false;
+
+		CourseDto Course { get; set; }
+
+		CourseDto NewCourse { get; set; }
 
 
 		protected override async Task OnInitializedAsync()
 		{
-			Courses = new List<CourseDto>();
-			SchoolClasses = new List<SchoolClassSummaryDto>();
 			Courses = await _courseService.GetCourses();
-			SchoolClasses = await _schoolClassService.GetAllSchoolClasses();
 		}
 
-		public async Task CreateSchoolClassCourses()
+		public CourseDto ChangeEdit(int courseId)
 		{
-			await _schoolClassCourseService.CreateSchoolClassCourses(CreateSchoolClassCourseDto);
+			Course = Courses.Where(c => c.CourseId == courseId).FirstOrDefault();
+			Course.Selected = true;
+			return Course;
+		}
+
+		public async Task EditCourseName()
+		{
+			_courseService.EditCourseName(Course.CourseId, Course);
+			Course.Selected = false;
+		}
+
+		public async Task CreateNewCourse()
+		{
+			_courseService.CreateCourse(NewCourse);
+			NewCourse.Selected = false;
+			Courses = await _courseService.GetCourses();
+		}
+
+
+		public async Task DeleteCourse(int courseId)
+		{
+			var course = await _courseService.GetCourseOverview(courseId);
+			if (course.Modules.Count == 0 && course != null)
+			{
+				await _courseService.DeleteCourse(courseId);
+				Courses = await _courseService.GetCourses();
+			}
+		}
+
+		public async Task CreateCourse()
+		{
+			NewCourse = new CourseDto();
+			NewCourse.CourseName = "";
+			NewCourse.Selected = true;
 		}
 	}
 }

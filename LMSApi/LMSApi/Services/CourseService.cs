@@ -22,9 +22,10 @@ namespace LMSApi.Services
 		{
 			return _context.Courses
 				.Where(c => c.CourseId == id)
-				.Include(c => c.Modules.Where(m => m.ParentId == null))
+				.Include(c => c.Modules.Where(m=>m.ParentId == null))
 				.ThenInclude(m => m.SubModules)
 				.ThenInclude(s => s.Codelabs)
+				.AsNoTracking()
 				.FirstOrDefault();
 		}
 
@@ -46,6 +47,13 @@ namespace LMSApi.Services
 			newCourse.CourseName = courseName;
 			_context.SaveChanges();
 			return newCourse;
+		}
+
+		public void DeleteCourse(int id)
+		{
+			var course = _context.Courses.Find(id);
+			_context.Courses.Remove(course);
+			_context.SaveChanges();
 		}
 	}
 }
