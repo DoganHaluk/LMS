@@ -12,5 +12,7 @@ namespace LMSBase.Models.Dtos.Request
         public string ModuleName { get; set; }
         public int ParentId { get; set; }
         public int CourseId { get; set; }
+
+        public bool Edit {  get; set; }=false;
     }
 }

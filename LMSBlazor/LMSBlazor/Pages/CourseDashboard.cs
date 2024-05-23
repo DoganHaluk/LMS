@@ -12,9 +12,6 @@ namespace LMSBlazor.Pages
 
 		List<CourseDto> Courses { get; set; }
 
-
-		private bool Edit { get; set; } = false;
-
 		CourseDto Course { get; set; }
 
 		CourseDto NewCourse { get; set; }

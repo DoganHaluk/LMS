@@ -12,5 +12,7 @@ namespace LMSBase.Models.Dtos.Response
 		public int CodelabId { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
+
+		public bool Edit { get; set; }
 	}
 }
