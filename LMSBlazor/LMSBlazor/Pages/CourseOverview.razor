@@ -17,7 +17,8 @@
 	<ul>
 		@foreach (var module in Course.Modules)
 		{
-			<li>@if(User.Role == "Student")
+			<li>
+				@if (User.Role == "Student")
 				{
 					<p>Learningmodule : @module.ModuleName</p>
 				}
@@ -42,7 +43,7 @@
 							<button type="submit">Ok</button>
 						</EditForm>
 					}
-				}	
+				}
 			</li>
 
 			if (module.SubModules.Count > 0)
@@ -72,7 +73,7 @@
 										<button type="submit">Ok</button>
 									</EditForm>
 								}
-							}							
+							}
 						</li>
 						@foreach (var codelab in submodules.Codelabs)
 						{
@@ -83,17 +84,22 @@
 										<p>Codelab : @codelab.Name</p>
 										<p>Description : @codelab.Description</p>
 										<button type="button" @onclick="()=>CreateStudentCodelab(codelab.CodelabId)">Start</button>
-										@if(StudentCodelab != null)
+										@if (StudentCodelab != null)
 										{
 											<EditForm @Model="@CodelabStatus" OnSubmit="UpdateCodelabStatus" FormName="CodelabStatus" Name="@($"Codelab{codelab.CodelabId}")">
 												<label>Status</label>
 												<InputSelect id="codelabStatus" @bind-Value="CodelabStatus.StatusId">
 													@foreach (var status in Statuses)
 													{
-														<option
+														<option value="@StudentCodelab.Status.StatusId">@StudentCodelab.Status.StatusName</option>
 													}
-
 												</InputSelect>
+												<button type="submit">Ok</button>
+											</EditForm>
+											<EditForm Model="@Comment" OnSubmit="AddComment" FormName="Comment" Name="@($"CommentCodelab{codelab.CodelabId}")">
+												<label>Comment</label>
+												<InputText @bind-Value=Comment.Comment>@StudentCodelab.Comment</InputText>
+												<button type="submit">Ok</button>
 											</EditForm>
 										}
 									}
