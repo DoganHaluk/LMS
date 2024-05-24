@@ -176,5 +176,15 @@ namespace LMSBlazor.Pages
 			StudentCodelab = await _studentCodelabService.CreateStudentCodelab(NewStudentCodelab);
 			return StudentCodelab;
 		}
+
+		public async Task UpdateCodelabStatus()
+		{
+			await _studentCodelabService.UpdateCodelabStatus(CodelabStatus);
+		}
+
+		public async Task GetStudentCodelab(int codelabId,int studentId)
+		{
+
+		}
 	}
 }

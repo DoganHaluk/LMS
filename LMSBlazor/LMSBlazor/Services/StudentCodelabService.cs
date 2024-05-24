@@ -37,6 +37,11 @@ namespace LMSBlazor.Services
 			return statuses;
 		}
 
+		public async Task UpdateCodelabStatus (UpdateStatusCodelabDto updateStatusCodelabDto)
+		{
+			var apiResponse = await _httpClient.PostAsJsonAsync("/api/studentcodelabs/")
+		}
+
 
 	}
 }
