@@ -76,15 +76,6 @@ namespace LMSApi.Services
 			{
 				errors.Add(nameError);
 			}
-			var nameCourse = _courseService.GetCourseByName(createCourseDto.CourseName);
-			if (nameCourse != null)
-			{
-				InputError sameNameError = InputError.CheckExistingName(createCourseDto.CourseName, nameCourse.CourseName);
-				if (sameNameError != null)
-				{
-					errors.Add(sameNameError);
-				}
-			}			
 			return errors;
 		}
 

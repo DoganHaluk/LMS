@@ -99,15 +99,6 @@ namespace LMSApi.Services
 			{
 				errors.Add(InputError.CheckSchoolClass());
 			}
-			var checkSchoolClass = _schoolClassService.GetSchoolClassByName(editSchoolClassDto.SchoolClassName);
-			if (checkSchoolClass != null)
-			{
-				InputError sameNameError = InputError.CheckExistingName(editSchoolClassDto.SchoolClassName, checkSchoolClass.SchoolClassName);
-				if (sameNameError != null)
-				{
-					errors.Add(sameNameError);
-				}
-			}
 			InputError nameError = InputError.CheckName(editSchoolClassDto.SchoolClassName);
             if ( nameError != null)
             {

@@ -70,5 +70,13 @@ namespace LMSApi.Controllers
 				return Created($"/api/modules/{newLearningModule.LearningModuleId}", _mapper.Map<LearningModuleDto>(newLearningModule));
 			}
 		}
+
+		[HttpDelete("{id}")]
+		[AuthorizeScope("Coach")]
+		public IActionResult DeleteLearningModule(int id)
+		{
+			_learningModuleService.DeleteLearningModule(id);
+			return NoContent();
+		}
 	}
 }

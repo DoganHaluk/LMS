@@ -81,15 +81,6 @@ namespace LMSApi.Services
 					errors.Add(descriptionError);
 				}
 			}
-			if (editCodelabDto.LearningModuleId > 0)
-			{
-				var checkModule = _learningModuleService.GetLearningModuleById(editCodelabDto.LearningModuleId);
-				InputError moduleError = InputError.CheckLearningModule(checkModule);
-				if (moduleError != null)
-				{
-					errors.Add(moduleError);
-				}
-			}
 			return errors;
 		}
 
@@ -104,11 +95,6 @@ namespace LMSApi.Services
 			{
 				update.Description = editCodelabDto.Description;
 			}
-			if (editCodelabDto.LearningModuleId != update.LearningModuleId && editCodelabDto.LearningModuleId > 0)
-			{
-				update.LearningModuleId = editCodelabDto.LearningModuleId;
-			}
-
 			return _codelabService.UpdateCodelab(update);
 		}
 

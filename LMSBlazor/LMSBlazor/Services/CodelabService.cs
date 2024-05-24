@@ -25,5 +25,16 @@ namespace LMSBlazor.Services
 			var apiResponse = await _httpClient.PostAsJsonAsync("/api/codelabs", createCodelabDto);
 			apiResponse.EnsureSuccessStatusCode();
 		}
+
+		public async Task EditCodelab(int codelabId,EditCodelabDto editCodelabDto)
+		{
+			var apiResponse = await _httpClient.PostAsJsonAsync($"/api/codelabs/{codelabId}", editCodelabDto);
+			apiResponse.EnsureSuccessStatusCode();
+		}
+
+		public async Task DeleteCodelab(int id)
+		{
+			var apiResponse = await _httpClient.DeleteAsync($"/api/codelabs/{id}");
+		}
 	}
 }

@@ -46,5 +46,12 @@ namespace LMSApi.Services
 			_context.SaveChanges();
 			return newLearningModule;
 		}
+
+		public void DeleteLearningModule(int id)
+		{
+			var module = _context.LearningModules.Find(id);
+			_context.LearningModules.Remove(module);
+			_context.SaveChanges();
+		}
 	}
 }

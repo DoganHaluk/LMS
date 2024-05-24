@@ -77,15 +77,6 @@ namespace LMSApi.Services
 			if (nameError != null)
 			{
 				errors.Add(nameError);
-			}
-			var nameModule = _learningModuleService.GetLearningModuleByName(learningModuleNameDto.ModuleName);
-			if (nameModule != null)
-			{
-				InputError sameNameError = InputError.CheckExistingName(learningModuleNameDto.ModuleName, nameModule.ModuleName);
-				if (sameNameError != null)
-				{
-					errors.Add(sameNameError);
-				}
 			}			
 			return errors;
 		}

@@ -4,39 +4,41 @@
 
 
 <h3>CourseDashboard</h3>
-
-<ul>
-	@foreach (var course in Courses)
-	{
-		<li>
-			@if (course.Selected == false)
-			{
-				<a href="/courseoverview?UserId=@UserId&CourseId=@course.CourseId">@course.CourseName</a>
-				<button type="button" @onclick="()=>ChangeEdit(course.CourseId)">Edit</button>
-				<button type="button" @onclick="()=>DeleteCourse(course.CourseId)">Delete</button>
-			}
-			
-			else 
-			{
-				<EditForm Model="@Course" OnSubmit="EditCourseName" FormName="CourseName@Course.CourseId" Name="@($"CourseName{Course.CourseId}")">
-				<label>Name</label>
-				<InputText @bind-Value=Course.CourseName>@course.CourseName</InputText>
-				<button type="submit">Ok</button>
-				</EditForm>
-			}	
-		</li>
-	}	
-</ul> 
-
-@if (NewCourse != null && NewCourse.Selected == true)
+@if (Courses != null)
 {
-	
+	<ul>
+		@foreach (var course in Courses)
+		{
+			<li>
+				@if (course.Selected == false)
+				{
+					<a href="/courseoverview?UserId=@UserId&CourseId=@course.CourseId">@course.CourseName</a>
+					<button type="button" @onclick="()=>ChangeEdit(course.CourseId)">Edit</button>
+					<button type="button" @onclick="()=>DeleteCourse(course.CourseId)">Delete</button>
+				}
+
+				else
+				{
+					<EditForm Model="@Course" OnSubmit="EditCourseName" FormName="CourseName@Course.CourseId" Name="@($"CourseName{Course.CourseId}")">
+						<label>Name</label>
+						<InputText @bind-Value=Course.CourseName>@course.CourseName</InputText>
+						<button type="submit">Ok</button>
+					</EditForm>
+				}
+			</li>
+		}
+	</ul>
+
+	@if (NewCourse != null && NewCourse.Selected == true)
+	{
+
 		<EditForm Model="@NewCourse" OnSubmit="CreateNewCourse" FormName="NewCourse">
 			<label>Name</label>
 			<InputText @bind-Value=NewCourse.CourseName>@NewCourse.CourseName</InputText>
 			<button type="submit">Ok</button>
 		</EditForm>
-	
-}
 
-<button type="button" @onclick="CreateCourse">Create</button>
+	}
+
+	<button type="button" @onclick="CreateCourse">Create</button>
+}

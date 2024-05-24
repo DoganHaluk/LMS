@@ -33,6 +33,11 @@ namespace LMSBlazor.Services
 			apiResponse.EnsureSuccessStatusCode();
 		}
 
-		
+		public async Task DeleteModule(int id)
+		{
+			var apiResponde = await _httpClient.DeleteAsync($"/api/modules/{id}");
+			apiResponde.EnsureSuccessStatusCode();
+		}
+
 	}
 }

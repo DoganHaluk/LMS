@@ -16,6 +16,7 @@ builder.Services.AddScoped<CourseService>();
 builder.Services.AddScoped<SchoolClassCourseService>();
 builder.Services.AddScoped<LearningModuleService>();
 builder.Services.AddScoped<CodelabService>();
+builder.Services.AddScoped<StudentCodelabService>();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7024") });
 
