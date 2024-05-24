@@ -3,6 +3,7 @@ using System.Text.Json;
 using LMSBase.Models.Dtos.Response;
 using LMSBase.Models.Dtos.Request;
 using System.Net.Http.Json;
+using LMSBase.Models.Domain;
 
 namespace LMSBlazor.Services
 {
@@ -32,14 +33,22 @@ namespace LMSBlazor.Services
 		public async Task<List<UpdateStatusCodelabDto>> GetStatuses()
 		{
 			List<UpdateStatusCodelabDto> statuses = new List<UpdateStatusCodelabDto>();
-			var apiResponse = await _httpClient.GetStreamAsync("/api/studentcodelabs/statuses");
+			var apiResponse = await _httpClient.GetStreamAsync("/api/statuses");
 			statuses = JsonSerializer.Deserialize<List<UpdateStatusCodelabDto>>(apiResponse, _serializerOptions);
 			return statuses;
 		}
 
 		public async Task UpdateCodelabStatus (UpdateStatusCodelabDto updateStatusCodelabDto)
 		{
-			var apiResponse = await _httpClient.PostAsJsonAsync("/api/studentcodelabs/")
+			var apiResponse = await _httpClient.PostAsJsonAsync("/api/studentcodelabs/", updateStatusCodelabDto);
+		}
+
+		public async Task<List<StudentCodelabSummaryDto>> GetStudentCodelabs(int id)
+		{
+			List<StudentCodelabSummaryDto> studentCodelabs = new List<StudentCodelabSummaryDto>();
+			var apiResponse = await _httpClient.GetStreamAsync($"/api/studentcodelabs/{id}");
+			studentCodelabs = JsonSerializer.Deserialize<List<StudentCodelabSummaryDto>>(apiResponse, _serializerOptions);
+			return studentCodelabs;
 		}
 
 

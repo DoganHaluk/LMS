@@ -14,9 +14,9 @@ namespace LMSApi.Services
 		}
 
 
-		public StudentCodelab GetStudentCodelab(int id)
+		public List<StudentCodelab> GetStudentCodelabs(int id)
 		{
-			return _context.StudentCodeLabs.Where(s=>s.StudentCodelabId==id).Include(s=>s.Status).FirstOrDefault();
+			return _context.StudentCodeLabs.Where(s=>s.UserId == id).Include(s=>s.Status).ToList();
 		}
 
 		public StudentCodelab GetStudentCodelabWithDoneStatus(int studentId,int codelabId)

@@ -23,10 +23,10 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpGet("{id}")]
-		[AuthorizeScope("Student")]
-		public IActionResult GetStudentCodelab(int id)
+		//[AuthorizeScope("Student")]
+		public IActionResult GetStudentCodelabs(int id)
 		{
-			return Ok(_mapper.Map<StudentCodelabSummaryDto>(_studentCodelabEditor.GetStudentCodelab(id))); 
+			return Ok(_mapper.Map<List<StudentCodelabSummaryDto>>(_studentCodelabEditor.GetStudentCodelabs(id))); 
 		}
 
 		[HttpPost]

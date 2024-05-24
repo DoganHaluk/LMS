@@ -21,9 +21,9 @@ namespace LMSApi.Services
 		}
 
 
-		public StudentCodelab GetStudentCodelab(int id)
+		public List<StudentCodelab> GetStudentCodelabs(int id)
 		{
-			return _studentCodelabService.GetStudentCodelab(id);
+			return _studentCodelabService.GetStudentCodelabs(id);
 		}
 
 		public StudentCodelab CreateStudentCodelab(StudentCodelab studentCodelab)

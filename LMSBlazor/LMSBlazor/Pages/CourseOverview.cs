@@ -31,13 +31,13 @@ namespace LMSBlazor.Pages
 
 		private CreateStudentCodelabDto NewStudentCodelab { get; set; }
 
-		private StudentCodelabSummaryDto StudentCodelab {  get; set; }
+		private UpdateStatusCodelabDto CodelabStatus { get; set; } = new UpdateStatusCodelabDto();
 
-		private UpdateStatusCodelabDto CodelabStatus { get; set; } 
-
-		private AddCommentDto Comment {  get; set; } 
+		private AddCommentDto Comment { get; set; } = new AddCommentDto();
 
 		private List<UpdateStatusCodelabDto> Statuses {  get; set; }
+
+		private List<StudentCodelabSummaryDto> StudentCodelabs {  get; set; }
 
 		private CurrentUser User { get; set; }
 
@@ -45,7 +45,12 @@ namespace LMSBlazor.Pages
 		{
 			User = await _authentication.GetUserAsync();
 			Course = await _courseService.GetCourseOverview(CourseId);
-			Statuses = await _studentCodelabService.GetStatuses();
+			if (User.Role == "Student")
+			{
+				Statuses = await _studentCodelabService.GetStatuses();
+				StudentCodelabs = await _studentCodelabService.GetStudentCodelabs(UserId);
+			}
+			
 		}
 
 		public LearningModuleOverviewDto ChangeEditModule(int id)
@@ -173,8 +178,9 @@ namespace LMSBlazor.Pages
 			NewStudentCodelab = new CreateStudentCodelabDto();
 			NewStudentCodelab.CodelabId = id;
 			NewStudentCodelab.UserId = UserId;
-			StudentCodelab = await _studentCodelabService.CreateStudentCodelab(NewStudentCodelab);
-			return StudentCodelab;
+			var studentCodelab = await _studentCodelabService.CreateStudentCodelab(NewStudentCodelab);
+			Course = await _courseService.GetCourseOverview(CourseId);
+			return studentCodelab;
 		}
 
 		public async Task UpdateCodelabStatus()
@@ -182,9 +188,16 @@ namespace LMSBlazor.Pages
 			await _studentCodelabService.UpdateCodelabStatus(CodelabStatus);
 		}
 
-		public async Task GetStudentCodelab(int codelabId,int studentId)
+		public StudentCodelabSummaryDto GetStudentCodelab(int codelabId)
 		{
+			var studentCodelab = StudentCodelabs.Where(s => s.CodelabId == codelabId).FirstOrDefault();
+			
+			return studentCodelab;
+		}
 
+		public async Task AddComment()
+		{
+			var x = 0;
 		}
 	}
 }

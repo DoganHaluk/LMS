@@ -10,6 +10,8 @@ namespace LMSBase.Models.Dtos.Response
 	{
 		public int StudentCodelabId { get; set; }
 
+		public int CodelabId { get; set; }
+
 		public string Comment { get; set; }
 
 		public StatusDto Status { get; set; }
