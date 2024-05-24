@@ -30,19 +30,19 @@ builder.Services.AddScoped<CodelabService>();
 builder.Services.AddScoped<CodelabEditor>();
 builder.Services.AddScoped<StudentCodelabService>();
 builder.Services.AddScoped<StudentCodelabEditor>();
+builder.Services.AddScoped<StatusService>();
 
 builder.Services.AddCors(option =>
 {
-    option.AddPolicy("blazorApp", builder =>
-    {
+	option.AddPolicy("blazorApp", builder =>
+	{
 		builder.AllowAnyOrigin()
 		.AllowAnyHeader()
-		.AllowAnyMethod();       
-    });
+		.AllowAnyMethod();
+	});
 });
 
-builder.Services.AddDbContext<LMSDbContext>(
-	options =>
+builder.Services.AddDbContext<LMSDbContext>(options =>
 	{
 		options.UseSqlServer(builder.Configuration["ConnectionString"]);
 	});
