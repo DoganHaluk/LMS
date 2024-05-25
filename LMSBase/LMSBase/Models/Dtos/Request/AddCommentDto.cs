@@ -8,6 +8,7 @@ namespace LMSBase.Models.Dtos.Request
 {
 	public class AddCommentDto
 	{
+		public int StudentCodelabId { get; set; }
 		public string Comment { get; set; }
 	}
 }

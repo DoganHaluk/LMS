@@ -5,6 +5,7 @@
 @inject CodelabService _codelabService
 @inject StudentCodelabService _studentCodelabService
 
+
 <h3>CourseOverview</h3>
 @if (Course != null)
 {
@@ -92,21 +93,18 @@
 										if ( studentCodelab != null)
 										{
 						
-											 <EditForm Model="@CodelabStatus" OnSubmit="UpdateCodelabStatus" FormName="CodelabStatus" Name="@($"Codelab{codelab.CodelabId}")">
+											 <EditForm Model="@studentCodelab" OnSubmit="()=>UpdateStudentCodelab(studentCodelab)" FormName="CodelabStatus" Name="@($"Codelab{codelab.CodelabId}")">
 												<label>Status</label>
-												<InputSelect id="codelabStatus" @bind-Value="CodelabStatus.StatusId">
+												<InputSelect id="codelabStatus" @bind-Value="studentCodelab.Status.StatusId">
 													@foreach (var status in Statuses)
 													{
-														<option value="@studentCodelab.Status.StatusId">@studentCodelab.Status.StatusName</option>
+														<option value="@status.StatusId">@status.StatusName</option>
 													}
-												</InputSelect>
-												<button type="submit">Ok</button>
-											</EditForm>
-											@* <EditForm Model="@Comment" OnSubmit="AddComment" FormName="Comment" Name="@($"CommentCodelab{codelab.CodelabId}")">
+												</InputSelect>																
 												<label>Comment</label>
-												<InputText @bind-Value=Comment.Comment>@studentCodelab.Comment</InputText>
+												<InputText @bind-Value=studentCodelab.Comment></InputText>
 												<button type="submit">Ok</button>
-											</EditForm>  *@
+											</EditForm> 
 										}
 										else
 										{
@@ -146,22 +144,58 @@
 				{
 					<ul>
 						<li>
-							@if (codelab.Edit == false)
+							@if (User.Role == "Student")
 							{
 								<p>Codelab : @codelab.Name</p>
+								<p>Id : @codelab.CodelabId</p>
 								<p>Description : @codelab.Description</p>
-								<button type="button" @onclick="()=>ChangeEditCodelab(codelab.CodelabId)">Edit</button>
-								<button type="button" @onclick="()=>DeleteCodelab(codelab.CodelabId)">Delete</button>
+
+								<text>
+									@{
+										var studentCodelab = GetStudentCodelab(codelab.CodelabId);
+									}
+								</text>
+
+								if (studentCodelab != null)
+								{
+
+									<EditForm Model="@studentCodelab" OnSubmit="()=>UpdateStudentCodelab(studentCodelab)" FormName="CodelabStatus" Name="@($"Codelab{codelab.CodelabId}")">
+										<label>Status</label>
+										<InputSelect id="codelabStatus" @bind-Value="studentCodelab.Status.StatusId">
+											@foreach (var status in Statuses)
+											{
+												<option value="@status.StatusId">@status.StatusName</option>
+											}
+										</InputSelect>
+										<label>Comment</label>
+										<InputText @bind-Value=studentCodelab.Comment></InputText>
+										<button type="submit">Ok</button>
+									</EditForm>
+								}
+								else
+								{
+									<button type="button" @onclick="()=>CreateStudentCodelab(codelab.CodelabId)">Start</button>
+								}
 							}
-							else
+							else if (User.Role == "Coach")
 							{
-								<EditForm Model="@Codelab" OnSubmit="EditCodelab" FormName="CodelabName@CodelabId" Name="@($"CodelabName{Codelab.CodelabId}")">
-									<label>Name</label>
-									<InputText @bind-Value=Codelab.Name>@Codelab.Name</InputText>
-									<label>Description</label>
-									<InputText @bind-Value=Codelab.Description>@Codelab.Description</InputText>
-									<button type="submit">Ok</button>
-								</EditForm>
+								if (codelab.Edit == false)
+								{
+									<p>Codelab : @codelab.Name</p>
+									<p>Description : @codelab.Description</p>
+									<button type="button" @onclick="()=>ChangeEditCodelab(codelab.CodelabId)">Edit</button>
+									<button type="button" @onclick="()=>DeleteCodelab(codelab.CodelabId)">Delete</button>
+								}
+								else
+								{
+									<EditForm Model="@Codelab" OnSubmit="EditCodelab" FormName="CodelabName@CodelabId" Name="@($"CodelabName{Codelab.CodelabId}")">
+										<label>Name</label>
+										<InputText @bind-Value=Codelab.Name>@Codelab.Name</InputText>
+										<label>Description</label>
+										<InputText @bind-Value=Codelab.Description>@Codelab.Description</InputText>
+										<button type="submit">Ok</button>
+									</EditForm>
+								}
 							}
 						</li>
 					</ul>

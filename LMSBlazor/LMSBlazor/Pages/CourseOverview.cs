@@ -31,10 +31,6 @@ namespace LMSBlazor.Pages
 
 		private CreateStudentCodelabDto NewStudentCodelab { get; set; }
 
-		private UpdateStatusCodelabDto CodelabStatus { get; set; } = new UpdateStatusCodelabDto();
-
-		private AddCommentDto Comment { get; set; } = new AddCommentDto();
-
 		private List<UpdateStatusCodelabDto> Statuses {  get; set; }
 
 		private List<StudentCodelabSummaryDto> StudentCodelabs {  get; set; }
@@ -49,9 +45,10 @@ namespace LMSBlazor.Pages
 			{
 				Statuses = await _studentCodelabService.GetStatuses();
 				StudentCodelabs = await _studentCodelabService.GetStudentCodelabs(UserId);
-			}
-			
+			}			
 		}
+
+		//COACH VERSION
 
 		public LearningModuleOverviewDto ChangeEditModule(int id)
 		{
@@ -172,6 +169,8 @@ namespace LMSBlazor.Pages
 			Course = await _courseService.GetCourseOverview(CourseId);
 		}
 
+		// STUDENT VERSION
+
 
 		public async Task<StudentCodelabSummaryDto> CreateStudentCodelab(int id)
 		{
@@ -183,21 +182,18 @@ namespace LMSBlazor.Pages
 			return studentCodelab;
 		}
 
-		public async Task UpdateCodelabStatus()
+		public async Task UpdateStudentCodelab(StudentCodelabSummaryDto studentCodelab)
 		{
-			await _studentCodelabService.UpdateCodelabStatus(CodelabStatus);
+			await _studentCodelabService.UpdateStudentCodelab(studentCodelab.StudentCodelabId, studentCodelab); ;
+			StudentCodelabs = await _studentCodelabService.GetStudentCodelabs(UserId);
 		}
 
 		public StudentCodelabSummaryDto GetStudentCodelab(int codelabId)
 		{
 			var studentCodelab = StudentCodelabs.Where(s => s.CodelabId == codelabId).FirstOrDefault();
-			
 			return studentCodelab;
 		}
 
-		public async Task AddComment()
-		{
-			var x = 0;
-		}
+		
 	}
 }

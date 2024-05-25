@@ -31,16 +31,9 @@ namespace LMSApi.Services
 			return _studentCodelabService.CreateStudentCodelab(studentCodelab);
 		}
 
-		public StudentCodelab UpdateStatus(int id, StudentCodelab studentCodelab)
+		public StudentCodelab UpdateStudentCodelab(StudentCodelabSummaryDto studentCodelab)
 		{
-			studentCodelab.CodelabId = id;
-			return _studentCodelabService.UpdateStatus(studentCodelab);
-		}
-
-		public StudentCodelab UpdateComment(int id,StudentCodelab studentCodelab)
-		{
-			studentCodelab.CodelabId = id;
-			return _studentCodelabService.UpdateComment(studentCodelab);
+			return _studentCodelabService.UpdateStudentCodelab(studentCodelab);
 		}
 
 		public List<Progression> GetProgressions(int schoolClassId,int moduleId)

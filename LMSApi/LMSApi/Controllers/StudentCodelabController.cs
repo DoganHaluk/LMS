@@ -38,18 +38,12 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPost("{id}")]
-		[AuthorizeScope("Student")]
-		public IActionResult UpdateStatus(int id, UpdateStatusCodelabDto updateStatusCodelabDto)
+		//[AuthorizeScope("Student")]
+		public IActionResult UpdateStudentCodelab(StudentCodelabSummaryDto studentCodelab)
 		{
-			return Ok(_studentCodelabEditor.UpdateStatus(id,_mapper.Map<StudentCodelab>(updateStatusCodelabDto)));
+			return Ok(_studentCodelabEditor.UpdateStudentCodelab(studentCodelab));
 		}
 
-		[HttpPost("comment/{id}")]
-		[AuthorizeScope("Student")]
-		public IActionResult AddComment(int id,AddCommentDto addCommentDto)
-		{
-			return Ok(_studentCodelabEditor.UpdateComment(id,_mapper.Map<StudentCodelab>(addCommentDto)));
-		}
 
 		[HttpGet("progression")]
 		[AuthorizeScope("Coach")]

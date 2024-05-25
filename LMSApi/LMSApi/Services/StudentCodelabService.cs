@@ -1,5 +1,6 @@
 ﻿using LMSApi.Configuration;
 using LMSBase.Models.Domain;
+using LMSBase.Models.Dtos.Response;
 using Microsoft.EntityFrameworkCore;
 
 namespace LMSApi.Services
@@ -31,22 +32,14 @@ namespace LMSApi.Services
 			return studentCodelab;
 		}
 
-		public StudentCodelab UpdateStatus(StudentCodelab studentCodelab)
+		public StudentCodelab UpdateStudentCodelab(StudentCodelabSummaryDto studentCodelab)
 		{
 			var updated = _context.StudentCodeLabs.Find(studentCodelab.StudentCodelabId);
-			updated.StatusId = studentCodelab.StatusId;
-			_context.SaveChanges();
-			return updated;
-		}
-
-		public StudentCodelab UpdateComment(StudentCodelab studentCodelab)
-		{
-			var updated = _context.StudentCodeLabs.Find(studentCodelab.StudentCodelabId);
+			updated.StatusId = studentCodelab.Status.StatusId;
 			updated.Comment = studentCodelab.Comment;
 			_context.SaveChanges();
 			return updated;
 		}
-
 
 	}
 }

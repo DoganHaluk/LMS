@@ -38,9 +38,10 @@ namespace LMSBlazor.Services
 			return statuses;
 		}
 
-		public async Task UpdateCodelabStatus (UpdateStatusCodelabDto updateStatusCodelabDto)
+		public async Task UpdateStudentCodelab (int studentCodelabId,StudentCodelabSummaryDto studentCodelab)
 		{
-			var apiResponse = await _httpClient.PostAsJsonAsync("/api/studentcodelabs/", updateStatusCodelabDto);
+			var apiResponse = await _httpClient.PostAsJsonAsync($"/api/studentcodelabs/{studentCodelabId}", studentCodelab);
+			apiResponse.EnsureSuccessStatusCode();
 		}
 
 		public async Task<List<StudentCodelabSummaryDto>> GetStudentCodelabs(int id)
@@ -50,7 +51,5 @@ namespace LMSBlazor.Services
 			studentCodelabs = JsonSerializer.Deserialize<List<StudentCodelabSummaryDto>>(apiResponse, _serializerOptions);
 			return studentCodelabs;
 		}
-
-
 	}
 }
