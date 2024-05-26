@@ -1,67 +1,80 @@
 ﻿@inject AuthenticationService _authentication
 @inject NavigationManager _navigation
+@inject LocalStorageService _localStorageService
+
 
 <div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">LMSBlazor</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
+	<div class="container-fluid">
+		<a class="navbar-brand" href="">LMSBlazor</a>
+		<button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</div>
 </div>
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="studentlist">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> studentlist
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" @onclick="NavigateToProfile">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> studentprofile
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" @onclick="NavigateToEdit">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> editstudentprofile
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="login">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Login
-            </NavLink>
-        </div>
-    </nav>
+	<nav class="flex-column">
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+				<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Login
+			</NavLink>
+		</div>
+		@if(User != null)
+		{
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" @onclick="NavigateToProfile">
+					<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> studentprofile
+				</NavLink>
+			</div>
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" @onclick="NavigateToEdit">
+					<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> editstudentprofile
+				</NavLink>
+			</div>
+		}
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" @onclick="Register">
+				<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Register
+			</NavLink>
+		</div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" @onclick="Logout">
+				<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Logout
+			</NavLink>
+		</div>
+	</nav>
 </div>
 
 @code {
 
-    private bool collapseNavMenu = true;
+	private bool collapseNavMenu = true;
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+	private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private CurrentUser User { get; set; }
+	private CurrentUser User { get; set; }
 
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
+	private async Task ToggleNavMenu()
+	{
+		collapseNavMenu = !collapseNavMenu;
+	}
 
-    private async void NavigateToProfile()
-    {
-        User =await _authentication.GetUserAsync();
-        _navigation.NavigateTo($"/studentprofile?UserId={User.UserId}");
-    }
+	private async void NavigateToProfile()
+	{
+		_navigation.NavigateTo($"/studentprofile?UserId={User.UserId}");
+	}
 
-    private async void NavigateToEdit()
-    {
-        User = await _authentication.GetUserAsync();
-        _navigation.NavigateTo($"/editstudentprofile?UserId={User.UserId}");
-    }
+	private async void NavigateToEdit()
+	{
+		_navigation.NavigateTo($"/editstudentprofile?UserId={User.UserId}");
+	}
+
+	private async void Logout()
+	{
+		_navigation.NavigateTo("/");
+	}
+
+	private async void Register()
+	{
+		_navigation.NavigateTo("/register");
+	}
 }

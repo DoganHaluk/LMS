@@ -49,6 +49,7 @@ namespace LMSApi.Services
 				Progression progression = new Progression()
 				{
 					StudentName = student.UserName,
+					TotalCodelabs = 0
 				};
 				foreach(var codelabId in codelabs)
 				{

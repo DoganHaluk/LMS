@@ -8,10 +8,10 @@ namespace LMSBase.Models.Dtos.Response
 {
 	public class ProgressionDto
 	{
-		public string StudentName { get; set; }
+		public string? StudentName { get; set; }
 
-		public int TotalCodelabs { get; set; }
+		public int? TotalCodelabs { get; set; }
 
-		public int FinishedCodelabs { get; set; }
+		public int? FinishedCodelabs { get; set; }
 	}
 }

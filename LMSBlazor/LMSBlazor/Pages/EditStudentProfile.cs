@@ -36,7 +36,14 @@ namespace LMSBlazor.Pages
                 Student = await _studentService.GetStudentProfile(UserId);
                 EditStudent.UserName = Student.UserName;
 				EditStudent.Email = Student.Email;
-				EditStudent.SchoolClassId = Student.SchoolClass.SchoolClassId;
+				if (Student.SchoolClass == null)
+				{
+					EditStudent.SchoolClassId = 1;
+				}
+				else
+				{
+					EditStudent.SchoolClassId = Student.SchoolClass.SchoolClassId;
+				}				
             }
 		}
 

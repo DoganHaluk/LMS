@@ -51,5 +51,14 @@ namespace LMSBlazor.Services
 			studentCodelabs = JsonSerializer.Deserialize<List<StudentCodelabSummaryDto>>(apiResponse, _serializerOptions);
 			return studentCodelabs;
 		}
+
+		public async Task<List<ProgressionDto>> GetProgressions(int schoolClassId, int moduleId)
+		{
+			List<ProgressionDto> progressions = new List<ProgressionDto>();
+			var apiResponse = await _httpClient.GetStreamAsync($"/api/studentcodelabs/progression?schoolClassId={schoolClassId}&moduleId={moduleId}");
+			progressions = JsonSerializer.Deserialize<List<ProgressionDto>>(apiResponse, _serializerOptions);
+			return progressions;
+
+		}
 	}
 }

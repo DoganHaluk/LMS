@@ -50,5 +50,11 @@ namespace LMSBlazor.Services
             var apiresponse = await _httpClient.PostAsJsonAsync($"/api/student/{id}", editStudentProfileDto);
             apiresponse.EnsureSuccessStatusCode();
 		}
+
+        public async Task CreateStudent(CreateStudentDto createStudentDto)
+        {
+			var apiresponse = await _httpClient.PostAsJsonAsync($"/api/student", createStudentDto);
+			apiresponse.EnsureSuccessStatusCode();
+		}
     }
 }

@@ -17,6 +17,10 @@ namespace LMSBlazor.Pages
 		[SupplyParameterFromQuery]
 		public int UserId { get; set; }
 
+		[SupplyParameterFromQuery]
+
+		public int SchoolClassId { get; set; }
+
 		private CourseOverviewDto Course { get; set; }
 
 		private LearningModuleOverviewDto Module { get; set; }
@@ -167,6 +171,11 @@ namespace LMSBlazor.Pages
 		{
 			await _codelabService.DeleteCodelab(id);
 			Course = await _courseService.GetCourseOverview(CourseId);
+		}
+
+		public void NavigateToProgression(int moduleId)
+		{
+			_navigation.NavigateTo($"/progressions?SchoolClassId={SchoolClassId}&ModuleId={moduleId}");
 		}
 
 		// STUDENT VERSION

@@ -1,0 +1,26 @@
+﻿@page "/register"
+@inject StudentService _studentService
+@inject NavigationManager _navigation
+
+<h3>Register</h3>
+
+<EditForm Model="@NewStudent" OnSubmit="CreateStudent">
+	<label>Name</label>
+	<InputText id="studentName" @bind-Value="NewStudent.UserName"></InputText>
+	<br />
+	<br />
+	<label>Email</label>
+	<InputText id="studentEmail" @bind-Value="NewStudent.Email"></InputText>
+	<br />
+	<br />
+	<label>Password</label>
+	<InputText id="studentpassword" @bind-Value="NewStudent.Password"></InputText>
+	<br />
+	<br />
+	<label>Repeat Password</label>
+	<InputText id="studentpassword" @bind-Value="NewStudent.RepeatPassword"></InputText>
+	<br />
+	<br />
+	<button type="submit">Submit</button>
+
+</EditForm>

@@ -38,7 +38,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPost("{id}")]
-		//[AuthorizeScope("Student")]
+		[AuthorizeScope("Student")]
 		public IActionResult UpdateStudentCodelab(StudentCodelabSummaryDto studentCodelab)
 		{
 			return Ok(_studentCodelabEditor.UpdateStudentCodelab(studentCodelab));
@@ -46,7 +46,7 @@ namespace LMSApi.Controllers
 
 
 		[HttpGet("progression")]
-		[AuthorizeScope("Coach")]
+		//[AuthorizeScope("Coach")]
 		public IActionResult GetProgressions(int schoolClassId=0,int moduleId=0)
 		{
 			return Ok(_mapper.Map<List<ProgressionDto>>(_studentCodelabEditor.GetProgressions(schoolClassId, moduleId)));

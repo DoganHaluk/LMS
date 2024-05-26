@@ -12,7 +12,13 @@ namespace LMSBlazor.Pages
 		private string ErrorMessage { get; set; }
 
 
-		public async Task HandleLogin()
+        protected override async Task OnInitializedAsync()
+		{
+			await _localStorageService.RemoveItem("currentUser");
+		}
+
+
+        public async Task HandleLogin()
 		{
 			var success = await _authenticationService.UserLoginAsync(UserLogin);
 			if (success == true) 

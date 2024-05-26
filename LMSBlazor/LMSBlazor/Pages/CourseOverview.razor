@@ -34,6 +34,10 @@
 							<button type="button" @onclick="()=>AddModule(module.LearningModuleId)">Add Submodule</button>
 							<button type="button" @onclick="()=>AddCodelab(module.LearningModuleId)">Add Codelab</button>
 							<button type="button" @onclick="()=>DeleteModule(module.LearningModuleId)">Delete</button>
+							if (SchoolClassId != null && module.Codelabs.Count>0)
+							{
+								<button type="button" @onclick="()=>NavigateToProgression(module.LearningModuleId)">Progression</button>
+							}
 						}
 					}
 					else
@@ -65,6 +69,10 @@
 									<button type="button" @onclick="()=>ChangeEditSubmodule(submodules.LearningModuleId)">Edit</button>
 									<button type="button" @onclick="()=>AddCodelab(submodules.LearningModuleId)">Add Codelab</button>
 									<button type="button" @onclick="()=>DeleteSubmodule(submodules.LearningModuleId)">Delete</button>
+									if (SchoolClassId != null && submodules.Codelabs.Count>0)
+									{
+										<button type="button" @onclick="()=>NavigateToProgression(submodules.LearningModuleId)">Progression</button>
+									}
 								}
 								else
 								{

@@ -1,0 +1,11 @@
+﻿@page "/progressions"
+@inject StudentCodelabService _studentcodelabService
+
+<h3>Progressions</h3>
+
+@foreach (var progression in LabProgressions)
+{
+	<p>@progression.StudentName :</p>
+	<p>@progression.FinishedCodelabs</p>
+	<p>@progression.TotalCodelabs</p>
+}

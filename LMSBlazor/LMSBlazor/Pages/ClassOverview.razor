@@ -28,7 +28,7 @@
 	<p>COURSE</p>
 	@foreach (var course in SchoolClass.SchoolClassCourses)
 	{
-		<li><a href="/courseoverview?UserId=@UserId&CourseId=@course.Course.CourseId">@course.Course.CourseName</a></li>
+		<li><a href="/courseoverview?UserId=@UserId&CourseId=@course.Course.CourseId&SchoolClassId=@SchoolClassId">@course.Course.CourseName</a></li>
 	}
 
 	@if (User.Role == "Coach")
