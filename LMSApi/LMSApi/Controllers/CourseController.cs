@@ -32,7 +32,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpGet("{id}")]
-		//[AuthorizeScope("Coach,Student")]
+		[AuthorizeScope("Coach,Student")]
 		public IActionResult GetCourseById(int id)
 		{
 			List<InputError> errors = _courseEditor.ValidateUserCourseOverview(id);

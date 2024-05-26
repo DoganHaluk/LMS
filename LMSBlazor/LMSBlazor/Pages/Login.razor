@@ -6,7 +6,7 @@
 
 <h3>Login</h3>
 
-<EditForm Model="@UserLogin" OnSubmit="HandleLogin">
+<EditForm Model="@UserLogin" OnSubmit="@HandleLogin">
 	<label>Email</label>
 	<InputText id="userEmail" @bind-Value="UserLogin.Email"></InputText>
 	<br />
