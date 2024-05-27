@@ -1,6 +1,7 @@
 ﻿using LMSBase.Models.Domain;
 using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
+using LMSBase.Models.Utilities;
 using LMSBlazor.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -38,6 +39,8 @@ namespace LMSBlazor.Pages
 		private List<UpdateStatusCodelabDto> Statuses {  get; set; }
 
 		private List<StudentCodelabSummaryDto> StudentCodelabs {  get; set; }
+
+		private List<InputError> Errors {  get; set; }
 
 		private CurrentUser User { get; set; }
 
@@ -84,16 +87,24 @@ namespace LMSBlazor.Pages
 
 		public async Task EditModuleName()
 		{
-			await _learningModuleService.EditModuleName(Module.LearningModuleId, Module);
-			Module.Edit = false;
-			Course = await _courseService.GetCourseOverview(CourseId);
+			Errors = await _learningModuleService.EditModuleName(Module.LearningModuleId, Module);
+			if (Errors == null)
+			{
+				Module.Edit = false;
+				Course = await _courseService.GetCourseOverview(CourseId);
+			}
+			
 		}
 
 		public async Task EditSubmoduleName()
 		{
-			await _learningModuleService.EditModuleName(Submodule.LearningModuleId, Submodule);
-			Submodule.Edit = false;
-			Course = await _courseService.GetCourseOverview(CourseId);
+			Errors = await _learningModuleService.EditModuleName(Submodule.LearningModuleId, Submodule);
+			if (Errors == null)
+			{
+				Submodule.Edit = false;
+				Course = await _courseService.GetCourseOverview(CourseId);
+			}
+			
 		}
 
 		public async Task EditCodelab()
@@ -103,9 +114,12 @@ namespace LMSBlazor.Pages
 				Name = Codelab.Name,
 				Description = Codelab.Description
 			};
-			await _codelabService.EditCodelab(Codelab.CodelabId, editCodelabDto);
-			Codelab.Edit = false;
-			Course = await _courseService.GetCourseOverview(CourseId);
+			Errors = await _codelabService.EditCodelab(Codelab.CodelabId, editCodelabDto);
+			if (Errors == null)
+			{
+				Codelab.Edit = false;
+				Course = await _courseService.GetCourseOverview(CourseId);
+			}			
 		}
 
 
@@ -123,9 +137,13 @@ namespace LMSBlazor.Pages
 
 		public async Task CreateModule()
 		{
-			await _learningModuleService.CreateModule(NewModule);
-			NewModule = null;
-			Course = await _courseService.GetCourseOverview(CourseId);
+			Errors = await _learningModuleService.CreateModule(NewModule);
+			if (Errors == null)
+			{
+				NewModule = null;
+				Course = await _courseService.GetCourseOverview(CourseId);
+			}
+			
 		}
 
 		public void AddCodelab(int id)
@@ -141,9 +159,13 @@ namespace LMSBlazor.Pages
 
 		public async Task CreateCodelab()
 		{
-			await _codelabService.CreateCodelab(NewCodelab);
-			NewCodelab = null;
-			Course = await _courseService.GetCourseOverview(CourseId);
+			Errors = await _codelabService.CreateCodelab(NewCodelab);
+			if (Errors == null)
+			{
+				NewCodelab = null;
+				Course = await _courseService.GetCourseOverview(CourseId);
+			}
+			
 		}
 
 		public async Task DeleteModule(int id)

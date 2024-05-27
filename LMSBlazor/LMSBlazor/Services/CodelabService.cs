@@ -2,6 +2,8 @@
 using System.Text.Json;
 using LMSBase.Models.Dtos.Request;
 using System.Net.Http.Json;
+using LMSBase.Models.Utilities;
+using System.Net;
 
 namespace LMSBlazor.Services
 {
@@ -20,16 +22,26 @@ namespace LMSBlazor.Services
 			};
 		}
 
-		public async Task CreateCodelab(CreateCodelabDto createCodelabDto)
+		public async Task<List<InputError>> CreateCodelab(CreateCodelabDto createCodelabDto)
 		{
 			var apiResponse = await _httpClient.PostAsJsonAsync("/api/codelabs", createCodelabDto);
-			apiResponse.EnsureSuccessStatusCode();
+			if (apiResponse.StatusCode == HttpStatusCode.BadRequest)
+			{
+				var errors = JsonSerializer.Deserialize<List<InputError>>(apiResponse.Content.ReadAsStream(), _serializerOptions);
+				return errors;
+			}
+			return null;
 		}
 
-		public async Task EditCodelab(int codelabId,EditCodelabDto editCodelabDto)
+		public async Task<List<InputError>> EditCodelab(int codelabId,EditCodelabDto editCodelabDto)
 		{
 			var apiResponse = await _httpClient.PostAsJsonAsync($"/api/codelabs/{codelabId}", editCodelabDto);
-			apiResponse.EnsureSuccessStatusCode();
+			if (apiResponse.StatusCode == HttpStatusCode.BadRequest)
+			{
+				var errors = JsonSerializer.Deserialize<List<InputError>>(apiResponse.Content.ReadAsStream(), _serializerOptions);
+				return errors;
+			}
+			return null;
 		}
 
 		public async Task DeleteCodelab(int id)

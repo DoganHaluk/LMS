@@ -1,5 +1,6 @@
 ﻿using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
+using LMSBase.Models.Utilities;
 using LMSBlazor.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -10,11 +11,13 @@ namespace LMSBlazor.Pages
 		[SupplyParameterFromQuery]
 		private int UserId { get; set; }
 
-		List<CourseDto> Courses { get; set; }
+		private List<CourseDto> Courses { get; set; }
 
-		CourseDto Course { get; set; }
+		private CourseDto Course { get; set; }
 
-		CourseDto NewCourse { get; set; }
+		private CourseDto NewCourse { get; set; }
+
+		private List<InputError> Errors { get; set; }
 
 
 		protected override async Task OnInitializedAsync()
@@ -31,15 +34,21 @@ namespace LMSBlazor.Pages
 
 		public async Task EditCourseName()
 		{
-			_courseService.EditCourseName(Course.CourseId, Course);
-			Course.Selected = false;
+			Errors = await _courseService.EditCourseName(Course.CourseId, Course);
+			if (Errors == null)
+			{
+				Course.Selected = false;
+			}			
 		}
 
 		public async Task CreateNewCourse()
 		{
-			_courseService.CreateCourse(NewCourse);
-			NewCourse.Selected = false;
-			Courses = await _courseService.GetCourses();
+			Errors = await _courseService.CreateCourse(NewCourse);
+			if (Errors == null)
+			{
+				NewCourse.Selected = false;
+				Courses = await _courseService.GetCourses();
+			}			
 		}
 
 

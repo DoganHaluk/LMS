@@ -1,10 +1,12 @@
 ﻿using LMSBase.Models.Domain;
 using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
+using LMSBase.Models.Utilities;
 using System.Net.Http.Json;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Net;
 
 namespace LMSBlazor.Services
 {
@@ -44,17 +46,27 @@ namespace LMSBlazor.Services
 		}
 
 
-        public async Task EditStudentProfile(int id,EditStudentProfileDto editStudentProfileDto)
+        public async Task<List<InputError>> EditStudentProfile(int id,EditStudentProfileDto editStudentProfileDto)
         {
 
-            var apiresponse = await _httpClient.PostAsJsonAsync($"/api/student/{id}", editStudentProfileDto);
-            apiresponse.EnsureSuccessStatusCode();
+            var apiResponse = await _httpClient.PostAsJsonAsync($"/api/student/{id}", editStudentProfileDto);
+            if (apiResponse.StatusCode == HttpStatusCode.BadRequest)
+            {
+                var errors = JsonSerializer.Deserialize<List<InputError>>(apiResponse.Content.ReadAsStream(), _serializerOptions);
+                return errors;
+			}
+            return null;
 		}
 
-        public async Task CreateStudent(CreateStudentDto createStudentDto)
+        public async Task<List<InputError>> CreateStudent(CreateStudentDto createStudentDto)
         {
-			var apiresponse = await _httpClient.PostAsJsonAsync($"/api/student", createStudentDto);
-			apiresponse.EnsureSuccessStatusCode();
+			var apiResponse = await _httpClient.PostAsJsonAsync($"/api/student", createStudentDto);
+			if (apiResponse.StatusCode == HttpStatusCode.BadRequest)
+			{
+				var errors = JsonSerializer.Deserialize<List<InputError>>(apiResponse.Content.ReadAsStream(), _serializerOptions);
+				return errors;
+			}
+			return null;
 		}
     }
 }

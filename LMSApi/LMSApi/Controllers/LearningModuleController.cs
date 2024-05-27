@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LMSApi.Configuration;
+using LMSBase.Models.Utilities;
 using LMSApi.Services;
 using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;

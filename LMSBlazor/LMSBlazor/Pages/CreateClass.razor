@@ -3,9 +3,17 @@
 
 <h3>CreateClass</h3>
 
-	<EditForm Model="@Name" OnSubmit="CreateSchoolClass">
-		<label>Name</label>
-		<InputText id="schoolClassName" @bind-Value="Name"></InputText>
-		<button type="submit">Submit</button>
-		<button type="button" @onclick="NavigateToCoachProfile">Cancel</button>
-	</EditForm>
+<EditForm Model="@Name" OnSubmit="CreateSchoolClass">
+	@if (Errors != null)
+	{
+		foreach (var error in Errors)
+		{
+			<p style="color:red">@error.Name, @error.Message, @error.Value</p>
+
+		}
+	}
+	<label>Name</label>
+	<InputText id="schoolClassName" @bind-Value="Name"></InputText>
+	<button type="submit">Submit</button>
+	<button type="button" @onclick="NavigateToCoachProfile">Cancel</button>
+</EditForm>

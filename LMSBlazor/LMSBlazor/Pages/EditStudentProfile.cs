@@ -1,5 +1,6 @@
 ﻿using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
+using LMSBase.Models.Utilities;
 using LMSBlazor.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -22,6 +23,8 @@ namespace LMSBlazor.Pages
 		private CoachSummaryDto Coach { get; set; }
 
 		private List<SchoolClassSummaryDto> SchoolClasses { get; set; }
+
+		private List<InputError> Errors { get; set; }
 
 		private CurrentUser User { get; set; }
 
@@ -49,9 +52,13 @@ namespace LMSBlazor.Pages
 
 		private async Task UpdateProfile()
 		{
-			await _studentService.EditStudentProfile(UserId, EditStudent);
-			_navigation.NavigateTo($"/studentprofile?UserId={Student.UserId}");
+			Errors = await _studentService.EditStudentProfile(UserId, EditStudent);
+			if (Errors == null)
+			{
+				_navigation.NavigateTo($"/studentprofile?UserId={Student.UserId}");
+			}
 		}
+			
 
         private void NavigateToProfile()
         {

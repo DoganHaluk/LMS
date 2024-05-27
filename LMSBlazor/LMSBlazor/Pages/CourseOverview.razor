@@ -43,6 +43,14 @@
 					else
 					{
 						<EditForm Model="@Module" OnSubmit="EditModuleName" FormName="ModuleName@ModuleId" Name="@($"ModuleName{Module.LearningModuleId}")">
+							@if (Errors != null)
+							{
+								foreach (var error in Errors)
+								{
+									<p style="color:red">@error.Name, @error.Message, @error.Value</p>
+
+								}
+							}
 							<label>Name</label>
 							<InputText @bind-Value=Module.ModuleName>@Module.ModuleName</InputText>
 							<button type="submit">Ok</button>
@@ -77,6 +85,14 @@
 								else
 								{
 									<EditForm Model="@Submodule" OnSubmit="EditSubmoduleName" FormName="SubmoduleName@ModuleId" Name="@($"SubModuleName{Submodule.LearningModuleId}")">
+										@if (Errors != null)
+										{
+											foreach (var error in Errors)
+											{
+												<p style="color:red">@error.Name, @error.Message, @error.Value</p>
+
+											}
+										}
 										<label>Name</label>
 										<InputText @bind-Value=Submodule.ModuleName>@Submodule.ModuleName</InputText>
 										<button type="submit">Ok</button>
@@ -102,6 +118,14 @@
 										{
 						
 											 <EditForm Model="@studentCodelab" OnSubmit="()=>UpdateStudentCodelab(studentCodelab)" FormName="CodelabStatus" Name="@($"Codelab{codelab.CodelabId}")">
+												@if (Errors != null)
+												{
+													foreach (var error in Errors)
+													{
+														<p style="color:red">@error.Name, @error.Message, @error.Value</p>
+
+													}
+												}
 												<label>Status</label>
 												<InputSelect id="codelabStatus" @bind-Value="studentCodelab.Status.StatusId">
 													@foreach (var status in Statuses)
@@ -131,6 +155,14 @@
 										else
 										{
 											<EditForm Model="@Codelab" OnSubmit="EditCodelab" FormName="CodelabName@CodelabId" Name="@($"CodelabName{Codelab.CodelabId}")">
+												@if (Errors != null)
+												{
+													foreach (var error in Errors)
+													{
+														<p style="color:red">@error.Name, @error.Message, @error.Value</p>
+
+													}
+												}
 												<label>Name</label>
 												<InputText @bind-Value=Codelab.Name>@Codelab.Name</InputText>
 												<label>Description</label>
@@ -214,6 +246,14 @@
 	@if (NewModule != null && NewModule.Edit == true)
 	{
 		<EditForm Model="@NewModule" OnSubmit="CreateModule" FormName="NewModuleName@ModuleId" Name="@($"NewModuleName{NewModule.ModuleName}")">
+			@if (Errors != null)
+			{
+				foreach (var error in Errors)
+				{
+					<p style="color:red">@error.Name, @error.Message, @error.Value</p>
+
+				}
+			}
 			<label>Name</label>
 			<InputText @bind-Value=NewModule.ModuleName>@NewModule.ModuleName</InputText>
 			<button type="submit">Ok</button>
@@ -222,6 +262,14 @@
 	@if (NewCodelab != null && NewCodelab.Edit == true)
 	{
 		<EditForm Model="@NewCodelab" OnSubmit="CreateCodelab" FormName="NewCodelabName@CodelabId" Name="@($"CodelabName{NewCodelab.Name}")">
+			@if (Errors != null)
+			{
+				foreach (var error in Errors)
+				{
+					<p style="color:red">@error.Name, @error.Message, @error.Value</p>
+
+				}
+			}
 			<label>Name</label>
 			<InputText @bind-Value=NewCodelab.Name>@NewCodelab.Name</InputText>
 			<label>Description</label>

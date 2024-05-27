@@ -3,6 +3,8 @@ using System.Text.Json;
 using LMSBase.Models.Dtos.Response;
 using System.Net.Http.Json;
 using LMSBase.Models.Dtos.Request;
+using LMSBase.Models.Utilities;
+using System.Net;
 
 namespace LMSBlazor.Services
 {
@@ -21,16 +23,26 @@ namespace LMSBlazor.Services
 			};
 		}
 
-		public async Task EditModuleName(int moduleId, LearningModuleOverviewDto learningModuleOverviewDto)
+		public async Task<List<InputError>> EditModuleName(int moduleId, LearningModuleOverviewDto learningModuleOverviewDto)
 		{
 			var apiResponse = await _httpClient.PutAsJsonAsync($"/api/modules/{moduleId}",learningModuleOverviewDto);
-			apiResponse.EnsureSuccessStatusCode();
+			if (apiResponse.StatusCode == HttpStatusCode.BadRequest)
+			{
+				var errors = JsonSerializer.Deserialize<List<InputError>>(apiResponse.Content.ReadAsStream(), _serializerOptions);
+				return errors;
+			}
+			return null;
 		}
 
-		public async Task CreateModule(CreateLearningModuleDto createLearningModuleDto)
+		public async Task<List<InputError>> CreateModule(CreateLearningModuleDto createLearningModuleDto)
 		{
 			var apiResponse = await _httpClient.PostAsJsonAsync("/api/modules", createLearningModuleDto);
-			apiResponse.EnsureSuccessStatusCode();
+			if (apiResponse.StatusCode == HttpStatusCode.BadRequest)
+			{
+				var errors = JsonSerializer.Deserialize<List<InputError>>(apiResponse.Content.ReadAsStream(), _serializerOptions);
+				return errors;
+			}
+			return null;
 		}
 
 		public async Task DeleteModule(int id)

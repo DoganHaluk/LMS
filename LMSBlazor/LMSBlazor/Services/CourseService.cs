@@ -1,4 +1,6 @@
 ﻿using LMSBase.Models.Dtos.Response;
+using LMSBase.Models.Utilities;
+using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -36,10 +38,15 @@ namespace LMSBlazor.Services
 			return courses;
 		}
 
-		public async Task EditCourseName(int courseId,CourseDto courseDto)
+		public async Task<List<InputError>> EditCourseName(int courseId,CourseDto courseDto)
 		{
 			var apiResponse = await _httpClient.PutAsJsonAsync($"/api/courses/{courseId}", courseDto);
-			apiResponse.EnsureSuccessStatusCode();
+			if (apiResponse.StatusCode == HttpStatusCode.BadRequest)
+			{
+				var errors = JsonSerializer.Deserialize<List<InputError>>(apiResponse.Content.ReadAsStream(), _serializerOptions);
+				return errors;
+			}
+			return null;
 		}
 
 		public async Task DeleteCourse(int courseId)
@@ -48,10 +55,15 @@ namespace LMSBlazor.Services
 			apiResponse.EnsureSuccessStatusCode();
 		}
 
-		public async Task CreateCourse(CourseDto course)
+		public async Task<List<InputError>> CreateCourse(CourseDto course)
 		{
 			var apiResponse = await _httpClient.PostAsJsonAsync("/api/courses",course);
-			apiResponse.EnsureSuccessStatusCode();
+			if (apiResponse.StatusCode == HttpStatusCode.BadRequest)
+			{
+				var errors = JsonSerializer.Deserialize<List<InputError>>(apiResponse.Content.ReadAsStream(), _serializerOptions);
+				return errors;
+			}
+			return null;
 		}
 	}
 }

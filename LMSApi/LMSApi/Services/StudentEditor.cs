@@ -52,10 +52,15 @@ namespace LMSApi.Services
 					errors.Add(error);
 				}
 			}
-			InputError passwordError = InputError.CheckRepeatPassword(createStudentDto.Password, createStudentDto.RepeatPassword);
-			if (passwordError != null)
+			InputError passwordError = InputError.CheckPassword(createStudentDto.Password);
+			if (emailError != null)
 			{
-				errors.Add(passwordError);
+					errors.Add(passwordError);
+			}
+			InputError repeatPasswordError = InputError.CheckRepeatPassword(createStudentDto.Password, createStudentDto.RepeatPassword);
+			if (repeatPasswordError != null)
+			{
+				errors.Add(repeatPasswordError);
 			}
 			return errors;
 		}
@@ -75,6 +80,14 @@ namespace LMSApi.Services
 			//{
 			//	errors.Add(ownerError);
 			//}
+			if (editStudentProfileDto.UserName.IsNullOrEmpty())
+			{
+				InputError nameError = InputError.CheckName(editStudentProfileDto.UserName);
+				if (nameError != null)
+				{
+					errors.Add(nameError);
+				}
+			}
 			if (!editStudentProfileDto.UserName.IsNullOrEmpty())
 			{
 				InputError nameError = InputError.CheckName(editStudentProfileDto.UserName);

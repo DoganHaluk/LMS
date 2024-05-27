@@ -88,6 +88,29 @@ namespace LMSBase.Models.Utilities
 			return errors;
 		}
 
+		public static InputError CheckPassword(string password)
+		{
+			if (password.Length > 50)
+			{
+				InputError nameError = new InputError();
+				nameError.Name = "Password";
+				nameError.Message = "Above 50 characters";
+				nameError.Code = "MaxCharacters";
+				nameError.Value = "50";
+				return nameError;
+			}
+			else if (string.IsNullOrEmpty(password))
+			{
+				InputError nameError = new InputError();
+				nameError.Name = "Password";
+				nameError.Message = "Empty Field";
+				nameError.Code = "Empty_String";
+				nameError.Value = "more than 6";
+				return nameError;
+			}
+			else { return null; }
+		}
+
 		public static InputError CheckRepeatPassword(string password, string repeatPassword)
 		{
 			if (password != repeatPassword)

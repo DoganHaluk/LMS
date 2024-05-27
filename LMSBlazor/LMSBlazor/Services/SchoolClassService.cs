@@ -4,6 +4,8 @@ using LMSBase.Models.Dtos.Response;
 using LMSBase.Models.Dtos.Request;
 using System.Net.Http.Json;
 using LMSBase.Models.Domain;
+using LMSBase.Models.Utilities;
+using System.Net;
 
 namespace LMSBlazor.Services
 {
@@ -46,11 +48,15 @@ namespace LMSBlazor.Services
 			return schoolclass;
 		}
 
-		public async Task<SchoolClassSummaryDto> CreateSchoolClass(CreateSchoolClassDto createSchoolClassDto)
+		public async Task<List<InputError>> CreateSchoolClass(CreateSchoolClassDto createSchoolClassDto)
 		{
 			var apiResponse = await _httpClient.PostAsJsonAsync("/api/SchoolClass/SchoolcLass",createSchoolClassDto);
-			SchoolClassSummaryDto newClass = JsonSerializer.Deserialize<SchoolClassSummaryDto>(apiResponse.Content.ReadAsStream(), _serializerOptions);
-			return newClass;
+			if (apiResponse.StatusCode == HttpStatusCode.BadRequest)
+			{
+				var errors = JsonSerializer.Deserialize<List<InputError>>(apiResponse.Content.ReadAsStream(), _serializerOptions);
+				return errors;
+			}
+			return null;
 		}
 	}
 }

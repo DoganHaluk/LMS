@@ -4,8 +4,19 @@
 
 <h3>EditStudentProfile</h3>
 
+	
+
 	<EditForm Model="@EditStudent" OnSubmit="UpdateProfile">
-		<label>Name</label>
+
+	@if (Errors != null)
+	{
+		foreach(var error in Errors)
+		{
+			<p style="color:red">@error.Name, @error.Message, @error.Value</p>
+			
+		}
+	}
+	<label>Name</label>
 		<InputText id="studentName" @bind-Value="EditStudent.UserName"></InputText>
 		<br />
 		<br />

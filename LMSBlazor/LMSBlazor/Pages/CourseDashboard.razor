@@ -20,6 +20,14 @@
 				else
 				{
 					<EditForm Model="@Course" OnSubmit="EditCourseName" FormName="CourseName@Course.CourseId" Name="@($"CourseName{Course.CourseId}")">
+						@if (Errors != null)
+						{
+							foreach (var error in Errors)
+							{
+								<p style="color:red">@error.Name, @error.Message, @error.Value</p>
+
+							}
+						}
 						<label>Name</label>
 						<InputText @bind-Value=Course.CourseName>@course.CourseName</InputText>
 						<button type="submit">Ok</button>
@@ -33,6 +41,14 @@
 	{
 
 		<EditForm Model="@NewCourse" OnSubmit="CreateNewCourse" FormName="NewCourse">
+			@if (Errors != null)
+			{
+				foreach (var error in Errors)
+				{
+					<p style="color:red">@error.Name, @error.Message, @error.Value</p>
+
+				}
+			}
 			<label>Name</label>
 			<InputText @bind-Value=NewCourse.CourseName>@NewCourse.CourseName</InputText>
 			<button type="submit">Ok</button>
