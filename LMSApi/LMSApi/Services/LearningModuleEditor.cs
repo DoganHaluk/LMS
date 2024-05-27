@@ -1,4 +1,4 @@
-﻿using LMSApi.Configuration;
+﻿using LMSBase.Models.Utilities;
 using LMSBase.Models.Domain;
 using LMSBase.Models.Dtos.Request;
 using System.Net.Http.Headers;

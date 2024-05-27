@@ -1,7 +1,8 @@
-﻿using LMSApi.Configuration;
+﻿using LMSBase.Models.Utilities;
 using LMSBase.Models.Domain;
 using LMSBase.Models.Dtos;
 using LMSBase.Models.Dtos.Request;
+using LMSApi.Configuration;
 
 namespace LMSApi.Services
 {

@@ -1,8 +1,6 @@
 ﻿using LMSBase.Models.Domain;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.IdentityModel.Tokens;
 
-namespace LMSApi.Configuration
+namespace LMSBase.Models.Utilities
 {
 	public class InputError
 	{
@@ -146,7 +144,7 @@ namespace LMSApi.Configuration
 
 		public static InputError CheckExistingName(string name1, string name2)
 		{
-			if (!name2.IsNullOrEmpty() && name1 == name2)
+			if (!string.IsNullOrEmpty(name2) && name1 == name2)
 			{
 				InputError sameNameError = new InputError();
 				sameNameError.Name = "Existing Name";
