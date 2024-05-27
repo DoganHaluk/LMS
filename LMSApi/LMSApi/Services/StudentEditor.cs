@@ -53,7 +53,7 @@ namespace LMSApi.Services
 				}
 			}
 			InputError passwordError = InputError.CheckPassword(createStudentDto.Password);
-			if (emailError != null)
+			if (passwordError != null)
 			{
 					errors.Add(passwordError);
 			}

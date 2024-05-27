@@ -3,8 +3,45 @@
 @inject NavigationManager _navigation
 
 <h3>Register</h3>
+<BSForm Model="@NewStudent" IsRow="true" Gutters="Gutters.Medium" OnSubmit="CreateStudent">
 
-<EditForm Model="@NewStudent" OnSubmit="CreateStudent">
+    <DataAnnotationsValidator />
+    <BSCol Position="Position.Relative" ColumnMedium="12">
+		@if (Errors != null)
+		{
+			foreach (var error in Errors)
+			{
+				<p style="color:red">@error.Name, @error.Message, @error.Value</p>
+			}
+		}
+        <BSValidationSummary />
+    </BSCol>
+    <BSCol Position="Position.Relative" ColumnMedium="4">
+        <BSLabel>Name</BSLabel>
+		<BSInput InputType="InputType.Text" id="studentName" @bind-Value="NewStudent.UserName" ValidateOnInput="true" />
+        <BSFeedback For="@(() => NewStudent.UserName)" ValidMessage="Name looks good." />
+    </BSCol>
+    <BSCol Position="Position.Relative" ColumnMedium="4">
+        <BSLabel>Email</BSLabel>
+		<BSInput InputType="InputType.Text" id="studentEmail" @bind-Value="NewStudent.Email" placeholder="Email Address" />
+		<BSFeedback For="@(() => NewStudent.Email)" ValidMessage="Email looks good." />
+    </BSCol>
+	<BSCol Position="Position.Relative" ColumnMedium="4">
+        <BSLabel>Password</BSLabel>
+		<BSInput InputType="InputType.Text" id="studentpassword" @bind-Value="NewStudent.Password" ValidateOnInput="true" />
+		<BSFeedback For="@(() => NewStudent.Password)" ValidMessage="Password looks good." />
+    </BSCol>
+	<BSCol Position="Position.Relative" ColumnMedium="4">
+		<BSLabel>Repeat Password</BSLabel>
+		<BSInput InputType="InputType.Text" id="studentrepeatpassword" @bind-Value="NewStudent.RepeatPassword" ValidateOnInput="true" />
+		<BSFeedback For="@(() => NewStudent.RepeatPassword)" ValidMessage="Password looks good." />
+	</BSCol>
+    <BSCol Column="12">
+        <BSButton Color="BSColor.Primary" IsSubmit="true">Submit</BSButton>
+    </BSCol>
+</BSForm>
+
+@* <EditForm Model="@NewStudent" OnSubmit="CreateStudent">
 	@if (Errors != null)
 	{
 		foreach (var error in Errors)
@@ -31,4 +68,4 @@
 	<br />
 	<button type="submit">Submit</button>
 
-</EditForm>
+</EditForm> *@

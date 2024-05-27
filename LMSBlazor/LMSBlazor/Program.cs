@@ -1,3 +1,4 @@
+using BlazorStrap;
 using LMSBlazor;
 using LMSBlazor.Services;
 using Microsoft.AspNetCore.Components.Forms;
@@ -18,6 +19,7 @@ builder.Services.AddScoped<SchoolClassCourseService>();
 builder.Services.AddScoped<LearningModuleService>();
 builder.Services.AddScoped<CodelabService>();
 builder.Services.AddScoped<StudentCodelabService>();
+builder.Services.AddBlazorStrap();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7024") });
 
