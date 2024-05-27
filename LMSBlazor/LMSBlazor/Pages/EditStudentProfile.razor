@@ -1,12 +1,75 @@
 ﻿@page "/editstudentprofile"
+@using BlazorStrap
 @inject NavigationManager _navigation
 @inject LocalStorageService _localStorageService
 
-<h3>EditStudentProfile</h3>
 
 	
+<BSContainer Class="d-flex justify-content-center align-items-center vh-100">
+    <BSCard Class="p-4 shadow-lg" Style="width: 400px;">
+        <BSCardHeader Class="text-center">
+            <h2>Form</h2>
+        </BSCardHeader>
+        <BSCardBody>
+            <BSForm Model="EditStudent">
+                <BSFormGroup>
+                    <BSLabel For="name">Name</BSLabel>
+                    <BSInput @bind-Value="EditStudent.UserName" Type="text" Id="name" Placeholder="Enter your name" />
+                </BSFormGroup>
+                <BSFormGroup>
+                    <BSLabel For="email">Email</BSLabel>
+                    <BSInput @bind-Value="EditStudent.Email" Type="email" Id="email" Placeholder="Enter your email" />
+                </BSFormGroup>
+                <BSFormGroup>
+                    <BSLabel For="class">Class</BSLabel>
+                    <BSDropdown Class="w-100">
+                        <BSDropdownToggle>
+                            @EditStudent.SchoolClassId
+                        </BSDropdownToggle>
+                        <BSDropdownMenu>
+                            @foreach (var schoolclass in SchoolClasses)
+                            {
+                                <BSDropdownItem OnClick="()=>SelectClass(schoolclass.SchoolClassId)">@schoolclass.SchoolClassName</BSDropdownItem>
+                            }
+                        </BSDropdownMenu>
+                    </BSDropdown>
+                </BSFormGroup>
+                <div class="d-flex justify-content-between">
+                    <BSButton Color="BSColor.Primary" OnClick="UpdateProfile">Submit</BSButton>
+                    <BSButton Color="BSColor.Secondary" OnClick="NavigateToProfile">Cancel</BSButton>
+                </div>
+            </BSForm>
+        </BSCardBody>
+    </BSCard>
+</BSContainer>
 
-	<EditForm Model="@EditStudent" OnSubmit="UpdateProfile">
+<div class="mt-3">
+    @if (Errors != null)
+    {
+        <BSAlert Color="BSColor.Danger">
+            <ul>
+                @foreach (var error in Errors)
+                {
+                    <li>@error</li>
+                }
+            </ul>
+        </BSAlert>
+    }
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@* <EditForm Model="@EditStudent" OnSubmit="UpdateProfile">
 
 	@if (Errors != null)
 	{
@@ -39,7 +102,7 @@
 
 	<button type="button" @onclick="NavigateToProfile">Cancel</button>
 
-	</EditForm>
+	</EditForm> *@
 
 
 	

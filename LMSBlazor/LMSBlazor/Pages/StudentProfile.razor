@@ -4,22 +4,42 @@
 
 
 
-<h3>StudentProfile</h3>
 @if (Student != null)
 {
-	<p>@Student.UserId</p>
-	<p>@Student.UserName</p>
-	<p>@Student.Email</p>
-	<p>@Student.SchoolClass?.SchoolClassName</p>
+	<BSContainer Class="d-flex justify-content-center align-items-center vh-100">
+		<BSCard Class="p-4 shadow-lg" Style="width: 400px;">
+			<BSCardBody>
+				<h2 class="mb-4">User Profile</h2>
+				<div>
+					<BSForm Model="Student">
+						<BSFormGroup>
+							<BSLabel For="name">Name</BSLabel>
+							<BSInput @bind-Value="Student.UserName" Type="text" Id="name" ReadOnly="true" />
+						</BSFormGroup>
+						<BSFormGroup>
+							<BSLabel For="email">Email</BSLabel>
+							<BSInput @bind-Value="Student.Email" Type="email" Id="email" ReadOnly="true" />
+						</BSFormGroup>
+						<BSFormGroup>
+							<BSLabel For="class">Class</BSLabel>
+							<BSInput @bind-Value="Student.SchoolClass.SchoolClassName" Type="text" Id="class" ReadOnly="true" />
+						</BSFormGroup>
+					</BSForm>
+
+					@if (User.Role == "Student" && User.UserId == Student.UserId)
+					{
+						<div class="mt-4">
+							<BSButton Color="BSColor.Primary" @onclick="NavigateToEdit">Edit</BSButton>
+							<BSButton Color="BSColor.Info" @onclick="NavigateToClass">Class Overview</BSButton>
+						</div>
+					}
+				</div>
+			</BSCardBody>
+		</BSCard>
+	</BSContainer>
 
 
-	@if (User.Role == "Student" && User.UserId == Student.UserId)
-	{
-		<button id="edit" @onclick="NavigateToEdit">Edit Profile</button>
-
-		<button id="classoverview" @onclick="NavigateToClass">Class Overview</button>
-	}
-
+	
 }
 
 
