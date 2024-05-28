@@ -19,11 +19,17 @@
         public async Task<CurrentUser> GetUserAsync()
         {
 			// if available, return user from memory
-			if (currentUser != null) { return currentUser; }
-            
+			if (currentUser != null) 
+            { 
+                return currentUser; 
+            }
             // else, try to retrieve user from localstorage (previous login)
-            else return await _storageService.GetItem<CurrentUser>("currentUser");
-		}
+            else
+            {
+                currentUser = await _storageService.GetItem<CurrentUser>("currentUser");
+                return currentUser;
+            }
+        }
 
         public async Task SetUserAsync(CurrentUser user)
         {
