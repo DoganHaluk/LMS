@@ -2,51 +2,54 @@
 @inject StudentService _studentService
 @inject NavigationManager _navigation
 
-<h3>Register</h3>
-<BSForm Model="@NewStudent" IsRow="true" Gutters="Gutters.Medium" OnSubmit="CreateStudent" style="display:block">
-
-	<DataAnnotationsValidator />
-	<BSCol Position="Position.Relative" ColumnMedium="12">
-		@if (Errors != null)
-		{
-			foreach (var error in Errors)
-			{
-				<p style="color:red">@error.Name, @error.Message, @error.Value</p>
-			}
-		}
-		<BSValidationSummary />
-	</BSCol>
-	<BSCol Position="Position.Relative" ColumnMedium="4">
-		<BSLabel>Name</BSLabel>
-		<BSInput InputType="InputType.Text" id="studentName" @bind-Value="NewStudent.UserName" ValidateOnInput="true" />
-		<BSFeedback For="@(() => NewStudent.UserName)" ValidMessage="Name looks good." />
-	</BSCol>
-	<BSCol Position="Position.Relative" ColumnMedium="4">
-		<BSLabel>Email</BSLabel>
-		<BSInput InputType="InputType.Email" id="studentEmail" @bind-Value="NewStudent.Email" ValidateOnInput="true" />
-		<BSFeedback For="@(() => NewStudent.Email)" ValidMessage="Email looks good." />
-	</BSCol>
-	<BSCol Position="Position.Relative" ColumnMedium="4">
-		<BSLabel>Password</BSLabel>
-		<div style="position: relative;">
-			<BSInput InputType="@(isPasswordVisible ? InputType.Text : InputType.Password)" id="studentpassword" @bind-Value="NewStudent.Password" ValidateOnInput="true"  />
-			<button type="button" @onclick="TogglePasswordVisibility" style="position: absolute; right: 20px; top: 0; height: 100%; border: none; background: none;">
-				<span>@(isPasswordVisible ? "Hide" : "Show")</span>
-			</button>
-		</div>
-		<BSFeedback For="@(() => NewStudent.Password)" ValidMessage="Password looks good." />
-	</BSCol>
-	<BSCol Position="Position.Relative" ColumnMedium="4">
-		<BSLabel>Repeat Password</BSLabel>
-		<div style="position: relative;">
-			<BSInput InputType="@(isPasswordVisible ? InputType.Text : InputType.Password)" id="studentrepeatpassword" @bind-Value="NewStudent.RepeatPassword" ValidateOnInput="true" />
-			<button type="button" @onclick="TogglePasswordVisibility" style="position: absolute; right: 20px; top: 0; height: 100%; border: none; background: none;">
-				<span>@(isPasswordVisible ? "Hide" : "Show")</span>
-			</button>
-		</div>
-		<BSFeedback For="@(() => NewStudent.RepeatPassword)" ValidMessage="Password looks good." />
-	</BSCol>
-	<BSCol Column="12">
-		<BSButton Color="BSColor.Primary" IsSubmit="true">Submit</BSButton>
-	</BSCol>
-</BSForm>
+<BSContainer Class="d-flex justify-content-center align-items-center vh-100">
+	<BSCard Class="p-4 shadow-lg" Style="width: 300px;">
+		<h2>Register</h2>
+		<BSForm Model="@NewStudent" IsRow="true" Gutters="Gutters.Medium" OnSubmit="CreateStudent" style="display:block">
+			<DataAnnotationsValidator />
+			<BSCol Position="Position.Relative" ColumnMedium="12">
+				@if (Errors != null)
+				{
+					foreach (var error in Errors)
+					{
+						<p style="color:red">@error.Name, @error.Message, @error.Value</p>
+					}
+				}
+				<BSValidationSummary />
+			</BSCol>
+			<BSCol Position="Position.Relative">
+				<BSLabel>Name</BSLabel>
+				<BSInput InputType="InputType.Text" id="studentName" @bind-Value="NewStudent.UserName" ValidateOnInput="true" />
+				<BSFeedback For="@(() => NewStudent.UserName)" ValidMessage="Name looks good." />
+			</BSCol>
+			<BSCol Position="Position.Relative">
+				<BSLabel>Email</BSLabel>
+				<BSInput InputType="InputType.Email" id="studentEmail" @bind-Value="NewStudent.Email" ValidateOnInput="true" />
+				<BSFeedback For="@(() => NewStudent.Email)" ValidMessage="Email looks good." />
+			</BSCol>
+			<BSCol Position="Position.Relative">
+				<BSLabel>Password</BSLabel>
+				<div style="position: relative;">
+					<BSInput InputType="@(isPasswordVisible ? InputType.Text : InputType.Password)" id="studentpassword" @bind-Value="NewStudent.Password" ValidateOnInput="true" />
+					<button type="button" @onclick="TogglePasswordVisibility" style="position: absolute; right: 20px; top: 0; height: 100%; border: none; background: none;">
+						<span>@(isPasswordVisible ? "Hide" : "Show")</span>
+					</button>
+				</div>
+				<BSFeedback For="@(() => NewStudent.Password)" ValidMessage="Password looks good." />
+			</BSCol>
+			<BSCol Position="Position.Relative">
+				<BSLabel>Repeat Password</BSLabel>
+				<div style="position: relative;">
+					<BSInput InputType="@(isPasswordVisible ? InputType.Text : InputType.Password)" id="studentrepeatpassword" @bind-Value="NewStudent.RepeatPassword" ValidateOnInput="true" />
+					<button type="button" @onclick="TogglePasswordVisibility" style="position: absolute; right: 20px; top: 0; height: 100%; border: none; background: none;">
+						<span>@(isPasswordVisible ? "Hide" : "Show")</span>
+					</button>
+				</div>
+				<BSFeedback For="@(() => NewStudent.RepeatPassword)" ValidMessage="Password looks good." />
+			</BSCol>
+			<BSCol Column="12">
+				<BSButton Color="BSColor.Primary" IsSubmit="true">Submit</BSButton>
+			</BSCol>
+		</BSForm>
+	</BSCard>
+</BSContainer>
