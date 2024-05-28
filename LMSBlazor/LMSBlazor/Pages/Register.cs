@@ -9,6 +9,7 @@ namespace LMSBlazor.Pages
 
 		private List<InputError> Errors { get; set; }
 
+		private bool isPasswordVisible = false;
 
 		protected override async Task OnInitializedAsync()
 		{
@@ -21,7 +22,17 @@ namespace LMSBlazor.Pages
 			if (Errors == null)
 			{
 				_navigation.NavigateTo("/");
-			}			
+			}
+		}
+
+		private void TogglePasswordVisibility()
+		{
+			isPasswordVisible = !isPasswordVisible;
+		}
+
+		public class NewStudentModel
+		{
+			public string Password { get; set; }
 		}
 	}
 }

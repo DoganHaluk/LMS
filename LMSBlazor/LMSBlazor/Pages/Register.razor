@@ -3,10 +3,10 @@
 @inject NavigationManager _navigation
 
 <h3>Register</h3>
-<BSForm Model="@NewStudent" IsRow="true" Gutters="Gutters.Medium" OnSubmit="CreateStudent">
+<BSForm Model="@NewStudent" IsRow="true" Gutters="Gutters.Medium" OnSubmit="CreateStudent" style="display:block">
 
-    <DataAnnotationsValidator />
-    <BSCol Position="Position.Relative" ColumnMedium="12">
+	<DataAnnotationsValidator />
+	<BSCol Position="Position.Relative" ColumnMedium="12">
 		@if (Errors != null)
 		{
 			foreach (var error in Errors)
@@ -14,58 +14,39 @@
 				<p style="color:red">@error.Name, @error.Message, @error.Value</p>
 			}
 		}
-        <BSValidationSummary />
-    </BSCol>
-    <BSCol Position="Position.Relative" ColumnMedium="4">
-        <BSLabel>Name</BSLabel>
-		<BSInput InputType="InputType.Text" id="studentName" @bind-Value="NewStudent.UserName" ValidateOnInput="true" />
-        <BSFeedback For="@(() => NewStudent.UserName)" ValidMessage="Name looks good." />
-    </BSCol>
-    <BSCol Position="Position.Relative" ColumnMedium="4">
-        <BSLabel>Email</BSLabel>
-		<BSInput InputType="InputType.Text" id="studentEmail" @bind-Value="NewStudent.Email" placeholder="Email Address" />
-		<BSFeedback For="@(() => NewStudent.Email)" ValidMessage="Email looks good." />
-    </BSCol>
+		<BSValidationSummary />
+	</BSCol>
 	<BSCol Position="Position.Relative" ColumnMedium="4">
-        <BSLabel>Password</BSLabel>
-		<BSInput InputType="InputType.Text" id="studentpassword" @bind-Value="NewStudent.Password" ValidateOnInput="true" />
+		<BSLabel>Name</BSLabel>
+		<BSInput InputType="InputType.Text" id="studentName" @bind-Value="NewStudent.UserName" ValidateOnInput="true" />
+		<BSFeedback For="@(() => NewStudent.UserName)" ValidMessage="Name looks good." />
+	</BSCol>
+	<BSCol Position="Position.Relative" ColumnMedium="4">
+		<BSLabel>Email</BSLabel>
+		<BSInput InputType="InputType.Email" id="studentEmail" @bind-Value="NewStudent.Email" ValidateOnInput="true" />
+		<BSFeedback For="@(() => NewStudent.Email)" ValidMessage="Email looks good." />
+	</BSCol>
+	<BSCol Position="Position.Relative" ColumnMedium="4">
+		<BSLabel>Password</BSLabel>
+		<div style="position: relative;">
+			<BSInput InputType="@(isPasswordVisible ? InputType.Text : InputType.Password)" id="studentpassword" @bind-Value="NewStudent.Password" ValidateOnInput="true"  />
+			<button type="button" @onclick="TogglePasswordVisibility" style="position: absolute; right: 20px; top: 0; height: 100%; border: none; background: none;">
+				<span>@(isPasswordVisible ? "Hide" : "Show")</span>
+			</button>
+		</div>
 		<BSFeedback For="@(() => NewStudent.Password)" ValidMessage="Password looks good." />
-    </BSCol>
+	</BSCol>
 	<BSCol Position="Position.Relative" ColumnMedium="4">
 		<BSLabel>Repeat Password</BSLabel>
-		<BSInput InputType="InputType.Text" id="studentrepeatpassword" @bind-Value="NewStudent.RepeatPassword" ValidateOnInput="true" />
+		<div style="position: relative;">
+			<BSInput InputType="@(isPasswordVisible ? InputType.Text : InputType.Password)" id="studentrepeatpassword" @bind-Value="NewStudent.RepeatPassword" ValidateOnInput="true" />
+			<button type="button" @onclick="TogglePasswordVisibility" style="position: absolute; right: 20px; top: 0; height: 100%; border: none; background: none;">
+				<span>@(isPasswordVisible ? "Hide" : "Show")</span>
+			</button>
+		</div>
 		<BSFeedback For="@(() => NewStudent.RepeatPassword)" ValidMessage="Password looks good." />
 	</BSCol>
-    <BSCol Column="12">
-        <BSButton Color="BSColor.Primary" IsSubmit="true">Submit</BSButton>
-    </BSCol>
+	<BSCol Column="12">
+		<BSButton Color="BSColor.Primary" IsSubmit="true">Submit</BSButton>
+	</BSCol>
 </BSForm>
-
-@* <EditForm Model="@NewStudent" OnSubmit="CreateStudent">
-	@if (Errors != null)
-	{
-		foreach (var error in Errors)
-		{
-			<p style="color:red">@error.Name, @error.Message, @error.Value</p>
-
-		}
-	}
-	<label>Name</label>
-	<InputText id="studentName" @bind-Value="NewStudent.UserName"></InputText>
-	<br />
-	<br />
-	<label>Email</label>
-	<InputText id="studentEmail" @bind-Value="NewStudent.Email"></InputText>
-	<br />
-	<br />
-	<label>Password</label>
-	<InputText id="studentpassword" @bind-Value="NewStudent.Password"></InputText>
-	<br />
-	<br />
-	<label>Repeat Password</label>
-	<InputText id="studentrepeatpassword" @bind-Value="NewStudent.RepeatPassword"></InputText>
-	<br />
-	<br />
-	<button type="submit">Submit</button>
-
-</EditForm> *@
