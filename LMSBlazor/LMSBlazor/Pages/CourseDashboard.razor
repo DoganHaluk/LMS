@@ -3,58 +3,97 @@
 @inject CourseService _courseService
 
 
-<h3>CourseDashboard</h3>
+
 @if (Courses != null)
 {
-	<ul>
-		@foreach (var course in Courses)
-		{
-			<li>
-				@if (course.Selected == false)
-				{
-					<a href="/courseoverview?UserId=@UserId&CourseId=@course.CourseId">@course.CourseName</a>
-					<button type="button" @onclick="()=>ChangeEdit(course.CourseId)">Edit</button>
-					<button type="button" @onclick="()=>DeleteCourse(course.CourseId)">Delete</button>
-				}
+	<BSContainer Class="d-flex justify-content-center align-items-center vh-100">
+		<BSCard Class="p-4 shadow-lg" Style="width: 400px;">
+			<BSCard>
+				<h2 style="margin-left:35px;">Course Dashboard</h2>
+				<table class="table" >
+					<thead style="border:solid white">
+						<tr>
+							<th>
+								
+							</th>
+							<th>
+								
+							</th>
+							<th>
+								
+							</th>
+							<th>
 
-				else
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+					@foreach (var course in Courses)
+					{
+						<tr>
+							@if (course.Selected == false)
+							{
+								
+								<th>
+								<a href="/courseoverview?UserId=@UserId&CourseId=@course.CourseId"><strong>@course.CourseName</strong></a>
+								</th>
+								<th>
+								<BSButton Color="BSColor.Primary" @onclick="()=>ChangeEdit(course.CourseId)" style="margin-left:20px;">Edit</BSButton>
+								</th>
+								<th>
+								<BSButton Color="BSColor.Primary" @onclick="()=>DeleteCourse(course.CourseId)">Delete</BSButton>
+								</th>
+								
+							}
+
+							else
+							{	<th>
+								<BSForm Model="@Course" FormName="CourseName@Course.CourseId" Name="@($"CourseName{Course.CourseId}")">
+									@if (Errors != null)
+									{
+										foreach (var error in Errors)
+										{
+											<BSAlert Color="BSColor.Danger">@error.Name, @error.Message, @error.Value</BSAlert>
+
+										}
+									}
+									
+									<div style="display:flex; align-items: center;">
+									<BSInput InputType="InputType.Text" @bind-Value=Course.CourseName>@course.CourseName</BSInput>
+
+									<BSButton Color="BSColor.Primary" @onclick="EditCourseName">Ok</BSButton>
+									</div>
+									
+								</BSForm>
+									</th>
+							}
+							</tr>
+					}
+				</tbody>
+				</table>
+
+
+				@if (NewCourse != null && NewCourse.Selected == true)
 				{
-					<EditForm Model="@Course" OnSubmit="EditCourseName" FormName="CourseName@Course.CourseId" Name="@($"CourseName{Course.CourseId}")">
+
+					<BSForm Model="@NewCourse" OnSubmit="CreateNewCourse" FormName="NewCourse">
 						@if (Errors != null)
 						{
 							foreach (var error in Errors)
 							{
-								<p style="color:red">@error.Name, @error.Message, @error.Value</p>
+								<BSAlert Color="BSColor.Danger">@error.Name, @error.Message, @error.Value</BSAlert>
 
 							}
 						}
 						<label>Name</label>
-						<InputText @bind-Value=Course.CourseName>@course.CourseName</InputText>
-						<button type="submit">Ok</button>
-					</EditForm>
-				}
-			</li>
-		}
-	</ul>
-
-	@if (NewCourse != null && NewCourse.Selected == true)
-	{
-
-		<EditForm Model="@NewCourse" OnSubmit="CreateNewCourse" FormName="NewCourse">
-			@if (Errors != null)
-			{
-				foreach (var error in Errors)
-				{
-					<p style="color:red">@error.Name, @error.Message, @error.Value</p>
+						<InputText @bind-Value=NewCourse.CourseName>@NewCourse.CourseName</InputText>
+						<BSButton Color="BSColor.Primary" @onclick="CreateNewCourse">Ok</BSButton>
+					</BSForm>
 
 				}
-			}
-			<label>Name</label>
-			<InputText @bind-Value=NewCourse.CourseName>@NewCourse.CourseName</InputText>
-			<button type="submit">Ok</button>
-		</EditForm>
 
-	}
-
-	<button type="button" @onclick="CreateCourse">Create</button>
+				<BSButton Color="BSColor.Primary" @onclick="CreateCourse">Create</BSButton>
+			</BSCard>
+		</BSCard>
+	</BSContainer>
 }

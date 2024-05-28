@@ -1,11 +1,15 @@
 ﻿@page "/progressions"
 @inject StudentCodelabService _studentcodelabService
+@inject LearningModuleService _learningModuleService
 
-<h3>Progressions</h3>
-
-@foreach (var progression in LabProgressions)
+@if(LabProgressions !=null && LearningModuleDto != null)
 {
-	<p>@progression.StudentName :</p>
-	<p>@progression.FinishedCodelabs</p>
-	<p>@progression.TotalCodelabs</p>
+	<h2 style="margin:50px;">Progressions for module : "@LearningModuleDto.ModuleName"</h2>
+	@foreach (var progression in LabProgressions)
+	{
+		<BSLabel Margin="Margins.Medium">@progression.StudentName</BSLabel>
+		<BSProgress>
+			<BSProgressBar Color="BSColor.Success" Value="GetValue(progression)">@GetValue(progression)%</BSProgressBar>
+		</BSProgress>
+	}
 }

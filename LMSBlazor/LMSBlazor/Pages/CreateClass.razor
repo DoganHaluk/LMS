@@ -1,19 +1,28 @@
 ﻿@page "/createclass"
 @inject NavigationManager _navigation
 
-<h3>CreateClass</h3>
 
-<EditForm Model="@Name" OnSubmit="CreateSchoolClass">
-	@if (Errors != null)
-	{
-		foreach (var error in Errors)
-		{
-			<p style="color:red">@error.Name, @error.Message, @error.Value</p>
 
-		}
-	}
-	<label>Name</label>
-	<InputText id="schoolClassName" @bind-Value="Name"></InputText>
-	<button type="submit">Submit</button>
-	<button type="button" @onclick="NavigateToCoachProfile">Cancel</button>
-</EditForm>
+<BSContainer Class="d-flex justify-content-center align-items-center vh-100">
+	<BSCard Class="p-4 shadow-lg" Style="width: 400px;">
+		<h2 style="margin:30px;">Create your class</h2>
+		<BSForm Model="@Name">
+			@if (Errors != null)
+			{
+				foreach (var error in Errors)
+				{
+					<BSAlert Color="BSColor.Danger">@error.Name, @error.Message, @error.Value</BSAlert>
+
+				}
+			}
+			<BSLabel>Name</BSLabel>
+			<InputText id="schoolClassName" @bind-Value="Name"></InputText>
+			<BSButton Color="BSColor.Primary" @onclick="CreateSchoolClass">Submit</BSButton>
+			<BSButton Color="BSColor.Primary" @onclick="NavigateToCoachProfile" style="margin:30px;">Cancel</BSButton>
+		</BSForm>
+	</BSCard>
+</BSContainer>
+
+
+
+

@@ -4,27 +4,45 @@
 @inject StateContainer _stateContainer
 
 
-<h3>CoachProfile</h3>
 
 @if (Coach != null)
 {
-	<p>@Coach.UserId</p>
-	<p>@Coach.UserName</p>
-	<p>@Coach.Email</p>
-	@if(User.Role == "Coach" && User.UserId == Coach.UserId)
-	{
-		<ul>
-			@foreach (var schoolClass in Coach.CoachSchoolClasses)
-			{
-				<li><a href="/classoverview?UserId=@UserId&SchoolClassId=@schoolClass.SchoolClass.SchoolClassId">@schoolClass.SchoolClass.SchoolClassName</a></li>
-			}
-		</ul>
-		<div>
-			<button type="button" @onclick="NavigateToCreateClass">Create Class</button>
-		</div>
-		<div>
-			<button type="button" @onclick="NavigateToCourseDashboard">Course Dashboard</button>
-		</div>
-	}
-	
+	<BSContainer Class="d-flex justify-content-center align-items-center vh-100">
+		<BSCard Class="p-4 shadow-lg" Style="width: 400px;">
+			<BSCard>
+				<h2 class="mb-4">Coach</h2>
+				<div>
+					<BSForm Model="Coach">
+
+							<BSLabel For="name">Name</BSLabel>
+							<BSInput @bind-Value="Coach.UserName" Type="text" Id="name" ReadOnly="true" />
+						
+							<BSLabel For="email">Email</BSLabel>
+							<BSInput @bind-Value="Coach.Email" Type="email" Id="email" ReadOnly="true" />
+							@if (User.Role == "Coach" && User.UserId == Coach.UserId)
+							{
+								<h2 class="mt-4">Classes</h2>
+								<ul class="list-group">
+									@foreach (var schoolClass in Coach.CoachSchoolClasses)
+									{
+										<li class="list-group-item" @onclick="() => NavigateToClassOverview(schoolClass.SchoolClass.SchoolClassId)" style="cursor: pointer;">
+											@schoolClass.SchoolClass.SchoolClassName
+										</li>
+									}
+								</ul>
+							}						
+					</BSForm>
+
+					@if (User.Role == "Coach" && User.UserId == Coach.UserId)
+					{
+						<div class="mt-4">
+							<BSButton Color="BSColor.Primary" @onclick="NavigateToCreateClass">Create Class</BSButton>
+							<BSButton Color="BSColor.Info" @onclick="NavigateToCourseDashboard">Course Dashboard</BSButton>
+						</div>
+					}
+				</div>
+			</BSCard>
+		</BSCard>
+	</BSContainer>	
 }
+

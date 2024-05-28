@@ -23,6 +23,14 @@ namespace LMSBlazor.Services
 			};
 		}
 
+		public async Task<LearningModuleDto> GetModuleById(int moduleId)
+		{
+			LearningModuleDto module = new LearningModuleDto();
+			var apiResponse = await _httpClient.GetStreamAsync($"/api/modules/{moduleId}");
+			module = JsonSerializer.Deserialize<LearningModuleDto>(apiResponse, _serializerOptions);
+			return module;
+		}
+
 		public async Task<List<InputError>> EditModuleName(int moduleId, LearningModuleOverviewDto learningModuleOverviewDto)
 		{
 			var apiResponse = await _httpClient.PutAsJsonAsync($"/api/modules/{moduleId}",learningModuleOverviewDto);

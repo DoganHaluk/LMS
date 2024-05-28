@@ -11,6 +11,8 @@ namespace LMSBlazor.Pages
 		[SupplyParameterFromQuery]
 		public int ModuleId { get; set; }
 
+		public LearningModuleDto LearningModuleDto { get; set; }
+
 		public List<ProgressionDto> LabProgressions { get; set; }
 
 
@@ -18,6 +20,14 @@ namespace LMSBlazor.Pages
 		{
 			LabProgressions = new List<ProgressionDto>();
 			LabProgressions = await _studentcodelabService.GetProgressions(SchoolClassId, ModuleId);
+			LearningModuleDto = new LearningModuleDto();
+			LearningModuleDto = await _learningModuleService.GetModuleById(ModuleId);
+		}
+
+		public int GetValue(ProgressionDto progression)
+		{
+			return (100/progression.TotalCodelabs)*progression.FinishedCodelabs;
+			
 		}
 
 	}
