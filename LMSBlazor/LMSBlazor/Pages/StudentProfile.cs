@@ -6,9 +6,6 @@ namespace LMSBlazor.Pages
 {
 	public partial class StudentProfile
 	{
-		[Inject]
-		StudentService _studentService { get; set; }
-
 		[SupplyParameterFromQuery]
 		public int UserId { get; set; }
 
@@ -28,7 +25,7 @@ namespace LMSBlazor.Pages
 
 		private async Task UpdatePageAsync()
 		{
-			User = await _authenticationService.GetUserAsync();
+			User = await _stateContainer.GetUserAsync();
 			Student = await _studentService.GetStudentProfile(UserId);
 		}
 

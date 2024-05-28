@@ -8,12 +8,6 @@ namespace LMSBlazor.Pages
 {
 	public partial class EditStudentProfile
 	{
-		[Inject]
-		StudentService _studentService { get; set; }
-		[Inject]
-		SchoolClassService _schoolClassService { get; set; }
-
-
 		[SupplyParameterFromQuery]
 		private int UserId { get; set; }
 		private EditStudentProfileDto EditStudent { get; set; }

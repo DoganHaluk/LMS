@@ -1,6 +1,7 @@
 ﻿@inject AuthenticationService _authentication
 @inject NavigationManager _navigation
-@inject LocalStorageService _localStorageService
+@implements IDisposable
+@inject StateContainer _stateContainer
 
 
 <div class="top-row ps-3 navbar navbar-dark">
@@ -8,113 +9,132 @@
 		<a class="navbar-brand" href="">Switchfully</a>
 	</div>
 </div>
-
 <div>
-	<nav class="flex-column">
-		<div class="nav-item px-3">
-			<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-				<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Login
-			</NavLink>
-		</div>
+    <nav class="flex-column">
+        @*General*@
+        @if (User == null)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Login
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" @onclick="Register">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Register
+                </NavLink>
+            </div>
+        }
 
+        @* Student *@
+        @if (User != null && User.Role == "Student")
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" @onclick="NavigateToStudentProfile">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Student Profile
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" @onclick="NavigateToStudentEdit">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Edit Student Profile
+                </NavLink>
+            </div>
+        }
 
-		@* Student *@
-		<div class="nav-item px-3">
-			<NavLink class="nav-link" @onclick="NavigateToStudentProfile">
-				<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Student Profile
-			</NavLink>
-		</div>
-		<div class="nav-item px-3">
-			<NavLink class="nav-link" @onclick="NavigateToStudentEdit">
-				<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Edit Student Profile
-			</NavLink>
-		</div>
+        @* Coach *@
+        @if (User != null && User.Role == "Coach")
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" @onclick="NavigateToCoachProfile">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Coach Profile
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" @onclick="NavigateToCourseDashboard">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Courses DashBoard
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" @onclick="NavigateToCreateClass">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Create Class
+                </NavLink>
+            </div>
+        }
 
-
-
-		@* Coach *@
-		<div class="nav-item px-3">
-			<NavLink class="nav-link" @onclick="NavigateToCoachProfile">
-				<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Coach Profile
-			</NavLink>
-		</div>
-		<div class="nav-item px-3">
-			<NavLink class="nav-link" @onclick="NavigateToCourseDashboard">
-				<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Courses DashBoard
-			</NavLink>
-		</div>
-		<div class="nav-item px-3">
-			<NavLink class="nav-link" @onclick="NavigateToCreateClass">
-				<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Create Class
-			</NavLink>
-		</div>
-
-
-
-		@*General*@
-		<div class="nav-item px-3">
-			<NavLink class="nav-link" @onclick="Register">
-				<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Register
-			</NavLink>
-		</div>
-		<div class="nav-item px-3">
-			<NavLink class="nav-link" @onclick="Logout">
-				<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Logout
-			</NavLink>
-		</div>
-	</nav>
+        @if (User != null)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" @onclick="Logout">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Logout
+                </NavLink>
+            </div>
+        }
+    </nav>
 </div>
 
 @code {
 
-	private bool collapseNavMenu = true;
+    private bool collapseNavMenu = true;
 
-	private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-	private CurrentUser User { get; set; }
+    private CurrentUser User { get; set; }
 
-	protected override async Task OnInitializedAsync()
-	{
-		User = await _authentication.GetUserAsync();
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        ReloadStateContainer();
+        _stateContainer.OnChange += async () => await ReloadStateContainer();
+    }
 
-	private async Task ToggleNavMenu()
-	{
-		collapseNavMenu = !collapseNavMenu;
-	}
+    public async Task ReloadStateContainer()
+    {
+        User = await _stateContainer.GetUserAsync();
+        StateHasChanged();
+    }
 
-	private async void NavigateToStudentProfile()
-	{
-		_navigation.NavigateTo($"/studentprofile?UserId={User.UserId}");
-	}
+    public void Dispose()
+    {
+        _stateContainer.OnChange -= async () => await ReloadStateContainer();
+    }
 
-	private async void NavigateToStudentEdit()
-	{
-		_navigation.NavigateTo($"/editstudentprofile?UserId={User.UserId}");
-	}
+    private async Task ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
 
-	private async void NavigateToCoachProfile()
-	{
-		_navigation.NavigateTo($"/coachprofile?UserId={User.UserId}");
-	}
+    private async void NavigateToStudentProfile()
+    {
+        _navigation.NavigateTo($"/studentprofile?UserId={User.UserId}");
+    }
 
-	private async void NavigateToCourseDashboard()
-	{
-		_navigation.NavigateTo($"/coursedashboard?UserId={User.UserId}");
-	}
+    private async void NavigateToStudentEdit()
+    {
+        _navigation.NavigateTo($"/editstudentprofile?UserId={User.UserId}");
+    }
 
-	private async void NavigateToCreateClass()
-	{
-		_navigation.NavigateTo($"/createclass?UserId={User.UserId}");
-	}
+    private async void NavigateToCoachProfile()
+    {
+        _navigation.NavigateTo($"/coachprofile?UserId={User.UserId}");
+    }
 
-	private async void Logout()
-	{
-		_navigation.NavigateTo("/");
-	}
+    private async void NavigateToCourseDashboard()
+    {
+        _navigation.NavigateTo($"/coursedashboard?UserId={User.UserId}");
+    }
 
-	private async void Register()
-	{
-		_navigation.NavigateTo("/register");
-	}
+    private async void NavigateToCreateClass()
+    {
+        _navigation.NavigateTo($"/createclass?UserId={User.UserId}");
+    }
+
+    private async void Logout()
+    {
+        _navigation.NavigateTo("/logout");
+    }
+
+    private async void Register()
+    {
+        _navigation.NavigateTo("/register");
+    }
+
 }

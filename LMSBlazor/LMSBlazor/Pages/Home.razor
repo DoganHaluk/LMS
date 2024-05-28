@@ -1,0 +1,27 @@
+﻿@page "/"
+@inject NavigationManager _navigation
+@inject StateContainer StateContainer
+
+<PageTitle>Home</PageTitle>
+
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await StateContainer.GetUserAsync();
+
+
+        if (user == null)
+        {
+            _navigation.NavigateTo("/login");
+        }
+        else if (user.Role == "Student")
+        {
+            _navigation.NavigateTo($"/StudentProfile?UserId={user.UserId}");
+        }
+        else if (user.Role == "Coach")
+        {
+            _navigation.NavigateTo($"/CoachProfile?UserId={user.UserId}");
+        }
+    }
+}

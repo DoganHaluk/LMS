@@ -16,7 +16,6 @@ namespace LMSBlazor.Pages
 
         protected override async Task OnInitializedAsync()
 		{
-			await _localStorageService.RemoveItem("currentUser");
 		}
 
 
@@ -25,7 +24,7 @@ namespace LMSBlazor.Pages
 			var success = await _authenticationService.UserLoginAsync(UserLogin);
 			if (success == true) 
 			{
-				var user = await _localStorageService.GetItem<CurrentUser>("currentUser");
+				var user = await _stateContainer.GetUserAsync();
 				if (user.Role == "Student")
 				{
                     _navigate.NavigateTo($"/studentprofile?UserId={user.UserId}");

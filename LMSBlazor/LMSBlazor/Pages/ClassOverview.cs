@@ -6,9 +6,6 @@ namespace LMSBlazor.Pages
 {
     public partial class ClassOverview
     {
-        [Inject]
-        SchoolClassService _schoolClassService {  get; set; }
-
         [SupplyParameterFromQuery]
         private int UserId { get; set; }
 
@@ -21,7 +18,7 @@ namespace LMSBlazor.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            User = await _authentication.GetUserAsync();
+            User = await _stateContainer.GetUserAsync();
             SchoolClass = new SchoolClassOverviewDto();
             SchoolClass = await _schoolClassService.GetSchoolClassOverview(SchoolClassId);
         }

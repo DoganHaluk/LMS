@@ -6,9 +6,6 @@ namespace LMSBlazor.Pages
 {
 	public partial class CoachProfile
 	{
-		[Inject]
-		CoachService _coachService { get; set; }
-
 		[SupplyParameterFromQuery]
 		private int UserId { get; set; }
 
@@ -18,7 +15,7 @@ namespace LMSBlazor.Pages
 
 		protected override async Task OnInitializedAsync()
 		{
-			User = await _authenticationService.GetUserAsync();
+			User = await _stateContainer.GetUserAsync();
 			Coach = await _coachService.GetCoachProfileAsync(UserId);
 		}
 
