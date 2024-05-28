@@ -3,20 +3,39 @@
 @inject LocalStorageService _localStorageService
 @inject AuthenticationService _authenticationService
 
+<div class="text-primary py-4 mb-6 text-center">
+    <h1 class="display-4">Welcome to Switchfully Learning Management System</h1>
+</div>
 
-<h3>Login</h3>
+<BSContainer Class="d-flex justify-content-center align-items-center vh-100">
+    <BSCard Class="p-4 shadow-lg" Style="width: 300px;">
+        <BSCardHeader Class="text-center">
+            <h2>Login</h2>
+        </BSCardHeader>
+        <BSCardBody>
+            <BSForm Model="UserLogin" OnSubmit="HandleLogin">
+                <BSFormGroup>
+                    <BSLabel For="username">Username</BSLabel>
+                    <BSInput @bind-Value="UserLogin.Email" Type="text" Id="username" Placeholder="Enter your username" />
+                </BSFormGroup>
+                <BSFormGroup>
+                    <BSLabel For="password">Password</BSLabel>
+                    <BSInput @bind-Value="UserLogin.Password" Type="password" Id="password" Placeholder="Enter your password" />
+                </BSFormGroup>
+                @if (!string.IsNullOrEmpty(ErrorMessage))
+                {
+                    <BSAlert Color="BSColor.Danger">@ErrorMessage</BSAlert>
+                }
+                <BSButton Color="BSColor.Primary" Class="mt-3" @onclick="HandleLogin">Submit</BSButton>
+            </BSForm>
+        </BSCardBody>
+    </BSCard>
+</BSContainer>
 
-<EditForm Model="@UserLogin" OnSubmit="@HandleLogin">
-	<label>Email</label>
-	<InputText id="userEmail" @bind-Value="UserLogin.Email"></InputText>
-	<br />
-	<br />
-	<label>Password</label>
-	<InputText type="password" id="userPassword" @bind-Value="UserLogin.Password"></InputText>
-	<button type="submit">Login</button>
-	@if (!string.IsNullOrEmpty(ErrorMessage))
-	{
-		<p>@ErrorMessage</p>
-	}
 
-</EditForm>
+<style>
+    /* Custom CSS for the error message */
+    .mt-2 {
+        margin-top: 10px; /* Adjust margin-top as needed */
+    }
+</style>

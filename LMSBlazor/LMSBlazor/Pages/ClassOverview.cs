@@ -30,5 +30,21 @@ namespace LMSBlazor.Pages
         {
             _navigation.NavigateTo($"/addcourses?UserId={UserId}&SchoolClassId={SchoolClassId}");
         }
+
+        public async Task NavigateToStudent(int studentId)
+        {
+            _navigation.NavigateTo($"/studentprofile?UserId={studentId}");
+        }
+
+        public async Task NavigateToCoach(int coachId)
+        {
+            _navigation.NavigateTo($"/coachprofile?UserId={coachId}");
+        }
+
+        public async Task NavigateToCourse(int courseId)
+        {
+            _navigation.NavigateTo($"/courseoverview?UserId={UserId}&CourseId={courseId}&SchoolClassId={SchoolClassId}");
+        }
+
     }
 }

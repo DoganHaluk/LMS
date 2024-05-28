@@ -50,6 +50,11 @@ namespace LMSBlazor.Pages
             }
 		}
 
+		private void SelectClass(int id)
+		{
+			EditStudent.SchoolClassId = id;
+		}
+
 		private async Task UpdateProfile()
 		{
 			Errors = await _studentService.EditStudentProfile(UserId, EditStudent);
