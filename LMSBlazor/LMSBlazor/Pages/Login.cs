@@ -11,6 +11,8 @@ namespace LMSBlazor.Pages
 
 		private string ErrorMessage { get; set; }
 
+        private bool isPasswordVisible = false;
+
 
         protected override async Task OnInitializedAsync()
 		{
@@ -37,6 +39,11 @@ namespace LMSBlazor.Pages
 			{
 				ErrorMessage = "Invalid Login";
 			}
+		}
+
+		private void TogglePasswordVisibility()
+		{
+			isPasswordVisible = !isPasswordVisible;
 		}
 	}
 }
