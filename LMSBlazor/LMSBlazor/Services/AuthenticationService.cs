@@ -12,17 +12,17 @@ namespace LMSBlazor.Services
 	{
 		private readonly HttpClient _httpClient;
 		private readonly JsonSerializerOptions _serializerOptions;
-		private readonly LocalStorageService _storageService;
+		private readonly StateContainer _stateContainer;
 
-		public AuthenticationService(HttpClient httpClient,LocalStorageService localStorageService)
+		public AuthenticationService(HttpClient httpClient, StateContainer stateContainer)
 		{
 			_httpClient = httpClient;
-			_storageService = localStorageService;
 			_serializerOptions = new JsonSerializerOptions()
 			{
 				PropertyNameCaseInsensitive = true,
 				ReferenceHandler = ReferenceHandler.Preserve
 			};
+			_stateContainer = stateContainer;
 		}
 
 
@@ -33,15 +33,15 @@ namespace LMSBlazor.Services
 			if (apiResponse.StatusCode == HttpStatusCode.OK)
 			{
 				CurrentUser user = JsonSerializer.Deserialize<CurrentUser>(apiResponse.Content.ReadAsStream(), _serializerOptions);
-				_storageService.SetItem("currentUser", user);
+				await _stateContainer.SetUserAsync(user);
 				return true;
 			}
 			return false;			
 		}
 
-		public async Task<CurrentUser> GetUserAsync()
+		public async Task UserLogoutAsync()
 		{
-			return await _storageService.GetItem<CurrentUser>("currentUser");
+			await _stateContainer.SetUserAsync(null);
 		}
 	}
 }

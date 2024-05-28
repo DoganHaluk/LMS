@@ -9,6 +9,9 @@ namespace LMSBlazor.Pages
 	public partial class CourseOverview
 	{
 		[Inject]
+		private StateContainer _stateContainer { get; set; }
+
+		[Inject]
 		private CourseService _courseService { get; set; }
 
 		[SupplyParameterFromQuery]
@@ -43,7 +46,7 @@ namespace LMSBlazor.Pages
 
 		protected override async Task OnInitializedAsync()
 		{
-			User = await _authentication.GetUserAsync();
+			User = await _stateContainer.GetUserAsync();
 			Course = await _courseService.GetCourseOverview(CourseId);
 			if (User.Role == "Student")
 			{

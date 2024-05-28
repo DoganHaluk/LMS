@@ -5,17 +5,18 @@ namespace LMSBlazor.Services
 	public class TokenService
 	{
 		private readonly HttpClient _httpClient;
-		private readonly AuthenticationService _authenticationService;
+		private readonly StateContainer _stateContainer;
 
-		public TokenService(HttpClient httpClient, AuthenticationService authenticationService)
+
+		public TokenService(HttpClient httpClient, StateContainer stateContainer)
 		{
 			_httpClient = httpClient;
-			_authenticationService = authenticationService;
+			_stateContainer = stateContainer;
 		}
 
 		public async Task AddTokenAsync()
 		{
-			var user = await _authenticationService.GetUserAsync();
+			var user = await _stateContainer.GetUserAsync();
 			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{user.Token}");
 		}
 	}

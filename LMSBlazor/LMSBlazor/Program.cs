@@ -10,7 +10,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<StudentService>();
 builder.Services.AddScoped<SchoolClassService>();
 builder.Services.AddScoped<AuthenticationService>();
-builder.Services.AddScoped<LocalStorageService>();
+builder.Services.AddSingleton<LocalStorageService>();
 builder.Services.AddScoped<CoachService>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<CourseService>();
@@ -18,6 +18,7 @@ builder.Services.AddScoped<SchoolClassCourseService>();
 builder.Services.AddScoped<LearningModuleService>();
 builder.Services.AddScoped<CodelabService>();
 builder.Services.AddScoped<StudentCodelabService>();
+builder.Services.AddSingleton<StateContainer>();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7024") });
 
