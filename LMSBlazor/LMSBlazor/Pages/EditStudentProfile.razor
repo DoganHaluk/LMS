@@ -7,39 +7,34 @@
 	
 <BSContainer Class="d-flex justify-content-center align-items-center vh-100">
     <BSCard Class="p-4 shadow-lg" Style="width: 400px;">
-        <BSCardHeader Class="text-center">
+        
             <h2>Form</h2>
-        </BSCardHeader>
-        <BSCardBody>
+       
+       
             <BSForm Model="EditStudent">
-                <BSFormGroup>
+                
                     <BSLabel For="name">Name</BSLabel>
                     <BSInput @bind-Value="EditStudent.UserName" Type="text" Id="name" Placeholder="Enter your name" />
-                </BSFormGroup>
-                <BSFormGroup>
+                
+                
                     <BSLabel For="email">Email</BSLabel>
                     <BSInput @bind-Value="EditStudent.Email" Type="email" Id="email" Placeholder="Enter your email" />
-                </BSFormGroup>
-                <BSFormGroup>
+                
+                
                     <BSLabel For="class">Class</BSLabel>
-                    <BSDropdown Class="w-100">
-                        <BSDropdownToggle>
-                            @EditStudent.SchoolClassId
-                        </BSDropdownToggle>
-                        <BSDropdownMenu>
+                    <BSInput InputType="InputType.Select" Class="w-100" @bind-Value="EditStudent.SchoolClassId">                      
                             @foreach (var schoolclass in SchoolClasses)
                             {
-                                <BSDropdownItem OnClick="()=>SelectClass(schoolclass.SchoolClassId)">@schoolclass.SchoolClassName</BSDropdownItem>
+                                <option value="@schoolclass.SchoolClassId">@schoolclass.SchoolClassName</option>
                             }
-                        </BSDropdownMenu>
-                    </BSDropdown>
-                </BSFormGroup>
-                <div class="d-flex justify-content-between">
+                    </BSInput>
+                
+                <div class="d-flex justify-content-between mt-5" >
                     <BSButton Color="BSColor.Primary" OnClick="UpdateProfile">Submit</BSButton>
                     <BSButton Color="BSColor.Secondary" OnClick="NavigateToProfile">Cancel</BSButton>
                 </div>
             </BSForm>
-        </BSCardBody>
+        
     </BSCard>
 </BSContainer>
 
