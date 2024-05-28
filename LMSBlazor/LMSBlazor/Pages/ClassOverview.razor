@@ -5,53 +5,56 @@
 
 @if (SchoolClass != null)
 {
-    <BSContainer>
-        <h1 class="text-center mt-4">Class Overview</h1>
-        <h2 class="mt-4">Class</h2>
-        <ul class="list-group">
-            <li class="list-group-item">
-                @SchoolClass.SchoolClassName
-            </li>
-            <!-- Add more class items as needed -->
-        </ul>
-        <h2 class="mt-4">Students</h2>
-        <ul class="list-group">
-            @foreach (var student in SchoolClass.Students)
-            {
-                <li class="list-group-item" @onclick="() => NavigateToStudent(student.UserId)" style="cursor: pointer;">
-                    @student.UserName
-                </li>
-            }
-            <!-- Add more student items as needed -->
-        </ul>
-        <h2 class="mt-4">Coaches</h2>
-        <ul class="list-group">
-            @foreach (var coach in SchoolClass.CoachSchoolClasses)
-            {
-                <li class="list-group-item" @onclick="() => NavigateToCoach(coach.Coach.UserId)" style="cursor: pointer;">
-                    @coach.Coach.UserName
-                </li>
-            }
+	<BSContainer>
+		<h1 class="text-center mt-4">Class Overview</h1>
+		<h2 class="mt-4">Class</h2>
+		<ul class="list-group">
+			<li class="list-group-item">
+				@SchoolClass.SchoolClassName
+			</li>
+			<!-- Add more class items as needed -->
+		</ul>
+		<h2 class="mt-4">Students</h2>
+		<ul class="list-group">
+			@if (SchoolClass.Students != null)
+			{
+				@foreach (var student in SchoolClass.Students)
+				{
+					<li class="list-group-item" @onclick="() => NavigateToStudent(student.UserId)" style="cursor: pointer;">
+						@student.UserName
+					</li>
+				}
+			}
+			<!-- Add more student items as needed -->
+		</ul>
+		<h2 class="mt-4">Coaches</h2>
+		<ul class="list-group">
+			@foreach (var coach in SchoolClass.CoachSchoolClasses)
+			{
+				<li class="list-group-item" @onclick="() => NavigateToCoach(coach.Coach.UserId)" style="cursor: pointer;">
+					@coach.Coach.UserName
+				</li>
+			}
 
-            <!-- Add more coach items as needed -->
-        </ul>
-        <h2 class="mt-4">Courses</h2>
-        <ul class="list-group">
-            @foreach (var course in SchoolClass.SchoolClassCourses)
-            {
-                <li class="list-group-item" @onclick="() => NavigateToCourse(course.Course.CourseId)" style="cursor: pointer;">
-                    @course.Course.CourseName
-                </li>
-            }
+			<!-- Add more coach items as needed -->
+		</ul>
+		<h2 class="mt-4">Courses</h2>
+		<ul class="list-group">
+			@foreach (var course in SchoolClass.SchoolClassCourses)
+			{
+				<li class="list-group-item" @onclick="() => NavigateToCourse(course.Course.CourseId)" style="cursor: pointer;">
+					@course.Course.CourseName
+				</li>
+			}
 
-            <!-- Add more course items as needed -->
-        </ul>
-        @if (User.Role == "Coach")
-        {
-            <div class="mt-4 text-center">
-                <BSButton Color="BSColor.Success" @onclick="NavigateToAddCourses">Add Course</BSButton>
-            </div>
-        }
+			<!-- Add more course items as needed -->
+		</ul>
+		@if (User.Role == "Coach")
+		{
+			<div class="mt-4 text-center">
+				<BSButton Color="BSColor.Success" @onclick="NavigateToAddCourses">Add Course</BSButton>
+			</div>
+		}
 
-    </BSContainer>
+	</BSContainer>
 }
