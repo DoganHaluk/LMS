@@ -96,13 +96,14 @@
 	public List<UpdateStatusCodelabDto> Statuses { get; set; }
 
 	[Parameter]
+	public List<StudentCodelabSummaryDto> StudentCodelabs { get; set; }
+
+	[Parameter]
 	public Func<Task> ReloadParentAsync { get; set; }
 
 	private CreateCodelabDto NewCodelab { get; set; }
 
-	private CreateStudentCodelabDto NewStudentCodelab { get; set; }
-
-	private List<StudentCodelabSummaryDto> StudentCodelabs { get; set; }
+	private CreateStudentCodelabDto NewStudentCodelab { get; set; } 
 
 	protected override async Task OnInitializedAsync()
 	{

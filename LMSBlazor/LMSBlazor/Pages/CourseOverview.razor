@@ -19,7 +19,7 @@
 	<ul>
 		@foreach (var module in Course.Modules)
 		{
-			<BSCard Class="p-4 shadow-lg" Style="width:auto;">
+			<BSCard Class="p-4 shadow-lg" Style="width:800px;">
 				<li>
 					@if (User.Role == "Student")
 					{
@@ -37,7 +37,7 @@
 								<BSButton Color="BSColor.Primary" @onclick="()=>DeleteModule(module.LearningModuleId)">Delete</BSButton>
 								if (SchoolClassId > 0 && module.Codelabs.Count > 0)
 								{
-									<BSButton Color="BSColor.Primary" @onclick="()=>NavigateToProgression(module.LearningModuleId)">Progression</BSButton>
+									<BSButton Color="BSColor.Primary" class="progression-button" @onclick="()=>NavigateToProgression(module.LearningModuleId)">Progression</BSButton>
 								}
 							}
 						}
@@ -59,7 +59,7 @@
 					}
 					@foreach (var codelab in module.Codelabs)
 					{
-						<CodelabDisplay Codelab="@codelab" Errors="@Errors" Statuses="@Statuses" ReloadParentAsync="@ReloadCourseAsync"></CodelabDisplay>
+						<CodelabDisplay Codelab="@codelab" Errors="@Errors" Statuses="@Statuses" ReloadParentAsync="@ReloadCourseAsync" StudentCodelabs="@StudentCodelabs"></CodelabDisplay>
 					}
 				</li>
 			</BSCard>
@@ -68,7 +68,7 @@
 			{
 				foreach (var submodules in module.SubModules)
 				{
-					<BSCard Class="p-4 shadow-lg" Style="width:auto;">
+					<BSCard Class="p-4 shadow-lg" Style="width:750px;margin-left:50px">
 						<ul>
 							<li>
 								@if (User.Role == "Student")
@@ -85,7 +85,7 @@
 										<BSButton Color="BSColor.Primary" @onclick="()=>DeleteSubmodule(submodules.LearningModuleId)">Delete</BSButton>
 										if (SchoolClassId > 0 && submodules.Codelabs.Count > 0)
 										{
-											<BSButton Color="BSColor.Primary" @onclick="()=>NavigateToProgression(submodules.LearningModuleId)">Progression</BSButton>
+											<BSButton Color="BSColor.Primary" class="progression-button" @onclick="()=>NavigateToProgression(submodules.LearningModuleId)">Progression</BSButton>
 										}
 									}
 									else
@@ -107,7 +107,7 @@
 							</li>
 							@foreach (var codelab in submodules.Codelabs)
 							{
-								<CodelabDisplay Codelab="@codelab" Errors="@Errors" Statuses="@Statuses" ReloadParentAsync="@ReloadCourseAsync"></CodelabDisplay>
+								<CodelabDisplay Codelab="@codelab" Errors="@Errors" Statuses="@Statuses" ReloadParentAsync="@ReloadCourseAsync" StudentCodelabs="@StudentCodelabs"></CodelabDisplay>
 							}
 						</ul>
 					</BSCard>

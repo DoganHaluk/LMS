@@ -109,3 +109,11 @@ code {
 .course-button {
     margin: 5px;
 }
+
+.progression-button {
+    margin-left: 5px;
+}
+
+.form-label{
+    margin-right: 50px;
+}
