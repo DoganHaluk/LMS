@@ -70,6 +70,14 @@ namespace LMSApi.Services
 			return coach;
 		}
 
+		public void UpdateCoach(int id, EditCoachDto coach)
+		{
+			var update = _context.Coaches.Find(id);
+			update.UserName = coach.UserName;
+			update.Email = coach.Email;
+			_context.SaveChanges();
+		}
+
 
 	}
 }

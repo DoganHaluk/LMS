@@ -4,26 +4,37 @@
 @inject SchoolClassCourseService _schoolClassCourseService
 @inject NavigationManager _navigation
 
-<h3>Courses</h3>
 
-<p>@SchoolClass.SchoolClassName</p>
+@if (Courses != null && SchoolClass != null)
+{
+	<BSContainer Class="d-flex justify-content-center align-items-center vh-100">
+		<BSCard Class="p-4 shadow-lg" Style="width: 280px;">
+			<BSCard>
+				<h2 class="mb-4" style="margin-left:10px;">Select Courses</h2>
+				<BSLabel style="margin-left:30px;">@SchoolClass.SchoolClassName</BSLabel>
 
-<EditForm Model="@Courses" OnSubmit="CreateSchoolClassCourses">
-	<ul>
-	@foreach (var course in Courses)
-	{
-			<li>
-			<InputCheckbox @bind-Value=course.Selected></InputCheckbox>
-			<label>@course.CourseName</label>
-			</li>
-	}
-	</ul>
-	<button type="submit">Add Courses</button>
+				<EditForm Model="@Courses" style="margin:40px;">
+					<ul>
+						@foreach (var course in Courses)
+						{
+							<li>
+								<InputCheckbox @bind-Value="@course.Selected"></InputCheckbox>
+								<BSLabel>@course.CourseName</BSLabel>
+							</li>
+						}
+					</ul>
+					<BSButton Color="BSColor.Primary" @onclick="CreateSchoolClassCourses">Add Courses</BSButton>
 
-</EditForm>
+				</EditForm>
+				<BSButton Color="BSColor.Primary" @onclick="NavigateToCourseDashboard">Course Dashboard</BSButton>
+			</BSCard>
+		</BSCard>
+	</BSContainer>
+}
 
-<button type="button" @onclick="NavigateToCourseDashboard">Course Dashboard</button>
-@* 
+
+
+@*
 <pre>@ModelJson</pre>
 <pre>@RequestJson</pre> *@
 

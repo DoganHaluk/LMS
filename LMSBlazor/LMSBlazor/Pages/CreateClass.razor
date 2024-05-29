@@ -1,19 +1,47 @@
 ﻿@page "/createclass"
 @inject NavigationManager _navigation
+@inject SchoolClassService _schoolClassService
 
-<h3>CreateClass</h3>
 
-<EditForm Model="@Name" OnSubmit="CreateSchoolClass">
-	@if (Errors != null)
-	{
-		foreach (var error in Errors)
-		{
-			<p style="color:red">@error.Name, @error.Message, @error.Value</p>
 
-		}
-	}
-	<label>Name</label>
-	<InputText id="schoolClassName" @bind-Value="Name"></InputText>
-	<button type="submit">Submit</button>
-	<button type="button" @onclick="NavigateToCoachProfile">Cancel</button>
-</EditForm>
+
+@if (SchoolClasses != null)
+{
+	<BSContainer Class="d-flex justify-content-center align-items-center vh-100">
+		<BSCard Class="p-4 shadow-lg" Style="width: 400px;">
+			<BSCard>
+				<h2 style="margin:50px;">Existing classes</h2>
+				<ul>
+				@foreach (var schoolClass in SchoolClasses)
+				{
+					<li style="margin-left:50px;">
+					<BSLabel>@schoolClass.SchoolClassName</BSLabel>
+						</li>
+				}
+			</ul>
+			<h2 style="margin:30px;">Create your class</h2>
+			<BSForm Model="@Name">
+				@if (Errors != null)
+				{
+					foreach (var error in Errors)
+					{
+						<BSAlert Color="BSColor.Danger">@error.Name, @error.Message, @error.Value</BSAlert>
+
+					}
+				}
+				<BSLabel Margin="Margins.Medium">Name</BSLabel>
+				<InputText id="schoolClassName" @bind-Value="Name"></InputText>
+				<BSButton Margin="Margins.Medium" Color="BSColor.Primary" @onclick="CreateSchoolClass">Submit</BSButton>
+				<BSButton Color="BSColor.Primary" @onclick="NavigateToCoachProfile" style="margin-left:140px;">Cancel</BSButton>
+			</BSForm>
+		</BSCard>
+	</BSCard>
+</BSContainer>
+}
+
+
+
+
+
+
+

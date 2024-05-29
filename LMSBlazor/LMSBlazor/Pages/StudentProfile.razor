@@ -8,22 +8,20 @@
 {
 	<BSContainer Class="d-flex justify-content-center align-items-center vh-100">
 		<BSCard Class="p-4 shadow-lg" Style="width: 400px;">
-			<BSCardBody>
-				<h2 class="mb-4">User Profile</h2>
+			
+				<h2 class="mb-4">Profile</h2>
 				<div>
 					<BSForm Model="Student">
-						<BSFormGroup>
+						
 							<BSLabel For="name">Name</BSLabel>
 							<BSInput @bind-Value="Student.UserName" Type="text" Id="name" ReadOnly="true" />
-						</BSFormGroup>
-						<BSFormGroup>
+						
 							<BSLabel For="email">Email</BSLabel>
 							<BSInput @bind-Value="Student.Email" Type="email" Id="email" ReadOnly="true" />
-						</BSFormGroup>
-						<BSFormGroup>
+						
 							<BSLabel For="class">Class</BSLabel>
 							<BSInput @bind-Value="Student.SchoolClass.SchoolClassName" Type="text" Id="class" ReadOnly="true" />
-						</BSFormGroup>
+						
 					</BSForm>
 
 					@if (User.Role == "Student" && User.UserId == Student.UserId)
@@ -34,7 +32,7 @@
 						</div>
 					}
 				</div>
-			</BSCardBody>
+			
 		</BSCard>
 	</BSContainer>
 

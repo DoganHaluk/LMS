@@ -11,7 +11,7 @@ namespace LMSApi.Controllers
 {
     [ApiController]
 	[Route("/api/coach")]
-	[AuthorizeScope("Coach")]
+	
 	public class CoachController : ControllerBase
 	{
 		private readonly CoachService _coachService;
@@ -26,17 +26,26 @@ namespace LMSApi.Controllers
 		
 
 		[HttpGet("{id}")]
+		[AuthorizeScope("Coach,Student")]
 		public IActionResult GetCoach(int id)
 		{
 			return Ok(_mapper.Map<CoachSummaryDto>(_coachService.GetCoach(id)));
 		}
 
 		[HttpPost("")]
-
+		
 		public IActionResult CreateCoach(CreateCoachDto coachDto)
 		{
 			Coach newCoach = _coachService.CreateCoach(_mapper.Map<Coach>(coachDto));
 			return Created($"{newCoach.UserId}", _mapper.Map<CoachSummaryDto>(newCoach));
+		}
+
+		[HttpPost("{id}")]
+
+		public IActionResult EditCoach(int id,EditCoachDto coachDto)
+		{
+			_coachService.UpdateCoach(id, coachDto);
+			return Ok();
 		}
 	}
 }
