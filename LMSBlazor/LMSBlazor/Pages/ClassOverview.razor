@@ -25,29 +25,31 @@
 					</li>
 				}
 			}
-			<!-- Add more student items as needed -->
+			
 		</ul>
 		<h2 class="mt-4">Coaches</h2>
 		<ul class="list-group">
-			@foreach (var coach in SchoolClass.CoachSchoolClasses)
+			@if (SchoolClass.CoachSchoolClasses != null)
 			{
-				<li class="list-group-item" @onclick="() => NavigateToCoach(coach.Coach.UserId)" style="cursor: pointer;">
-					@coach.Coach.UserName
-				</li>
-			}
-
-			<!-- Add more coach items as needed -->
+				@foreach (var coach in SchoolClass.CoachSchoolClasses)
+				{
+					<li class="list-group-item" @onclick="() => NavigateToCoach(coach.Coach.UserId)" style="cursor: pointer;">
+						@coach.Coach.UserName
+					</li>
+				}
+			}			
 		</ul>
 		<h2 class="mt-4">Courses</h2>
 		<ul class="list-group">
-			@foreach (var course in SchoolClass.SchoolClassCourses)
+			@if (SchoolClass.SchoolClassCourses != null)
 			{
-				<li class="list-group-item" @onclick="() => NavigateToCourse(course.Course.CourseId)" style="cursor: pointer;">
-					@course.Course.CourseName
-				</li>
+				@foreach (var course in SchoolClass.SchoolClassCourses)
+				{
+					<li class="list-group-item" @onclick="() => NavigateToCourse(course.Course.CourseId)" style="cursor: pointer;">
+						@course.Course.CourseName
+					</li>
+				}
 			}
-
-			<!-- Add more course items as needed -->
 		</ul>
 		@if (User.Role == "Coach")
 		{

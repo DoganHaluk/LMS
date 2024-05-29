@@ -8,18 +8,22 @@ namespace LMSBlazor.Pages
 {
 	public partial class CreateClass
 	{
-		[Inject]
-		private SchoolClassService _schoolClassService {  get; set; }
-
 		[SupplyParameterFromQuery]
 		private int UserId { get; set; }
 
 		private string Name { get; set; } = "";
 
+		private List<SchoolClassSummaryDto> SchoolClasses {  get; set; }
+
 		private CreateSchoolClassDto NewClass {  get; set; }
 
 		private List<InputError> Errors { get; set; }
 
+		protected override async Task OnInitializedAsync()
+		{
+			SchoolClasses = new List<SchoolClassSummaryDto>();
+			SchoolClasses = await _schoolClassService.GetAllSchoolClasses();
+		}
 
 		public async Task CreateSchoolClass()
 		{

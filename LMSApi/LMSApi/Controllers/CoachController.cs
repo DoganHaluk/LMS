@@ -33,11 +33,19 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPost("")]
-		[AuthorizeScope("Coach")]
+		
 		public IActionResult CreateCoach(CreateCoachDto coachDto)
 		{
 			Coach newCoach = _coachService.CreateCoach(_mapper.Map<Coach>(coachDto));
 			return Created($"{newCoach.UserId}", _mapper.Map<CoachSummaryDto>(newCoach));
+		}
+
+		[HttpPost("{id}")]
+
+		public IActionResult EditCoach(int id,EditCoachDto coachDto)
+		{
+			_coachService.UpdateCoach(id, coachDto);
+			return Ok();
 		}
 	}
 }
