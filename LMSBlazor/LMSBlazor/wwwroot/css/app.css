@@ -106,6 +106,6 @@ code {
     display: block !important;
 }
 
-btn btn-primary {
-    margin-left: 10px;
+.course-button {
+    margin: 5px;
 }

@@ -22,9 +22,11 @@ namespace LMSApi.Services
 		{
 			return _context.Courses
 				.Where(c => c.CourseId == id)
-				.Include(c => c.Modules.Where(m=>m.ParentId == null))
+				.Include(c => c.Modules.Where(m => m.ParentId == null))
 				.ThenInclude(m => m.SubModules)
 				.ThenInclude(s => s.Codelabs)
+				.Include(c => c.Modules.Where(m => m.ParentId == null))
+				.ThenInclude(m => m.Codelabs)
 				.AsNoTracking()
 				.FirstOrDefault();
 		}

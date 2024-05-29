@@ -47,6 +47,7 @@ namespace LMSBlazor.Services
 		public async Task DeleteCodelab(int id)
 		{
 			var apiResponse = await _httpClient.DeleteAsync($"/api/codelabs/{id}");
+			apiResponse.EnsureSuccessStatusCode();
 		}
 	}
 }

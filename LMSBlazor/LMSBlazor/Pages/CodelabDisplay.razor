@@ -1,0 +1,182 @@
+﻿@using LMSBase.Models.Dtos.Request;
+@using LMSBase.Models.Dtos.Response;
+@using LMSBase.Models.Utilities;
+@using LMSBase.Models.Domain;
+@inject CodelabService _codelabService
+@inject StudentCodelabService _studentCodelabService
+@inject StateContainer _stateContainer
+
+<p></p>
+@if (User != null)
+{
+	<ul>
+		<li style="margin: 20px">
+			@if (User.Role == "Student")
+			{
+				<BSLabel>Codelab : @Codelab.Name</BSLabel>
+				<BSLabel>Description : @Codelab.Description</BSLabel>
+				<text>
+					@{
+						var studentCodelab = GetStudentCodelab(Codelab.CodelabId);
+					}
+				</text>
+
+				if (studentCodelab != null)
+				{
+					<BSForm Model="@studentCodelab" FormName="CodelabStatus" Name="@($"Codelab{Codelab.CodelabId}")">
+						@if (Errors != null)
+						{
+							foreach (var error in Errors)
+							{
+								<BSAlert Color="BSColor.Danger">@error.Name, @error.Message, @error.Value</BSAlert>
+							}
+						}
+						<BSLabel>Status</BSLabel>
+						<BSInput InputType="InputType.Select" id="codelabStatus" @bind-Value="studentCodelab.Status.StatusId">
+							@foreach (var status in Statuses)
+							{
+								<option value="@status.StatusId">@status.StatusName</option>
+							}
+						</BSInput>
+						<BSLabel>Comment</BSLabel>
+						<BSInput InputType="InputType.Text" @bind-Value=studentCodelab.Comment></BSInput>
+						<BSButton Color="BSColor.Primary" @onclick="()=>UpdateStudentCodelab(studentCodelab)">Ok</BSButton>
+					</BSForm>
+				}
+				else
+				{
+					<BSButton Color="BSColor.Primary" @onclick="()=>CreateStudentCodelab(Codelab.CodelabId)">Start</BSButton>
+				}
+			}
+			else if (User.Role == "Coach")
+			{
+				if (Codelab.Edit == false)
+				{
+
+					<BSLabel style="display:block">Codelab : @Codelab.Name</BSLabel>
+					<BSLabel style="display:block">Description : @Codelab.Description</BSLabel>
+					<BSButton Color="BSColor.Primary" @onclick="()=>ChangeEditCodelab()">Edit</BSButton>
+					<BSButton Color="BSColor.Primary" @onclick="()=>DeleteCodelab(Codelab.CodelabId)">Delete</BSButton>
+				}
+				else
+				{
+					<BSForm Model="@Codelab" FormName="CodelabName@CodelabId" Name="@($"CodelabName{Codelab.CodelabId}")">
+						@if (Errors != null)
+						{
+							foreach (var error in Errors)
+							{
+								<BSAlert Color="BSColor.Danger">@error.Name, @error.Message, @error.Value</BSAlert>
+
+							}
+						}
+						<BSLabel>Name</BSLabel>
+						<BSInput InputType="InputType.Text" @bind-Value=Codelab.Name>@Codelab.Name</BSInput>
+						<BSLabel>Description</BSLabel>
+						<BSInput InputType="InputType.Text" @bind-Value=Codelab.Description>@Codelab.Description</BSInput>
+						<BSButton Color="BSColor.Primary" @onclick="EditCodelab">Ok</BSButton>
+					</BSForm>
+				}
+			}
+
+		</li>
+	</ul>
+}
+
+
+@code {
+	public CurrentUser User { get; set; }
+
+	[Parameter]
+	public CodelabSummaryDto Codelab { get; set; }
+
+	[Parameter]
+	public List<InputError> Errors { get; set; }
+
+	[Parameter]
+	public List<UpdateStatusCodelabDto> Statuses { get; set; }
+
+	[Parameter]
+	public Func<Task> ReloadParentAsync { get; set; }
+
+	private CreateCodelabDto NewCodelab { get; set; }
+
+	private CreateStudentCodelabDto NewStudentCodelab { get; set; }
+
+	private List<StudentCodelabSummaryDto> StudentCodelabs { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		User = await _stateContainer.GetUserAsync();
+	}
+
+	public void ChangeEditCodelab()
+	{
+		Codelab.Edit = true;
+	}
+
+	public async Task EditCodelab()
+	{
+		EditCodelabDto editCodelabDto = new EditCodelabDto()
+			{
+				Name = Codelab.Name,
+				Description = Codelab.Description
+			};
+		Errors = await _codelabService.EditCodelab(Codelab.CodelabId, editCodelabDto);
+		if (Errors == null)
+		{
+			Codelab.Edit = false;
+			await ReloadParentAsync();
+		}
+	}
+
+	public void AddCodelab(int id)
+	{
+		NewCodelab = new CreateCodelabDto()
+			{
+				Name = "",
+				Description = "",
+				LearningModuleId = id,
+				Edit = true
+			};
+	}
+
+	public async Task CreateCodelab()
+	{
+		Errors = await _codelabService.CreateCodelab(NewCodelab);
+		if (Errors == null)
+		{
+			NewCodelab = null;
+			await ReloadParentAsync();
+		}
+	}
+
+	public async Task DeleteCodelab(int id)
+	{
+		await _codelabService.DeleteCodelab(id);
+		await ReloadParentAsync();
+	}
+
+	// STUDENT VERSION
+
+	public async Task<StudentCodelabSummaryDto> CreateStudentCodelab(int id)
+	{
+		NewStudentCodelab = new CreateStudentCodelabDto();
+		NewStudentCodelab.CodelabId = id;
+		NewStudentCodelab.UserId = User.UserId ?? 0;
+		var studentCodelab = await _studentCodelabService.CreateStudentCodelab(NewStudentCodelab);
+		await ReloadParentAsync();
+		return studentCodelab;
+	}
+
+	public async Task UpdateStudentCodelab(StudentCodelabSummaryDto studentCodelab)
+	{
+		await _studentCodelabService.UpdateStudentCodelab(studentCodelab.StudentCodelabId, studentCodelab); ;
+		StudentCodelabs = await _studentCodelabService.GetStudentCodelabs(User.UserId ?? 0);
+	}
+
+	public StudentCodelabSummaryDto GetStudentCodelab(int codelabId)
+	{
+		var studentCodelab = StudentCodelabs.Where(s => s.CodelabId == codelabId).FirstOrDefault();
+		return studentCodelab;
+	}
+}

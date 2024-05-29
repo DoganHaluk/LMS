@@ -25,13 +25,9 @@ namespace LMSBlazor.Pages
 
 		private LearningModuleOverviewDto Submodule { get; set; }
 
-		private CodelabSummaryDto Codelab { get; set; }
-
 		private CreateLearningModuleDto NewModule { get; set; }
 
 		private CreateCodelabDto NewCodelab { get; set; }
-
-		private CreateStudentCodelabDto NewStudentCodelab { get; set; }
 
 		private List<UpdateStatusCodelabDto> Statuses {  get; set; }
 
@@ -70,27 +66,14 @@ namespace LMSBlazor.Pages
 			return Submodule;
 		}
 
-		public CodelabSummaryDto ChangeEditCodelab(int id)
-		{
-			List<LearningModuleOverviewDto> submodules = new List<LearningModuleOverviewDto>();
-			submodules = Course.Modules.SelectMany(m => m.SubModules).ToList();
-			List<CodelabSummaryDto> codelabs = new List<CodelabSummaryDto>();
-			codelabs = submodules.SelectMany(s => s.Codelabs).ToList();
-			Codelab = codelabs.Where(c => c.CodelabId == id).FirstOrDefault();
-			Codelab.Edit = true;
-			return Codelab;
-		}
-
-
 		public async Task EditModuleName()
 		{
 			Errors = await _learningModuleService.EditModuleName(Module.LearningModuleId, Module);
 			if (Errors == null)
 			{
 				Module.Edit = false;
-				Course = await _courseService.GetCourseOverview(CourseId);
+				await ReloadCourseAsync();
 			}
-			
 		}
 
 		public async Task EditSubmoduleName()
@@ -99,27 +82,9 @@ namespace LMSBlazor.Pages
 			if (Errors == null)
 			{
 				Submodule.Edit = false;
-				Course = await _courseService.GetCourseOverview(CourseId);
+				await ReloadCourseAsync();
 			}
-			
 		}
-
-		public async Task EditCodelab()
-		{
-			EditCodelabDto editCodelabDto = new EditCodelabDto()
-			{
-				Name = Codelab.Name,
-				Description = Codelab.Description
-			};
-			Errors = await _codelabService.EditCodelab(Codelab.CodelabId, editCodelabDto);
-			if (Errors == null)
-			{
-				Codelab.Edit = false;
-				Course = await _courseService.GetCourseOverview(CourseId);
-			}			
-		}
-
-
 
 		public void AddModule(int id = 0)
 		{
@@ -138,9 +103,8 @@ namespace LMSBlazor.Pages
 			if (Errors == null)
 			{
 				NewModule = null;
-				Course = await _courseService.GetCourseOverview(CourseId);
+				await ReloadCourseAsync();
 			}
-			
 		}
 
 		public void AddCodelab(int id)
@@ -162,7 +126,7 @@ namespace LMSBlazor.Pages
 				NewCodelab = null;
 				Course = await _courseService.GetCourseOverview(CourseId);
 			}
-			
+
 		}
 
 		public async Task DeleteModule(int id)
@@ -172,7 +136,7 @@ namespace LMSBlazor.Pages
 			{
 				await _learningModuleService.DeleteModule(id);
 			}
-			Course = await _courseService.GetCourseOverview(CourseId);
+			await ReloadCourseAsync();
 		}
 
 		public async Task DeleteSubmodule(int id)
@@ -183,13 +147,7 @@ namespace LMSBlazor.Pages
 			{
 				await _learningModuleService.DeleteModule(id);
 			}
-			Course = await _courseService.GetCourseOverview(CourseId);
-		}
-
-		public async Task DeleteCodelab(int id)
-		{
-			await _codelabService.DeleteCodelab(id);
-			Course = await _courseService.GetCourseOverview(CourseId);
+			await ReloadCourseAsync();
 		}
 
 		public void NavigateToProgression(int moduleId)
@@ -197,31 +155,9 @@ namespace LMSBlazor.Pages
 			_navigation.NavigateTo($"/progressions?SchoolClassId={SchoolClassId}&ModuleId={moduleId}");
 		}
 
-		// STUDENT VERSION
-
-
-		public async Task<StudentCodelabSummaryDto> CreateStudentCodelab(int id)
+		public async Task ReloadCourseAsync()
 		{
-			NewStudentCodelab = new CreateStudentCodelabDto();
-			NewStudentCodelab.CodelabId = id;
-			NewStudentCodelab.UserId = UserId;
-			var studentCodelab = await _studentCodelabService.CreateStudentCodelab(NewStudentCodelab);
 			Course = await _courseService.GetCourseOverview(CourseId);
-			return studentCodelab;
 		}
-
-		public async Task UpdateStudentCodelab(StudentCodelabSummaryDto studentCodelab)
-		{
-			await _studentCodelabService.UpdateStudentCodelab(studentCodelab.StudentCodelabId, studentCodelab); ;
-			StudentCodelabs = await _studentCodelabService.GetStudentCodelabs(UserId);
-		}
-
-		public StudentCodelabSummaryDto GetStudentCodelab(int codelabId)
-		{
-			var studentCodelab = StudentCodelabs.Where(s => s.CodelabId == codelabId).FirstOrDefault();
-			return studentCodelab;
-		}
-
-		
 	}
 }

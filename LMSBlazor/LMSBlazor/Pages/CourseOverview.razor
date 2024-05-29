@@ -7,262 +7,115 @@
 @inject CourseService _courseService
 
 
-<h3>CourseOverview</h3>
-<div style="border: 1px solid black;">Module</div>
-<div style="border: 1px solid red; margin-left:20px">SubModule</div>
+<h3>Course Overview</h3>
 @if (Course != null)
 {
-	<h2>@Course.CourseName</h2>
+	<h4>@Course.CourseName Course</h4>
 	@if (User.Role == "Coach")
 	{
-		<BSButton Color="BSColor.Primary" type="button" @onclick="()=>AddModule()">Add Module</BSButton>
+		<BSButton Color="BSColor.Primary" class="course-button" type="button" @onclick="()=>AddModule()">Add Module</BSButton>
 	}
 
 	<ul>
 		@foreach (var module in Course.Modules)
 		{
-			<li style="margin: 20px">
-				@if (User.Role == "Student")
-				{
-					<BSLabel>Learningmodule : @module.ModuleName</BSLabel>
-				}
-				else if (User.Role == "Coach")
-				{
-					@if (module.Edit == false)
+			<BSCard Class="p-4 shadow-lg" Style="width:auto;">
+				<li>
+					@if (User.Role == "Student")
 					{
-
-						<BSLabel>Learningmodule : @module.ModuleName</BSLabel>
-						{
-
-							<BSButton Color="BSColor.Primary" @onclick="()=>ChangeEditModule(module.LearningModuleId)">Edit</BSButton>
-							<BSButton Color="BSColor.Primary" @onclick="()=>AddModule(module.LearningModuleId)">Add Submodule</BSButton>
-							<BSButton Color="BSColor.Primary" @onclick="()=>AddCodelab(module.LearningModuleId)">Add Codelab</BSButton>
-							<BSButton Color="BSColor.Primary" @onclick="()=>DeleteModule(module.LearningModuleId)">Delete</BSButton>
-							if (SchoolClassId > 0 && module.Codelabs.Count>0)
-							{
-								<BSButton Color="BSColor.Primary" @onclick="()=>NavigateToProgression(module.LearningModuleId)">Progression</BSButton>
-							}
-						}
+						<BSLabel>Module : @module.ModuleName</BSLabel>
 					}
-					else
+					else if (User.Role == "Coach")
 					{
-						<BSForm Model="@Module" FormName="ModuleName@ModuleId" Name="@($"ModuleName{Module.LearningModuleId}")">
-							@if (Errors != null)
+						@if (module.Edit == false)
+						{
+							<BSLabel>Module : @module.ModuleName</BSLabel>
 							{
-								foreach (var error in Errors)
+								<BSButton Color="BSColor.Primary" @onclick="()=>ChangeEditModule(module.LearningModuleId)">Edit</BSButton>
+								<BSButton Color="BSColor.Primary" @onclick="()=>AddModule(module.LearningModuleId)">Add Submodule</BSButton>
+								<BSButton Color="BSColor.Primary" @onclick="()=>AddCodelab(module.LearningModuleId)">Add Codelab</BSButton>
+								<BSButton Color="BSColor.Primary" @onclick="()=>DeleteModule(module.LearningModuleId)">Delete</BSButton>
+								if (SchoolClassId > 0 && module.Codelabs.Count > 0)
 								{
-									<BSAlert Color="BSColor.Danger">@error.Name, @error.Message, @error.Value</BSAlert>
-
+									<BSButton Color="BSColor.Primary" @onclick="()=>NavigateToProgression(module.LearningModuleId)">Progression</BSButton>
 								}
 							}
-							<BSLabel>Name</BSLabel>
-							<BSInput InputType="InputType.Text" @bind-Value=Module.ModuleName>@Module.ModuleName</BSInput>
-							<BSButton Color="BSColor.Primary" @onclick="EditModuleName">Ok</BSButton>
-						</BSForm>
+						}
+						else
+						{
+							<BSForm Model="@Module" FormName="ModuleName@ModuleId" Name="@($"ModuleName{Module.LearningModuleId}")">
+								@if (Errors != null)
+								{
+									foreach (var error in Errors)
+									{
+										<BSAlert Color="BSColor.Danger">@error.Name, @error.Message, @error.Value</BSAlert>
+									}
+								}
+								<BSLabel>Name</BSLabel>
+								<BSInput InputType="InputType.Text" @bind-Value=Module.ModuleName>@Module.ModuleName</BSInput>
+								<BSButton Color="BSColor.Primary" @onclick="EditModuleName">Ok</BSButton>
+							</BSForm>
+						}
 					}
-				}
-			</li>
+					@foreach (var codelab in module.Codelabs)
+					{
+						<CodelabDisplay Codelab="@codelab" Errors="@Errors" Statuses="@Statuses" ReloadParentAsync="@ReloadCourseAsync"></CodelabDisplay>
+					}
+				</li>
+			</BSCard>
 
 			if (module.SubModules.Count > 0)
 			{
 				foreach (var submodules in module.SubModules)
 				{
-					<ul>
-						<li>
-							@if (User.Role == "Student")
-							{
-								<BSLabel>Submodule : @submodules.ModuleName</BSLabel>
-							}
-							else if (User.Role == "Coach")
-							{
-								@if (submodules.Edit == false)
+					<BSCard Class="p-4 shadow-lg" Style="width:auto;">
+						<ul>
+							<li>
+								@if (User.Role == "Student")
 								{
 									<BSLabel>Submodule : @submodules.ModuleName</BSLabel>
-									<BSButton Color="BSColor.Primary" @onclick="()=>ChangeEditSubmodule(submodules.LearningModuleId)">Edit</BSButton>
-									<BSButton Color="BSColor.Primary" @onclick="()=>AddCodelab(submodules.LearningModuleId)">Add Codelab</BSButton>
-									<BSButton Color="BSColor.Primary" @onclick="()=>DeleteSubmodule(submodules.LearningModuleId)">Delete</BSButton>
-									if (SchoolClassId > 0 && submodules.Codelabs.Count>0)
-									{
-										<BSButton Color="BSColor.Primary" @onclick="()=>NavigateToProgression(submodules.LearningModuleId)">Progression</BSButton>
-									}
 								}
-								else
+								else if (User.Role == "Coach")
 								{
-									<BSForm Model="@Submodule" FormName="SubmoduleName@ModuleId" Name="@($"SubModuleName{Submodule.LearningModuleId}")">
-										@if (Errors != null)
-										{
-											foreach (var error in Errors)
-											{
-												<p style="color:red">@error.Name, @error.Message, @error.Value</p>
-
-											}
-										}
-										<BSLabel>Name</BSLabel>
-										<BSInput InputType="InputType.Text" @bind-Value=Submodule.ModuleName>@Submodule.ModuleName</BSInput>
-										<BSButton Color="BSColor.Primary" @onclick="EditSubmoduleName">Ok</BSButton>
-									</BSForm>
-								}
-							}
-						</li>
-						@foreach (var codelab in submodules.Codelabs)
-						{
-							<ul>
-								<li style="margin: 20px">
-									@if (User.Role == "Student")
+									@if (submodules.Edit == false)
 									{
-										<BSLabel>Codelab : @codelab.Name</BSLabel>
-										<BSLabel>Description : @codelab.Description</BSLabel>
-
-										<text>@{
-												var studentCodelab = GetStudentCodelab(codelab.CodelabId);
-											}</text>
-
-										if ( studentCodelab != null)
+										<BSLabel>Submodule : @submodules.ModuleName</BSLabel>
+										<BSButton Color="BSColor.Primary" @onclick="()=>ChangeEditSubmodule(submodules.LearningModuleId)">Edit</BSButton>
+										<BSButton Color="BSColor.Primary" @onclick="()=>AddCodelab(submodules.LearningModuleId)">Add Codelab</BSButton>
+										<BSButton Color="BSColor.Primary" @onclick="()=>DeleteSubmodule(submodules.LearningModuleId)">Delete</BSButton>
+										if (SchoolClassId > 0 && submodules.Codelabs.Count > 0)
 										{
-						
-											 <BSForm Model="@studentCodelab" FormName="CodelabStatus" Name="@($"Codelab{codelab.CodelabId}")">
-												@if (Errors != null)
+											<BSButton Color="BSColor.Primary" @onclick="()=>NavigateToProgression(submodules.LearningModuleId)">Progression</BSButton>
+										}
+									}
+									else
+									{
+										<BSForm Model="@Submodule" FormName="SubmoduleName@ModuleId" Name="@($"SubModuleName{Submodule.LearningModuleId}")">
+											@if (Errors != null)
+											{
+												foreach (var error in Errors)
 												{
-													foreach (var error in Errors)
-													{
-														<BSAlert Color="BSColor.Danger">@error.Name, @error.Message, @error.Value</BSAlert>
-
-													}
+													<p style="color:red">@error.Name, @error.Message, @error.Value</p>
 												}
-												<BSLabel>Status</BSLabel>
-												<BSInput InputType="InputType.Select" id="codelabStatus" @bind-Value="studentCodelab.Status.StatusId">
-													@foreach (var status in Statuses)
-													{
-														<option value="@status.StatusId">@status.StatusName</option>
-													}
-												</BSInput>																
-												<BSLabel>Comment</BSLabel>
-												<BSInput InputType="InputType.Text" @bind-Value=studentCodelab.Comment></BSInput>
-												<BSButton Color="BSColor.Primary" @onclick="()=>UpdateStudentCodelab(studentCodelab)">Ok</BSButton>
-											</BSForm> 
-										}
-										else
-										{
-											<BSButton Color="BSColor.Primary" @onclick="()=>CreateStudentCodelab(codelab.CodelabId)">Start</BSButton>
-										}
+											}
+											<BSLabel>Name</BSLabel>
+											<BSInput InputType="InputType.Text" @bind-Value=Submodule.ModuleName>@Submodule.ModuleName</BSInput>
+											<BSButton Color="BSColor.Primary" @onclick="EditSubmoduleName">Ok</BSButton>
+										</BSForm>
 									}
-									else if (User.Role == "Coach")
-									{
-										if (codelab.Edit == false)
-										{
-
-											<BSLabel>Codelab : @codelab.Name</BSLabel>
-											<BSLabel>Description : @codelab.Description</BSLabel>
-											<BSButton Color="BSColor.Primary" @onclick="()=>ChangeEditCodelab(codelab.CodelabId)">Edit</BSButton>
-											<BSButton Color="BSColor.Primary" @onclick="()=>DeleteCodelab(codelab.CodelabId)">Delete</BSButton>
-										}
-										else
-										{
-											<BSForm Model="@Codelab" FormName="CodelabName@CodelabId" Name="@($"CodelabName{Codelab.CodelabId}")">
-												@if (Errors != null)
-												{
-													foreach (var error in Errors)
-													{
-														<BSAlert Color="BSColor.Danger">@error.Name, @error.Message, @error.Value</BSAlert>
-
-													}
-												}
-												<BSLabel>Name</BSLabel>
-												<BSInput InputType="InputType.Text" @bind-Value=Codelab.Name>@Codelab.Name</BSInput>
-												<BSLabel>Description</BSLabel>
-												<BSInput InputType="InputType.Text" @bind-Value=Codelab.Description>@Codelab.Description</BSInput>
-												<BSButton Color="BSColor.Primary" @onclick="EditCodelab">Ok</BSButton>
-											</BSForm>
-										}
-									}
-									
-								</li>
-							</ul>
-						}
-					</ul>
-				}
-			}
-			else
-			{
-				foreach (var codelab in module.Codelabs)
-				{
-					<ul>
-						<li>
-							@if (User.Role == "Student")
+								}
+							</li>
+							@foreach (var codelab in submodules.Codelabs)
 							{
-								<BSLabel>Codelab : @codelab.Name</BSLabel>
-								<BSLabel>Description : @codelab.Description</BSLabel>
-
-								<text>
-									@{
-										var studentCodelab = GetStudentCodelab(codelab.CodelabId);
-									}
-								</text>
-
-								if (studentCodelab != null)
-								{
-
-									<BSForm Model="@studentCodelab" FormName="CodelabStatus" Name="@($"Codelab{codelab.CodelabId}")">
-										@if (Errors != null)
-										{
-											foreach (var error in Errors)
-											{
-												<BSAlert Color="BSColor.Danger">@error.Name, @error.Message, @error.Value</BSAlert>
-
-											}
-										}
-										<BSLabel>Status</BSLabel>
-										<BSInput InputType="InputType.Select" id="codelabStatus" @bind-Value="studentCodelab.Status.StatusId">
-											@foreach (var status in Statuses)
-											{
-												<option value="@status.StatusId">@status.StatusName</option>
-											}
-										</BSInput>
-										<BSLabel>Comment</BSLabel>
-										<BSInput InputType="InputType.Text" @bind-Value=studentCodelab.Comment></BSInput>
-										<BSButton Color="BSColor.Primary" @onclick="()=>UpdateStudentCodelab(studentCodelab)">Ok</BSButton>
-									</BSForm>
-								}
-								else
-								{
-									<BSButton Color="BSColor.Primary" @onclick="()=>CreateStudentCodelab(codelab.CodelabId)">Start</BSButton>
-								}
+								<CodelabDisplay Codelab="@codelab" Errors="@Errors" Statuses="@Statuses" ReloadParentAsync="@ReloadCourseAsync"></CodelabDisplay>
 							}
-							else if (User.Role == "Coach")
-							{
-								if (codelab.Edit == false)
-								{
-
-									<BSLabel>Codelab : @codelab.Name</BSLabel>
-									<BSLabel>Description : @codelab.Description</BSLabel>
-									<BSButton Color="BSColor.Primary" @onclick="()=>ChangeEditCodelab(codelab.CodelabId)">Edit</BSButton>
-									<BSButton Color="BSColor.Primary" @onclick="()=>DeleteCodelab(codelab.CodelabId)">Delete</BSButton>
-								}
-								else
-								{
-									<BSForm Model="@Codelab" FormName="CodelabName@CodelabId" Name="@($"CodelabName{Codelab.CodelabId}")">
-										@if (Errors != null)
-										{
-											foreach (var error in Errors)
-											{
-												<BSAlert Color="BSColor.Danger">@error.Name, @error.Message, @error.Value</BSAlert>
-
-											}
-										}
-										<BSLabel>Name</BSLabel>
-										<BSInput InputType="InputType.Text" @bind-Value=Codelab.Name>@Codelab.Name</BSInput>
-										<BSLabel>Description</BSLabel>
-										<BSInput InputType="InputType.Text" @bind-Value=Codelab.Description>@Codelab.Description</BSInput>
-										<BSButton Color="BSColor.Primary" @onclick="EditCodelab">Ok</BSButton>
-									</BSForm>
-								}
-							}
-						</li>
-					</ul>
+						</ul>
+					</BSCard>
 				}
 			}
 		}
 	</ul>
+
 	@if (NewModule != null && NewModule.Edit == true)
 	{
 		<BSForm Model="@NewModule" FormName="NewModuleName@ModuleId" Name="@($"NewModuleName{NewModule.ModuleName}")">
@@ -298,6 +151,3 @@
 		</BSForm>
 	}
 }
-
-
-
