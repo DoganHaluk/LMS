@@ -18,17 +18,22 @@
 						
 							<BSLabel For="email">Email</BSLabel>
 							<BSInput @bind-Value="Student.Email" Type="email" Id="email" ReadOnly="true" />
-						
-							<BSLabel For="class">Class</BSLabel>
-							<BSInput @bind-Value="Student.SchoolClass.SchoolClassName" Type="text" Id="class" ReadOnly="true" />
-						
+							@if(Student.SchoolClass != null)
+							{
+								<BSLabel For="class">Class</BSLabel>
+								<BSInput @bind-Value="Student.SchoolClass.SchoolClassName" Type="text" Id="class" ReadOnly="true" />
+							}
+											
 					</BSForm>
 
 					@if (User.Role == "Student" && User.UserId == Student.UserId)
 					{
 						<div class="mt-4">
 							<BSButton Color="BSColor.Primary" @onclick="NavigateToEdit">Edit</BSButton>
+						@if (Student.SchoolClass != null)
+						{
 							<BSButton Color="BSColor.Info" @onclick="NavigateToClass">Class Overview</BSButton>
+						}						
 						</div>
 					}
 				</div>

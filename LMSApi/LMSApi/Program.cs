@@ -47,10 +47,12 @@ builder.Services.AddDbContext<LMSDbContext>(options =>
 		options.UseSqlServer(builder.Configuration["ConnectionString"]);
 	});
 
-builder.Services.AddControllers().AddJsonOptions(options =>
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options=>options.SuppressModelStateInvalidFilter = true).AddJsonOptions(options =>
 {
 	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 });
+
+
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

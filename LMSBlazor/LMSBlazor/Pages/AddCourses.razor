@@ -8,12 +8,12 @@
 @if (Courses != null && SchoolClass != null)
 {
 	<BSContainer Class="d-flex justify-content-center align-items-center vh-100">
-		<BSCard Class="p-4 shadow-lg" Style="width: 280px;">
+		<BSCard Class="p-4 shadow-lg" Style="width: 350px;">
 			<BSCard>
-				<h2 class="mb-4" style="margin-left:10px;">Select Courses</h2>
-				<BSLabel style="margin-left:30px;">@SchoolClass.SchoolClassName</BSLabel>
+				<h2 class="mb-4" style="margin-left:50px;">Select Courses</h2>
+				<BSLabel style="margin-left:50px;">@SchoolClass.SchoolClassName</BSLabel>
 
-				<EditForm Model="@Courses" style="margin:40px;">
+				<EditForm Model="@Courses" style="margin:60px;">
 					<ul>
 						@foreach (var course in Courses)
 						{
@@ -23,7 +23,7 @@
 							</li>
 						}
 					</ul>
-					<BSButton Color="BSColor.Primary" @onclick="CreateSchoolClassCourses">Add Courses</BSButton>
+					<BSButton Color="BSColor.Primary" @onclick="CreateSchoolClassCourses" style="margin-left:20px;">Add Courses</BSButton>
 
 				</EditForm>
 				<BSButton Color="BSColor.Primary" @onclick="NavigateToCourseDashboard">Course Dashboard</BSButton>
