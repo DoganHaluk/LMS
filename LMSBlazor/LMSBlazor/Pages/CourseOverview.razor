@@ -34,7 +34,10 @@
 								<BSButton Color="BSColor.Primary" @onclick="()=>ChangeEditModule(module.LearningModuleId)">Edit</BSButton>
 								<BSButton Color="BSColor.Primary" @onclick="()=>AddModule(module.LearningModuleId)">Add Submodule</BSButton>
 								<BSButton Color="BSColor.Primary" @onclick="()=>AddCodelab(module.LearningModuleId)">Add Codelab</BSButton>
-								<BSButton Color="BSColor.Primary" @onclick="()=>DeleteModule(module.LearningModuleId)">Delete</BSButton>
+								if (module.SubModules.Count==0 && module.Codelabs.Count == 0)
+								{
+									<BSButton Color="BSColor.Primary" @onclick="()=>DeleteModule(module.LearningModuleId)">Delete</BSButton>
+								}								
 								if (SchoolClassId > 0 && module.Codelabs.Count > 0)
 								{
 									<BSButton Color="BSColor.Primary" class="progression-button" @onclick="()=>NavigateToProgression(module.LearningModuleId)">Progression</BSButton>
@@ -59,7 +62,7 @@
 					}
 					@foreach (var codelab in module.Codelabs)
 					{
-						<CodelabDisplay Codelab="@codelab" Errors="@Errors" Statuses="@Statuses" ReloadParentAsync="@ReloadCourseAsync" StudentCodelabs="@StudentCodelabs"></CodelabDisplay>
+						<CodelabDisplay UserId="@UserId" User="@User" Codelab="@codelab" Errors="@Errors" Statuses="@Statuses" ReloadParentAsync="@ReloadCourseAsync" StudentCodelabs="@StudentCodelabs"></CodelabDisplay>
 					}
 				</li>
 			</BSCard>
@@ -82,7 +85,10 @@
 										<BSLabel>Submodule : @submodules.ModuleName</BSLabel>
 										<BSButton Color="BSColor.Primary" @onclick="()=>ChangeEditSubmodule(submodules.LearningModuleId)">Edit</BSButton>
 										<BSButton Color="BSColor.Primary" @onclick="()=>AddCodelab(submodules.LearningModuleId)">Add Codelab</BSButton>
-										<BSButton Color="BSColor.Primary" @onclick="()=>DeleteSubmodule(submodules.LearningModuleId)">Delete</BSButton>
+										if (submodules.Codelabs.Count == 0)
+										{
+											<BSButton Color="BSColor.Primary" @onclick="()=>DeleteSubmodule(submodules.LearningModuleId)">Delete</BSButton>
+										}						
 										if (SchoolClassId > 0 && submodules.Codelabs.Count > 0)
 										{
 											<BSButton Color="BSColor.Primary" class="progression-button" @onclick="()=>NavigateToProgression(submodules.LearningModuleId)">Progression</BSButton>
@@ -107,7 +113,7 @@
 							</li>
 							@foreach (var codelab in submodules.Codelabs)
 							{
-								<CodelabDisplay Codelab="@codelab" Errors="@Errors" Statuses="@Statuses" ReloadParentAsync="@ReloadCourseAsync" StudentCodelabs="@StudentCodelabs"></CodelabDisplay>
+								<CodelabDisplay UserId="@UserId" User="@User" Codelab="@codelab" Errors="@Errors" Statuses="@Statuses" ReloadParentAsync="@ReloadCourseAsync" StudentCodelabs="@StudentCodelabs"></CodelabDisplay>
 							}
 						</ul>
 					</BSCard>

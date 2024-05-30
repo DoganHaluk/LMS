@@ -84,6 +84,11 @@
 
 
 @code {
+
+	[Parameter]
+	public int UserId { get; set; }
+
+	[Parameter]
 	public CurrentUser User { get; set; }
 
 	[Parameter]
@@ -99,16 +104,12 @@
 	public List<StudentCodelabSummaryDto> StudentCodelabs { get; set; }
 
 	[Parameter]
-	public Func<Task> ReloadParentAsync { get; set; }
+	public EventCallback<Task> ReloadParentAsync { get; set; }
 
 	private CreateCodelabDto NewCodelab { get; set; }
 
 	private CreateStudentCodelabDto NewStudentCodelab { get; set; } 
 
-	protected override async Task OnInitializedAsync()
-	{
-		User = await _stateContainer.GetUserAsync();
-	}
 
 	public void ChangeEditCodelab()
 	{
@@ -126,7 +127,7 @@
 		if (Errors == null)
 		{
 			Codelab.Edit = false;
-			await ReloadParentAsync();
+			await ReloadParentAsync.InvokeAsync();
 		}
 	}
 
@@ -147,32 +148,32 @@
 		if (Errors == null)
 		{
 			NewCodelab = null;
-			await ReloadParentAsync();
+			await ReloadParentAsync.InvokeAsync();
 		}
 	}
 
 	public async Task DeleteCodelab(int id)
 	{
 		await _codelabService.DeleteCodelab(id);
-		await ReloadParentAsync();
+		await ReloadParentAsync.InvokeAsync();
 	}
 
 	// STUDENT VERSION
 
-	public async Task<StudentCodelabSummaryDto> CreateStudentCodelab(int id)
+	public async Task CreateStudentCodelab(int id)
 	{
 		NewStudentCodelab = new CreateStudentCodelabDto();
 		NewStudentCodelab.CodelabId = id;
-		NewStudentCodelab.UserId = User.UserId ?? 0;
-		var studentCodelab = await _studentCodelabService.CreateStudentCodelab(NewStudentCodelab);
-		await ReloadParentAsync();
-		return studentCodelab;
+		NewStudentCodelab.UserId = UserId;
+		await _studentCodelabService.CreateStudentCodelab(NewStudentCodelab);
+		StudentCodelabs = await _studentCodelabService.GetStudentCodelabs(UserId);
 	}
 
 	public async Task UpdateStudentCodelab(StudentCodelabSummaryDto studentCodelab)
 	{
 		await _studentCodelabService.UpdateStudentCodelab(studentCodelab.StudentCodelabId, studentCodelab); ;
-		StudentCodelabs = await _studentCodelabService.GetStudentCodelabs(User.UserId ?? 0);
+		StudentCodelabs = await _studentCodelabService.GetStudentCodelabs(UserId);
+		
 	}
 
 	public StudentCodelabSummaryDto GetStudentCodelab(int codelabId)
