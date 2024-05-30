@@ -1,12 +1,23 @@
 ﻿@inherits LayoutComponentBase
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+	<div class="sidebar">
+		<NavMenu />
+	</div>
 
-    <main>
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+	<main>
+		<div class="top-row px-4 logindisplay">
+			<img src="\logo.png" width="100" />
+			<h3 class="fs-3">Learning Management System</h3>
+		</div>
+		<article class="content px-4">
+			@Body
+		</article>
+		<div class="bottom-row px-4">
+			<a href="">
+				<img src="\SWITCHFULLY_color_favicon_CMYK_LargeRes.jpg" width="40" />
+				<span class="fs-6">Copyright © 2024 Switchfully. All Rights Reserved.</span>
+			</a>
+		</div>
+	</main>
+
 </div>

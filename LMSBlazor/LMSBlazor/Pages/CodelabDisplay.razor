@@ -13,8 +13,8 @@
 		<li style="margin: 20px">
 			@if (User.Role == "Student")
 			{
-				<BSLabel>Codelab : @Codelab.Name</BSLabel>
-				<BSLabel>Description : @Codelab.Description</BSLabel>
+				<BSLabel style="display:block">Codelab : @Codelab.Name</BSLabel>
+				<BSLabel style="display:block">Description : @Codelab.Description</BSLabel>
 				<text>
 					@{
 						var studentCodelab = GetStudentCodelab(Codelab.CodelabId);

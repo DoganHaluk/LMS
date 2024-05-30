@@ -17,7 +17,7 @@ a, .btn-link {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 .content {
@@ -114,6 +114,33 @@ code {
     margin-left: 5px;
 }
 
-.form-label{
+.form-label {
     margin-right: 50px;
+}
+
+.bottom-row {
+    background-color: #f7f7f7;
+    border-top: 1px solid #d6d5d5;
+    height: 3.5rem;
+    max-height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+}
+
+.top-row {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: center !important;
+    height: 3.5rem;
+    max-height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.content {
+    margin-bottom: 4rem;
 }

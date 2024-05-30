@@ -31,6 +31,7 @@ namespace LMSApi.Controllers
 			{
 				authenticatedDto.UserId = student.UserId;
 				authenticatedDto.Role = "Student";
+				authenticatedDto.UserName = student.UserName;
 				authenticatedDto.Token = _studentService.GenerateJwtToken(student);
 				return Ok(authenticatedDto);
 			}
@@ -38,6 +39,7 @@ namespace LMSApi.Controllers
 			{
 				authenticatedDto.UserId = coach.UserId;
 				authenticatedDto.Role = "Coach";
+				authenticatedDto.UserName = coach.UserName;
 				authenticatedDto.Token = _coachService.GenerateJwtToken(coach);
 				return Ok(authenticatedDto);
 			}
