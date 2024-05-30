@@ -1,4 +1,5 @@
-﻿using LMSBase.Models.Dtos.Request;
+﻿using LMSBase.Models.Domain;
+using LMSBase.Models.Dtos.Request;
 using LMSBase.Models.Dtos.Response;
 using LMSBase.Models.Utilities;
 using LMSBlazor.Services;
@@ -52,12 +53,11 @@ namespace LMSBlazor.Pages
 		}
 
 
-		public async Task DeleteCourse(int courseId)
+		public async Task DeleteCourse(CourseDto course)
 		{
-			var course = await _courseService.GetCourseOverview(courseId);
 			if (course.Modules.Count == 0 && course != null)
 			{
-				await _courseService.DeleteCourse(courseId);
+				await _courseService.DeleteCourse(course.CourseId);
 				Courses = await _courseService.GetCourses();
 			}
 		}

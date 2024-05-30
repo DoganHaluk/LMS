@@ -1,5 +1,6 @@
 ﻿using LMSApi.Configuration;
 using LMSBase.Models.Domain;
+using LMSBase.Models.Dtos.Response;
 using Microsoft.EntityFrameworkCore;
 
 namespace LMSApi.Services
@@ -15,7 +16,7 @@ namespace LMSApi.Services
 
 		public List<Course> GetCourses()
 		{
-			return _context.Courses.ToList();
+			return _context.Courses.Include(c=>c.Modules).AsNoTracking().ToList();
 		}
 
 		public Course GetCourseById(int id)

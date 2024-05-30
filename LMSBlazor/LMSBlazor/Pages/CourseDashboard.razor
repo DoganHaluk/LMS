@@ -40,14 +40,23 @@
 								<th>
 								<BSButton Color="BSColor.Primary" @onclick="()=>ChangeEdit(course.CourseId)" style="margin-left:20px;">Edit</BSButton>
 								</th>
-								<th>
-								<BSButton Color="BSColor.Primary" @onclick="()=>DeleteCourse(course.CourseId)">Delete</BSButton>
-								</th>
-								
-							}
+									@if(course.Modules == null || course.Modules.Count == 0)
+									{
+										<th>
+											<BSButton Color="BSColor.Primary" @onclick="()=>DeleteCourse(course)">Delete</BSButton>
+										</th>
+									}
+									else
+									{
+										<th>
+											<BSButton Color="BSColor.Secondary" Readonly="true">Delete</BSButton>
+										</th>
+									}
+								}
 
 							else
-							{	<th>
+							{	
+						<th>
 								<BSForm Model="@Course" FormName="CourseName@Course.CourseId" Name="@($"CourseName{Course.CourseId}")">
 									@if (Errors != null)
 									{

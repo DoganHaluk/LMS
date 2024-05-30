@@ -1,16 +1,22 @@
 ﻿using LMSBase.Models.Utilities;
 using LMSBase.Models.Domain;
 using LMSBase.Models.Dtos.Request;
+using Microsoft.EntityFrameworkCore;
+using LMSBase.Models.Dtos.Response;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
+using AutoMapper;
 
 namespace LMSApi.Services
 {
     public class CourseEditor
 	{
 		private readonly CourseService _courseService;
+		private readonly IMapper _mapper;
 
-		public CourseEditor(CourseService courseService)
+		public CourseEditor(CourseService courseService,IMapper mapper)
 		{
 			_courseService = courseService;
+			_mapper = mapper;
 		}
 
 		public List<InputError> ValidateUserCourseOverview(int id)
@@ -24,6 +30,23 @@ namespace LMSApi.Services
 			//	errors.Add(ownerError);
 			//}
 			return errors;
+		}
+
+		public List<CourseDto> GetCourses()
+		{
+			List<CourseDto> courses = new List<CourseDto>();
+			List<Course> getCourses = _courseService.GetCourses();
+			foreach (var course in getCourses)
+			{
+				CourseDto newCourse = new CourseDto()
+				{
+					CourseId = course.CourseId,
+					CourseName = course.CourseName,
+					Modules = _mapper.Map<List<LearningModuleOverviewDto>>(course.Modules)
+				};
+				courses.Add(newCourse);
+			}
+			return courses;
 		}
 
 

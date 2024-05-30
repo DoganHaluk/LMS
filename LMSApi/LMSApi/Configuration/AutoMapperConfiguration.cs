@@ -21,12 +21,11 @@ namespace LMSApi.Configuration
 			CreateMap<SchoolClassCourse, SchoolClassCourseDto>();
 			CreateMap<Course, CourseOverviewDto>();
 			CreateMap<Status, StatusDto>();
-			CreateMap<Course, CourseDto>();
+			CreateMap<Course, CourseDto>().ForMember(x=>x.Selected, opt=>opt.Ignore());
 			CreateMap<LearningModule, LearningModuleDto>();
 			CreateMap<CreateCoachDto, Coach>();
 			CreateMap<Codelab, CodelabSummaryDto>();
 			CreateMap<CreateCodelabDto, Codelab>();
-			CreateMap<Course, CourseOverviewDto>();
 			CreateMap<LearningModule, LearningModuleOverviewDto>();
 			CreateMap<StudentCodelab, StudentCodelabSummaryDto>();
 			CreateMap<CreateStudentCodelabDto, StudentCodelab>();
