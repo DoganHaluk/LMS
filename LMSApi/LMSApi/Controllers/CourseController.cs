@@ -26,7 +26,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpGet]
-		//[AuthorizeScope("Coach,Student")]
+		[AuthorizeScope("Coach,Student")]
 		public IActionResult GetCourses()		
 		{
 			return Ok(_courseEditor.GetCourses());

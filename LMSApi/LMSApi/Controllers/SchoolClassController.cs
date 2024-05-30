@@ -24,7 +24,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpGet("SchoolClasses")]
-		//[AuthorizeScope("Coach,Student")]
+		[AuthorizeScope("Coach,Student")]
 		public IActionResult GetSchoolClasses()
 		{
 			List<SchoolClassSummaryDto> list = new List<SchoolClassSummaryDto>();
@@ -44,7 +44,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpGet("ClassOverview/{id}")]
-		//[AuthorizeScope("Coach,Student")]
+		[AuthorizeScope("Coach,Student")]
 		public IActionResult GetSchoolClassOverview(int id) 
 		{
 			List<InputError> errors = _schoolClassEditor.ValidateUserClassOverview(id);
@@ -59,7 +59,7 @@ namespace LMSApi.Controllers
 		}
 
 		[HttpPost("Schoolclass")]
-		//[AuthorizeScope("Coach")]
+		[AuthorizeScope("Coach")]
 		public IActionResult CreateSchoolClass(CreateSchoolClassDto createSchoolClassDto)
 		{
 			List<InputError> errors = _schoolClassEditor.ValidateSchoolClassCreation(createSchoolClassDto);
